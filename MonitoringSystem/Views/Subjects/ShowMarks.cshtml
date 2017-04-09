@@ -25,16 +25,16 @@
         padding: 0;
     }
     .date-process-hidden{
-        /*visibility:hidden;*/
         transition: 1s linear all;
+        display:none;
         opacity:0;
         width:0px;
         height:0px;
     }
     .date-process-normal{
         opacity:1;
+        display:block;
         transition: 1s linear all;
-        /*visibility:visible;*/
     }
     .max-point {
         width:45px;
@@ -43,11 +43,15 @@
         width:45px;
     }
     .point-hidden{
-       /*visibility:hidden;*/
        transition: 1s linear all;
+       display:none;       
        opacity:0;
        width:0px;
        height:0px;
+    }
+    .point-date-of-program, .point-date-of-report{
+        width: 137px;
+        border-radius: 12px;
     }
     *,*:before,*:after{
         box-sizing:border-box;
@@ -255,19 +259,16 @@
                                 if (marks[j] != null)
                                 {
                                     string currentLabId = marks[j].MarkID.ToString() + "_lab";
-                                    string currentLabDateOfProgram = marks[j].MarkID.ToString() + "_labdateofprogram";
-                                    string currentLabDateOfReport = marks[j].MarkID.ToString() + "_labdateofreport";
-
                                     <td class="lab">
                                         <div class="point-normal">
                                             <input type="number" class="student-point" id=@currentLabId value=@marks[j].TheMark.ToString() />
                                         </div>
                                         <div class="date-process-hidden">
-                                            <label for=@currentLabDateOfReport>Отчет: </label>
-                                            <input type="date" class="point-date-of-report" id=@currentLabDateOfReport value=@marks[j].DateOfReport.ToString("yyyy-MM-dd") />
+                                            <label>Отчет: </label>
+                                            <input type="date" class="point-date-of-report"  value=@marks[j].DateOfReport.ToString("yyyy-MM-dd") />
 
-                                            <label for=@currentLabDateOfProgram>Приложение: </label>
-                                            <input type="date" class="point-date-of-program" id=@currentLabDateOfProgram value=@marks[j].DateOfProgram.ToString("yyyy-MM-dd") />
+                                            <label>Приложение: </label>
+                                            <input type="date" class="point-date-of-program"  value=@marks[j].DateOfProgram.ToString("yyyy-MM-dd") />
                                         </div>
                                     </td>
                                 }
@@ -291,19 +292,16 @@
                                 if (hws[j] != null)
                                 {
                                     string currentHwId = hws[j].HomeWorkID.ToString() + "_hw";
-                                    string currentHwDateOfProgram = marks[j].MarkID.ToString() + "_hwdateofprogram";
-                                    string currentHwDateOfReport = marks[j].MarkID.ToString() + "_hwdateofreport";
-
                                     <td class="hw">
                                         <div class="point-normal">
                                             <input type="number" class="student-point" id=@currentHwId value=@hws[j].HWPoint.ToString() />
                                         </div>
                                         <div class="date-process-hidden">
-                                            <label for=@currentHwDateOfReport>Отчет: </label>
-                                            <input type="date" class="point-date-of-report" id=@currentHwDateOfReport value=@marks[j].DateOfReport.ToString("yyyy-MM-dd") />
+                                            <label>Отчет: </label>
+                                            <input type="date" class="point-date-of-report" value=@hws[j].DateOfReport.ToString("yyyy-MM-dd") />
 
-                                            <label for=@currentHwDateOfProgram>Приложение: </label>
-                                            <input type="date" class="point-date-of-program" id=@currentHwDateOfProgram value=@marks[j].DateOfProgram.ToString("yyyy-MM-dd") />
+                                            <label>Приложение: </label>
+                                            <input type="date" class="point-date-of-program" value=@hws[j].DateOfProgram.ToString("yyyy-MM-dd") />
                                         </div>
                                     </td>
                                 }
@@ -372,7 +370,6 @@
                 var recordBookNumbersList = getRecordBookNumbers(); // массив из id студентов группы
                 var maxMarksSum = getMaxMarkSum();
                 handleDataFromCells();
-                getDatesToSend();
                 for (var i = 0; i < arrayOfInputData.length; i++) {
                     var currentInput;
                     if (arrayOfInputData[i].rbn === "") {
@@ -385,8 +382,9 @@
                     }
                 }
                 $("#btn-savechanges").bind("click", function () {
-                    var url = decodeURI(window.location.href);
+                    getDatesToSend();
                     var dataToSend = arrayOfInputData;
+                    var url = decodeURI(window.location.href);
                     dataToSend.push({ inputId: url });
                     dataToSend = JSON.stringify(dataToSend);                    
                      
@@ -424,24 +422,38 @@
                     }                    
                 });
                 function getDatesToSend() {
-                    // получить все интупти с датой, извлечь их значения и упаковать для отправки на сервер
+                    var moduleInputs = $("tbody.tablecontent>tr#" + recordBookNumbersList[0] + ">td.module");
+                    for (var i = 0; i < recordBookNumbersList.length; i++) {
+                        var currentStudent = $("tbody.tablecontent>tr#" + recordBookNumbersList[i]); // currentStudent - строка таблицы для i-го студента
+                        var rowLengthAll = currentStudent.children().length;
+                        for (var j = 1; j < rowLengthAll - moduleInputs.length - 3; j++) {
+                            var currentCell = currentStudent[0].children[j];
+                            if (currentCell.children.length > 0) {
+                                for (var k = 0; k < arrayOfInputData.length; k++) {
+                                    if (arrayOfInputData[k].inputId === currentCell.children[0].children[0].id) {
+                                        arrayOfInputData[k].dateOfReport = currentCell.children[1].children[1].value;
+                                        arrayOfInputData[k].dateOfProgram = currentCell.children[1].children[3].value;
+                                    }
+                                }
+                            }
+                        }
+                    }
 
-                    var dateReportInputs = $("tbody.tablecontent input.point-date-of-report");
-                    var dateProgramInputs = $("tbody.tablecontent input.point-date-of-program");
-                    for (var i = 0; i < dateReportInputs.length; i++) {
-                        inputObj = new inputObject();
-                        inputObj.inputId = dateReportInputs[i].id;
-                        inputObj.inputvalue = dateReportInputs[i].value;
-                        inputObj.markType = dateReportInputs[i].closest("td").className + "date";
-                        arrayOfInputData.push(inputObj);
-                    }
-                    for (var i = 0; i < dateProgramInputs.length; i++) {
-                        inputObj = new inputObject();
-                        inputObj.inputId = dateProgramInputs[i].id;
-                        inputObj.inputvalue = dateProgramInputs[i].value;
-                        inputObj.markType = dateProgramInputs[i].closest("td").className + "date";
-                        arrayOfInputData.push(inputObj);
-                    }
+                    //var dateReportInputs = $("tbody.tablecontent input.point-date-of-report");
+                    //var dateProgramInputs = $("tbody.tablecontent input.point-date-of-program");
+                    //for (var i = 0; i < dateReportInputs.length; i++) {
+                    //    for (var j = 0; j < arrayOfInputData.length; j++) {
+                    //        if (arrayOfInputData[j].markType === "lab" || arrayOfInputData[j].markType === "hw")
+                    //        {
+                    //            var inArrayId = parseInt(arrayOfInputData[j].inputId);
+                    //            var inInputId = parseInt(dateProgramInputs[i].id)
+                    //            if (inArrayId === inInputId) {
+                    //                arrayOfInputData[j].dateOfProgram = dateProgramInputs[i].value;
+                    //                arrayOfInputData[j].dateOfReport = dateReportInputs[i].value;
+                    //            }
+                    //        }                            
+                    //    }
+                    //}
                     debugger;
                 }
                 function recalculateMaxMarkSumWithStudentsAutomats() {
@@ -455,7 +467,7 @@
                         if (cells[i].localName === "input") {
                             for (var k = 0; k < arrayOfInputData.length; k++) {
                                 if (arrayOfInputData[k].inputId === cells[i].id) {
-                                    arrayOfInputData[k].inputvalue = +cells[i].value;
+                                    arrayOfInputData[k].inputvalue = cells[i].value;
                                     maxMarksSum += +cells[i].value;
                                 }
                             }
@@ -480,13 +492,13 @@
                                     if (currentCell.children[0].children[0].localName === "input") {
                                         for (var k = 0; k < arrayOfInputData.length; k++) {
                                             if (arrayOfInputData[k].inputId === currentCell.children[0].children[0].id) {
-                                                arrayOfInputData[k].inputvalue = +currentCell.children[0].children[0].value;
+                                                arrayOfInputData[k].inputvalue = currentCell.children[0].children[0].value;
                                                 studentsTotalPointer += +currentCell.children[0].children[0].value;
                                             }
                                         }
                                     }
                                 }                                
-                                else /*if (currentCell.children[0].localName == "p") */{
+                                else {
                                     studentsTotalPointer += +currentCell.children[0].innerText;
                                 }
                             } else continue;
@@ -501,7 +513,6 @@
                         var currentStudent = $("tbody.tablecontent>tr#" + recordBookNumbersList[i]); // currentStudent - строка таблицы для i-го студента
                         var studentsTotalPointer = 0; // сумма всех отметок студента
 
-                        // собираем все данные с ячеек строки студента
                         var rowLength = currentStudent.children().length;
                         for (var j = 1; j < rowLength - 2; j++) {
                             // currentCell - текущий "ребенок" строки - ячейка <td>
@@ -510,10 +521,10 @@
                                 if (currentCell.className != "lectures") {
                                     if (currentCell.children[0].children[0].localName === "input") {
                                         var inputObj = new inputObject();
-                                        inputObj.rbn = currentStudent[0].id;
-                                        inputObj.markType = currentCell.children[0].className;
-                                        inputObj.inputvalue = +currentCell.children[0].children[0].value;
-                                        inputObj.inputId = currentCell.children[0].children[0].id;
+                                        inputObj.rbn = currentStudent[0].id;    // номер зачетки студента
+                                        inputObj.markType = currentCell.closest("td").className; // тип оценки
+                                        inputObj.inputvalue = currentCell.children[0].children[0].value; // оценка
+                                        inputObj.inputId = currentCell.children[0].children[0].id; // id оценки в БД
                                         arrayOfInputData.push(inputObj);
                                         studentsTotalPointer += +currentCell.children[0].children[0].value;
                                     }
@@ -528,6 +539,14 @@
                         inputData(recordBookNumbersList[i], studentsAutomat, studentsECTS);
                     }
                 }
+                function inputObject() {
+                    this.rbn = "";
+                    this.markType = "";
+                    this.inputvalue = "";
+                    this.inputId = "";
+                    this.dateOfReport = "";
+                    this.dateOfProgram = "";
+                }
                 function getRecordBookNumbers() {
                     var rbnList = [];
                     for (var i = 0; i < tablecontent.length; i++) {
@@ -535,15 +554,7 @@
                     }
                     return rbnList;
                 }
-                function inputObject() {
-                    this.rbn = "";
-                    this.markType = "";
-                    this.inputvalue = 0;
-                    this.inputId = "";
-                }
                 function calcAutomat(maxMarksSum, studentTotalPointer) {
-                    // высчитываем итоговый балл студента, исходя из его успевааемости
-
                     if (maxMarksSum == 100) {
                         return Math.round(studentTotalPointer);
                     }
@@ -561,7 +572,7 @@
                             var inputObj = new inputObject();
                             inputObj.rbn = "";
                             inputObj.markType = cells[i].closest("th").className;
-                            inputObj.inputvalue = +cells[i].value;
+                            inputObj.inputvalue = cells[i].value;
                             inputObj.inputId = cells[i].id;
                             arrayOfInputData.push(inputObj);
 
@@ -572,7 +583,6 @@
                         }
                     }
                     var cellToInputSum = $("thead>tr.maxpoints>th>p#automat-title").empty().append(maxMarksSum + "/100");
-                    //debugger;
                     return maxMarksSum;
                 }
                 function getECTS(finishMark) {
@@ -594,7 +604,7 @@
                     else if (finishMark >= 83 && finishMark <= 89) {
                         return "B";
                     }
-                    else if (finishMark >= 90 && finishMark <= 100) {
+                    else if (finishMark >= 90) {
                         return "A";
                     }
                     return "FX";

@@ -256,54 +256,30 @@ namespace MonitoringSystem.Controllers
                 {
                     case "lab":
                         Mark mark = db.Marks.Find(Convert.ToInt32(dataToSend[i].inputId));                        
-                        mark.TheMark = dataToSend[i].inputvalue;
+                        mark.TheMark = Convert.ToInt16(dataToSend[i].inputvalue);
+                        mark.DateOfProgram = Convert.ToDateTime(dataToSend[i].dateOfProgram);
+                        mark.DateOfReport = Convert.ToDateTime(dataToSend[i].dateOfReport);
                         break;
                     case "hw":
                         HomeWork homework = db.HomeWorks.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        homework.HWPoint = dataToSend[i].inputvalue;
-                        break;
-                    case "labdate":
-                        Mark markdate = db.Marks.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        if (isProgramOrReport(dataToSend[i].inputId, "dateofprogram") != "")
-                        {
-                            if (isProgramOrReport(dataToSend[i].inputId, "dateofprogram") == "dateofprogram")
-                            {
-                                markdate.DateOfProgram = Convert.ToDateTime(dataToSend[i].inputvalue);
-                            }
-                            else if (isProgramOrReport(dataToSend[i].inputId, "dateofreport") == "dateofreport")
-                            {
-                                markdate.DateOfReport = Convert.ToDateTime(dataToSend[i].inputvalue);
-                            }
-                        }
-                        break;
-                    case "hwdate":
-                        HomeWork homeworkdate = db.HomeWorks.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        if (isProgramOrReport(dataToSend[i].inputId, "dateofprogram") != "")
-                        {
-                            if (isProgramOrReport(dataToSend[i].inputId, "dateofprogram") == "dateofprogram")
-                            {
-                                homeworkdate.DateOfProgram = Convert.ToDateTime(dataToSend[i].inputvalue);
-                            }
-                            else if (isProgramOrReport(dataToSend[i].inputId, "dateofreport") == "dateofreport")
-                            {
-                                homeworkdate.DateOfReport = Convert.ToDateTime(dataToSend[i].inputvalue);
-                            }
-                        }
-                        break;
+                        homework.HWPoint = Convert.ToInt16(dataToSend[i].inputvalue);
+                        homework.DateOfProgram = Convert.ToDateTime(dataToSend[i].dateOfProgram);
+                        homework.DateOfReport = Convert.ToDateTime(dataToSend[i].dateOfReport);
+                        break;                    
                     case "module":
                         Module module = db.Modules.Find(Convert.ToInt16(dataToSend[i].inputId));
-                        module.ModulePoint = dataToSend[i].inputvalue;
+                        module.ModulePoint = Convert.ToInt16(dataToSend[i].inputvalue);
                         break;
                     case "maxlab": LabMaxPoint lmp = db.LabMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        lmp.MaxPoint = dataToSend[i].inputvalue;
+                        lmp.MaxPoint = Convert.ToInt16(dataToSend[i].inputvalue);
                         break;
                     case "maxhw":
                         HWMaxPoint hwmp = db.HWMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        hwmp.MaxPoint = dataToSend[i].inputvalue;
+                        hwmp.MaxPoint = Convert.ToInt16(dataToSend[i].inputvalue);
                         break;
                     case "maxmodule":
                         ModuleMaxPoint mmp = db.ModuleMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        mmp.MaxPoint = dataToSend[i].inputvalue;
+                        mmp.MaxPoint = Convert.ToInt16(dataToSend[i].inputvalue);
                         break;
                     default:
                         break;
@@ -316,7 +292,6 @@ namespace MonitoringSystem.Controllers
             {
                 url = url.Substring(0, url.Length - 1);
             }
-
             return RedirectToAction(url);
         }
 
@@ -366,7 +341,11 @@ namespace MonitoringSystem.Controllers
         [JsonProperty("markType")]
         public string markType { get; set; }
         [JsonProperty("inputvalue")]
-        public short inputvalue { get; set; }
+        public string inputvalue { get; set; }
+        [JsonProperty("dateOfReport")]
+        public DateTime dateOfReport { get; set; }
+        [JsonProperty("dateOfProgram")]
+        public DateTime dateOfProgram { get; set; }
    }
 
     public class ModelList
@@ -380,11 +359,27 @@ namespace MonitoringSystem.Controllers
         public List<HWMaxPoint> hwmps { get; set; }
         public List<ModuleMaxPoint> mmps { get; set; }
         public List<AttMaxPoint> atmps { get; set; }
-
-
         public string GroupName { get; set; }
         public string SubjectName { get; set; }
         public int SubjectId { get; set; }
         public int[] attendanceAmount { get; set; }
     }    
 }
+
+
+//case "labdateprogram":
+//    Mark markdateprogram = db.Marks.Find(Convert.ToInt32(dataToSend[i].inputId));
+//    markdateprogram.DateOfProgram = Convert.ToDateTime(dataToSend[i].inputvalue);
+//    break;
+//case "labdatereport":
+//    Mark markdatereport = db.Marks.Find(Convert.ToInt32(dataToSend[i].inputId));
+//    markdatereport.DateOfReport = Convert.ToDateTime(dataToSend[i].inputvalue);
+//    break;
+//case "hwdateprogram":
+//    HomeWork homeworkdateprogram = db.HomeWorks.Find(Convert.ToInt32(dataToSend[i].inputId));
+//    homeworkdateprogram.DateOfProgram = Convert.ToDateTime(dataToSend[i].inputvalue);
+//    break;
+//case "hwdatereport":
+//    HomeWork homeworkdatereport = db.HomeWorks.Find(Convert.ToInt32(dataToSend[i].inputId));
+//    homeworkdatereport.DateOfReport = Convert.ToDateTime(dataToSend[i].inputvalue);
+//    break;
