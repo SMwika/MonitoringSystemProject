@@ -1,0 +1,12 @@
+﻿/*.contanier-groups {
+    margin:auto;
+}*/
+
+
+.target-courses {
+    width: 25%;
+    border: 1px solid black;
+    display: inline-block;
+    height: 200px;
+    margin: 5px;
+}

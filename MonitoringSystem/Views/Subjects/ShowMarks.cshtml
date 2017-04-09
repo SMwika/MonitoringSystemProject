@@ -1,0 +1,609 @@
+﻿@model MonitoringSystem.Controllers.ModelList
+@using MonitoringSystem.Models
+<style type="text/css">
+    table {
+        width: 300px; /* Ширина таблицы */
+        border-collapse: collapse; /* Убираем двойные линии между ячейками */
+    }
+
+    td, th {
+        text-align: center;
+        border: 1px solid black; /* Параметры рамки */
+        margin: 0;
+    }
+
+    th {
+        padding: 3px; /* Поля вокруг содержимого таблицы */
+        background: #b0e0e6; /* Цвет фона */
+    }
+
+    .name {
+        text-align: left;
+    }
+
+    td {
+        padding: 0;
+    }
+    .date-process-hidden{
+        /*visibility:hidden;*/
+        transition: 1s linear all;
+        opacity:0;
+        width:0px;
+        height:0px;
+    }
+    .date-process-normal{
+        opacity:1;
+        transition: 1s linear all;
+        /*visibility:visible;*/
+    }
+    .max-point {
+        width:45px;
+    }
+    .student-point, .student-point-module{
+        width:45px;
+    }
+    .point-hidden{
+       /*visibility:hidden;*/
+       transition: 1s linear all;
+       opacity:0;
+       width:0px;
+       height:0px;
+    }
+    *,*:before,*:after{
+        box-sizing:border-box;
+        margin:0;
+        padding:0;
+        /*transition*/
+        -webkit-transition:.25s ease-in-out;
+           -moz-transition:.25s ease-in-out;
+             -o-transition:.25s ease-in-out;
+                transition:.25s ease-in-out;
+        outline:none;
+        font-family:Helvetica Neue,helvetica,arial,verdana,sans-serif;
+        }
+        h1{
+        margin:75px auto 0 auto;
+        text-align:center;
+        font-weight:200;
+        color:#4b4b4b;
+        }
+        #toggles{
+        width:60px;
+        margin-left:60px;
+        text-align:center;
+        }
+        .ios-toggle,.ios-toggle:active{
+        position:absolute;
+        top:-5000px;
+        height:0;
+        width:0;
+        opacity:0;
+        border:none;
+        outline:none;
+        }
+        .checkbox-label{
+        display:block;
+        position:relative;
+        padding:10px;
+        margin-bottom:20px;
+        font-size:14px;
+        line-height:16px;
+        width:100%;
+        height:36px;
+        /*border-radius*/
+        -webkit-border-radius:18px;
+           -moz-border-radius:18px;
+                border-radius:18px;
+        background:#f8f8f8;
+        cursor:pointer;
+        }
+        .checkbox-label:before{
+        content:'';
+        display:block;
+        position:absolute;
+        z-index:1;
+        line-height:34px;
+        text-indent:40px;
+        height:36px;
+        width:36px;
+        /*border-radius*/
+        -webkit-border-radius:100%;
+           -moz-border-radius:100%;
+                border-radius:100%;
+        top:0px;
+        left:0px;
+        right:auto;
+        background:white;
+        /*box-shadow*/
+        -webkit-box-shadow:0 3px 3px rgba(0,0,0,.2),0 0 0 2px #dddddd;
+           -moz-box-shadow:0 3px 3px rgba(0,0,0,.2),0 0 0 2px #dddddd;
+                box-shadow:0 3px 3px rgba(0,0,0,.2),0 0 0 2px #dddddd;
+        }
+        .checkbox-label:after{
+        content:attr(data-off);
+        display:block;
+        position:absolute;
+        z-index:0;
+        top:0;
+        left:-300px;
+        padding:10px;
+        height:100%;
+        width:300px;
+        text-align:right;
+        color:#bfbfbf;
+        white-space:nowrap;
+        }
+        .ios-toggle:checked + .checkbox-label{
+        /*box-shadow*/
+        -webkit-box-shadow:inset 0 0 0 20px rgba(19,191,17,1),0 0 0 2px rgba(19,191,17,1);
+           -moz-box-shadow:inset 0 0 0 20px rgba(19,191,17,1),0 0 0 2px rgba(19,191,17,1);
+                box-shadow:inset 0 0 0 20px rgba(19,191,17,1),0 0 0 2px rgba(19,191,17,1);
+        }
+        .ios-toggle:checked + .checkbox-label:before{
+        left:calc(100% - 36px);
+        /*box-shadow*/
+        -webkit-box-shadow:0 0 0 2px transparent,0 3px 3px rgba(0,0,0,.3);
+           -moz-box-shadow:0 0 0 2px transparent,0 3px 3px rgba(0,0,0,.3);
+                box-shadow:0 0 0 2px transparent,0 3px 3px rgba(0,0,0,.3);
+        }
+        .ios-toggle:checked + .checkbox-label:after{
+        content:attr(data-on);
+        left:60px;
+        width:36px;
+        }
+        /* BLUE CHECKBOX */
+
+        #checkbox-date-to-mark + .checkbox-label{
+        /*box-shadow*/
+        -webkit-box-shadow:inset 0 0 0 0px #1fc1c8,0 0 0 2px #dddddd;
+           -moz-box-shadow:inset 0 0 0 0px #1fc1c8,0 0 0 2px #dddddd;
+                box-shadow:inset 0 0 0 0px #1fc1c8,0 0 0 2px #dddddd;
+        }
+        #checkbox-date-to-mark:checked + .checkbox-label{
+        /*box-shadow*/
+        -webkit-box-shadow:inset 0 0 0 20px #1fc1c8,0 0 0 2px #1fc1c8;
+           -moz-box-shadow:inset 0 0 0 20px #1fc1c8,0 0 0 2px #1fc1c8;
+                box-shadow:inset 0 0 0 20px #1fc1c8,0 0 0 2px #1fc1c8;
+        }
+        #checkbox-date-to-mark:checked + .checkbox-label:after{
+        color:#1fc1c8;
+        }
+
+</style>
+@{
+    ViewBag.Title = Model.GroupName +", " + Model.SubjectName;
+}
+<h2 class="group-info">@Model.GroupName, @Model.SubjectName</h2>
+<p>
+    <div id="toggles">
+        <input type="checkbox" name="checkbox1" id="checkbox-date-to-mark" class="ios-toggle" checked="checked"/>
+        <label for="checkbox-date-to-mark" class="checkbox-label" data-off="даты" data-on="оценки"></label>
+    </div>
+    <div class="btn-group btn-group-justified">
+        <a href="#" id="btn-addlab" class="btn btn-primary">Добавить ЛР</a>
+        <a href="#" class="btn btn-success">Добавить РР</a>
+        <a href="#" class="btn btn-warning">Добавить Модуль</a>
+        <a href="#" class="btn btn-success">Добавить свободный столбец</a>
+    </div>
+</p>
+<table class="table table-bordered table-hover" border="1" cellspacing="0">
+    @* ВЕРХ ТАБЛИЦЫ *@
+    <thead>
+        <tr id="head-title">
+            <th id="group=name">@Model.GroupName</th>
+            @for (int i = 1; i <= Model.marksToShow.Max(l => l.LabNumber); i++)
+            {
+                string labNumber = "labnumber_" + i.ToString();
+                <th id=@labNumber>ЛР @i</th>
+            }
+            @for (int i = 1; i <= Model.hwToShow.Max(hw => hw.HWNumber); i++)
+            {
+                string hwNumber = "hwnumber_" + i.ToString();
+                <th id=@hwNumber>РР @i</th>
+            }
+            @for (int i = 1; i <= Model.modulesToShow.Max(m => m.ModuleNumber); i++)
+            {
+                string moduleNumber = "modulenumber_" + i.ToString();
+                <th id=@moduleNumber>Mодуль @i</th>
+            }
+            <th>Лекции</th>
+            <th>Сумма</th>
+            <th>Автомат</th>
+        </tr>
+        <tr class="maxpoints">
+            <th><p id="max-points-title">Максмальные баллы</p></th>
+            @for (int i = 0; i < Model.lmps.Max(ln => ln.LabNumber); i++)
+            {
+                string currentMaxLabId = Model.lmps[i].LabMaxPointID.ToString() + "_maxlab";
+                <th class="maxlab">
+                    <input class="max-point" type="number" value=@Model.lmps[i].MaxPoint.ToString() id=@currentMaxLabId>
+                </th>
+            }
+            @for (int i = 0; i < Model.hwmps.Max(ln => ln.HWNumber); i++)
+            {
+                string currentMaxHWId = Model.hwmps[i].HWMaxPointID.ToString() + "_maxhw";
+                <th class="maxhw">
+                    <input class="max-point" type="number" value=@Model.hwmps[i].MaxPoint.ToString() id=@currentMaxHWId>
+                </th>
+            }
+            @for (int i = 0; i < Model.mmps.Max(ln => ln.ModuleNumber); i++)
+            {
+                string currentMaxModuleId = Model.mmps[i].ModuleMaxPointID.ToString() + "_maxmodule";
+                <th class="maxmodule">
+                    <input class="max-point" type="number" value=@Model.mmps[i].MaxPoint.ToString() id=@currentMaxModuleId>
+                </th>
+            }
+            <th><p id="maxlectures">@Model.atmps[0].MaxAmount</p></th>
+            <th><p id="automat-title">100</p></th>
+            <th><p id="ECTS-title">ECTS</p></th>
+        </tr>
+    </thead>
+    <tbody class="tablecontent">
+        @for (int i = 0; i < Model.studentsToShow.Count; i++)
+        {
+            <tr id=@Model.studentsToShow[i].RecordBookNumberID.ToString()>
+                <td class="name">@Model.studentsToShow[i].LastName @Model.studentsToShow[i].FirstName.Substring(0, 1). @Model.studentsToShow[i].MiddleName.Substring(0, 1)</td>
+                @{
+                    //Оценки
+                    List<Mark> marks = Model.marksToShow.Where(m => m.RecordBookNumberID == Model.studentsToShow[i].RecordBookNumberID).ToList();
+                    if (marks != null)
+                    {
+                        for (int j = 0; j < Model.marksToShow.Max(l => l.LabNumber); j++)
+                        {
+                            if (j < marks.Count)
+                            {
+                                if (marks[j] != null)
+                                {
+                                    string currentLabId = marks[j].MarkID.ToString() + "_lab";
+                                    string currentLabDateOfProgram = marks[j].MarkID.ToString() + "_labdateofprogram";
+                                    string currentLabDateOfReport = marks[j].MarkID.ToString() + "_labdateofreport";
+
+                                    <td class="lab">
+                                        <div class="point-normal">
+                                            <input type="number" class="student-point" id=@currentLabId value=@marks[j].TheMark.ToString() />
+                                        </div>
+                                        <div class="date-process-hidden">
+                                            <label for=@currentLabDateOfReport>Отчет: </label>
+                                            <input type="date" class="point-date-of-report" id=@currentLabDateOfReport value=@marks[j].DateOfReport.ToString("yyyy-MM-dd") />
+
+                                            <label for=@currentLabDateOfProgram>Приложение: </label>
+                                            <input type="date" class="point-date-of-program" id=@currentLabDateOfProgram value=@marks[j].DateOfProgram.ToString("yyyy-MM-dd") />
+                                        </div>
+                                    </td>
+                                }
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+                        }
+                    }
+
+                    //домашки
+                    List<HomeWork> hws = Model.hwToShow
+                        .Where(hw => hw.RecordBookNumberID == Model.studentsToShow[i].RecordBookNumberID).ToList();
+                    if (hws != null)
+                    {
+                        for (int j = 0; j < Model.hwToShow.Max(hw => hw.HWNumber); j++)
+                        {
+                            if (j < hws.Count)
+                            {
+                                if (hws[j] != null)
+                                {
+                                    string currentHwId = hws[j].HomeWorkID.ToString() + "_hw";
+                                    string currentHwDateOfProgram = marks[j].MarkID.ToString() + "_hwdateofprogram";
+                                    string currentHwDateOfReport = marks[j].MarkID.ToString() + "_hwdateofreport";
+
+                                    <td class="hw">
+                                        <div class="point-normal">
+                                            <input type="number" class="student-point" id=@currentHwId value=@hws[j].HWPoint.ToString() />
+                                        </div>
+                                        <div class="date-process-hidden">
+                                            <label for=@currentHwDateOfReport>Отчет: </label>
+                                            <input type="date" class="point-date-of-report" id=@currentHwDateOfReport value=@marks[j].DateOfReport.ToString("yyyy-MM-dd") />
+
+                                            <label for=@currentHwDateOfProgram>Приложение: </label>
+                                            <input type="date" class="point-date-of-program" id=@currentHwDateOfProgram value=@marks[j].DateOfProgram.ToString("yyyy-MM-dd") />
+                                        </div>
+                                    </td>
+                                }
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+                        }
+                    }
+
+                    List<Module> modules = Model.modulesToShow
+                         .Where(m => m.RecordBookNumberID == Model.studentsToShow[i].RecordBookNumberID).ToList();
+                    if (modules != null)
+                    {
+                        for (int j = 0; j < Model.modulesToShow.Max(m => m.ModuleNumber); j++)
+                        {
+                            if (j < modules.Count)
+                            {
+                                if (modules[j] != null)
+                                {
+                                    string currentModuleId = modules[j].ModuleID.ToString() + "_module";
+                                    <td class="module">
+                                        <div class="point-module">
+                                            <input type="number" class="student-point-module" id=@currentModuleId value=@modules[j].ModulePoint.ToString() />
+                                        </div>
+                                    </td>
+                                }
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+                        }
+                    }
+                    <td class="lectures">
+                        <p id="studentAttends">@Model.attendanceAmount[i]</p>
+                    </td>
+                    string studentMark = Model.studentsToShow[i].RecordBookNumberID + "_automat";
+                    string studentECTS = Model.studentsToShow[i].RecordBookNumberID + "_ECTS";
+                    <td class="automat">
+                        <p id=@studentMark></p>
+                    </td>
+                    <td class="ECTS">
+                        <p id=@studentECTS></p>
+                    </td>
+                }
+            </tr>
+                    }
+    </tbody>
+</table>
+
+<p>
+    <a href="#" id="btn-savechanges" class="btn btn-primary btn-lg">Сохранить изменения</a>
+</p>
+<p>
+    <a href="#" class="btn btn-primary btn-sm">Править посещаемость</a>
+</p>
+
+@section scripts
+{
+    <script>
+            (function () {
+                var tablecontent = $("tbody.tablecontent").children();
+                var arrayOfInputData = []; //массив объектов, который хранит информацию о каждом инпуте, который должен подвергаться редактированию
+                var recordBookNumbersList = getRecordBookNumbers(); // массив из id студентов группы
+                var maxMarksSum = getMaxMarkSum();
+                handleDataFromCells();
+                getDatesToSend();
+                for (var i = 0; i < arrayOfInputData.length; i++) {
+                    var currentInput;
+                    if (arrayOfInputData[i].rbn === "") {
+                        currentInput = $("thead>tr.maxpoints>th." + arrayOfInputData[i].markType + ">input#" + arrayOfInputData[i].inputId);
+                        currentInput.bind("change", recalculateMaxMarkSumWithStudentsAutomats);
+                    }
+                    else {
+                        currentInput = $("tbody.tablecontent>tr#" + arrayOfInputData[i].rbn + ">td>div>input#" + arrayOfInputData[i].inputId);
+                        currentInput.bind("change", recalculateMaxMarkSumWithStudentsAutomats);
+                    }
+                }
+                $("#btn-savechanges").bind("click", function () {
+                    var url = decodeURI(window.location.href);
+                    var dataToSend = arrayOfInputData;
+                    dataToSend.push({ inputId: url });
+                    dataToSend = JSON.stringify(dataToSend);                    
+                     
+                    $.ajax({
+                        url: "@Url.Action("SaveChanges")",
+                        type: "POST",
+                    data: dataToSend,
+                    dataType: "json",
+                    contentType: "application/json",                        
+                    success: function (data) {
+                        alert("data has been sent to server");
+                        }
+                    });
+                });                
+                $("#checkbox-date-to-mark").bind("change", function () {
+                    var pointInputs;
+                    var dateIpnuts;
+                    if (!$(this).is(":checked"))  //если от "оценок" к "датам"
+                    {
+                        pointInputs = $("tbody.tablecontent .point-normal")
+                            .removeClass("point-normal")
+                            .addClass("point-hidden");
+                        dateIpnuts = $("tbody.tablecontent .date-process-hidden")
+                            .removeClass("date-process-hidden")
+                            .addClass("date-process-normal");
+                    }
+                    else // если от "дат" к "оценкам"
+                    {
+                        dateIpnuts = $("tbody.tablecontent .date-process-normal")
+                            .removeClass("date-process-normal")
+                            .addClass("date-process-hidden");
+                        pointInputs = $("tbody.tablecontent .point-hidden").
+                            removeClass("point-hidden")
+                            .addClass("point-normal");
+                    }                    
+                });
+                function getDatesToSend() {
+                    // получить все интупти с датой, извлечь их значения и упаковать для отправки на сервер
+
+                    var dateReportInputs = $("tbody.tablecontent input.point-date-of-report");
+                    var dateProgramInputs = $("tbody.tablecontent input.point-date-of-program");
+                    for (var i = 0; i < dateReportInputs.length; i++) {
+                        inputObj = new inputObject();
+                        inputObj.inputId = dateReportInputs[i].id;
+                        inputObj.inputvalue = dateReportInputs[i].value;
+                        inputObj.markType = dateReportInputs[i].closest("td").className + "date";
+                        arrayOfInputData.push(inputObj);
+                    }
+                    for (var i = 0; i < dateProgramInputs.length; i++) {
+                        inputObj = new inputObject();
+                        inputObj.inputId = dateProgramInputs[i].id;
+                        inputObj.inputvalue = dateProgramInputs[i].value;
+                        inputObj.markType = dateProgramInputs[i].closest("td").className + "date";
+                        arrayOfInputData.push(inputObj);
+                    }
+                    debugger;
+                }
+                function recalculateMaxMarkSumWithStudentsAutomats() {
+                    var table = $(this).closest("table");
+                    var body = table[0].children[1];
+                    var maxMarksSum = 0;
+                    var maxPointsRow = $("thead>tr.maxpoints>th");
+                    var cells = maxPointsRow.children();
+                    // обработка thead
+                    for (var i = 1; i < cells.length - 2; i++) {
+                        if (cells[i].localName === "input") {
+                            for (var k = 0; k < arrayOfInputData.length; k++) {
+                                if (arrayOfInputData[k].inputId === cells[i].id) {
+                                    arrayOfInputData[k].inputvalue = +cells[i].value;
+                                    maxMarksSum += +cells[i].value;
+                                }
+                            }
+                        }
+                        else if (cells[i].localName === "p") {
+                            maxMarksSum += +cells[i].innerText;
+                        }
+                    }
+                    var cellToInputSum = $("thead>tr.maxpoints>th>p#automat-title").empty().append(maxMarksSum + "/100");
+
+                    //обработка tbody
+                    for (var i = 0; i < body.children.length; i++) {
+                        var currentStudent = $("tbody.tablecontent>tr#" + recordBookNumbersList[i]); // currentStudent - строка таблицы для i-го студента
+                        var studentsTotalPointer = 0; // сумма всех отметок студента
+
+                        // собираем все данные с ячеек строки студента
+                        var rowLength = currentStudent.children().length;
+                        for (var j = 1; j < rowLength - 2; j++) {
+                            var currentCell = currentStudent[0].children[j]; // currentCell - текущий "ребенок" строки - ячейка <td>
+                            if (currentCell.children.length > 0) {
+                                if (currentCell.className != "lectures") {
+                                    if (currentCell.children[0].children[0].localName === "input") {
+                                        for (var k = 0; k < arrayOfInputData.length; k++) {
+                                            if (arrayOfInputData[k].inputId === currentCell.children[0].children[0].id) {
+                                                arrayOfInputData[k].inputvalue = +currentCell.children[0].children[0].value;
+                                                studentsTotalPointer += +currentCell.children[0].children[0].value;
+                                            }
+                                        }
+                                    }
+                                }                                
+                                else /*if (currentCell.children[0].localName == "p") */{
+                                    studentsTotalPointer += +currentCell.children[0].innerText;
+                                }
+                            } else continue;
+                        }
+                        var studentsAutomat = calcAutomat(maxMarksSum, studentsTotalPointer);
+                        var studentsECTS = getECTS(studentsAutomat);
+                        inputData(recordBookNumbersList[i], studentsAutomat, studentsECTS);
+                    }
+                }
+                function handleDataFromCells() {
+                    for (var i = 0; i < recordBookNumbersList.length; i++) {                        
+                        var currentStudent = $("tbody.tablecontent>tr#" + recordBookNumbersList[i]); // currentStudent - строка таблицы для i-го студента
+                        var studentsTotalPointer = 0; // сумма всех отметок студента
+
+                        // собираем все данные с ячеек строки студента
+                        var rowLength = currentStudent.children().length;
+                        for (var j = 1; j < rowLength - 2; j++) {
+                            // currentCell - текущий "ребенок" строки - ячейка <td>
+                            var currentCell = currentStudent[0].children[j];
+                            if (currentCell.children.length > 0) {
+                                if (currentCell.className != "lectures") {
+                                    if (currentCell.children[0].children[0].localName === "input") {
+                                        var inputObj = new inputObject();
+                                        inputObj.rbn = currentStudent[0].id;
+                                        inputObj.markType = currentCell.children[0].className;
+                                        inputObj.inputvalue = +currentCell.children[0].children[0].value;
+                                        inputObj.inputId = currentCell.children[0].children[0].id;
+                                        arrayOfInputData.push(inputObj);
+                                        studentsTotalPointer += +currentCell.children[0].children[0].value;
+                                    }
+                                }                                
+                                else {
+                                    studentsTotalPointer += +currentCell.children[0].innerText;
+                                }
+                            } else continue;
+                        }
+                        var studentsAutomat = calcAutomat(maxMarksSum, studentsTotalPointer);
+                        var studentsECTS = getECTS(studentsAutomat);
+                        inputData(recordBookNumbersList[i], studentsAutomat, studentsECTS);
+                    }
+                }
+                function getRecordBookNumbers() {
+                    var rbnList = [];
+                    for (var i = 0; i < tablecontent.length; i++) {
+                        rbnList.push(tablecontent[i].id);
+                    }
+                    return rbnList;
+                }
+                function inputObject() {
+                    this.rbn = "";
+                    this.markType = "";
+                    this.inputvalue = 0;
+                    this.inputId = "";
+                }
+                function calcAutomat(maxMarksSum, studentTotalPointer) {
+                    // высчитываем итоговый балл студента, исходя из его успевааемости
+
+                    if (maxMarksSum == 100) {
+                        return Math.round(studentTotalPointer);
+                    }
+                    else {
+                        var total = (studentTotalPointer * 100) / maxMarksSum;
+                        return Math.round(total);
+                    }
+                }
+                function getMaxMarkSum() {
+                    var maxMarksSum = 0;
+                    var maxPointsRow = $("thead>tr.maxpoints>th");
+                    var cells = maxPointsRow.children();
+                    for (var i = 1; i < cells.length-2; i++) {
+                        if (cells[i].localName === "input") {
+                            var inputObj = new inputObject();
+                            inputObj.rbn = "";
+                            inputObj.markType = cells[i].closest("th").className;
+                            inputObj.inputvalue = +cells[i].value;
+                            inputObj.inputId = cells[i].id;
+                            arrayOfInputData.push(inputObj);
+
+                            maxMarksSum += +cells[i].value;
+                        }
+                        else if (cells[i].localName === "p") {
+                            maxMarksSum += +cells[i].innerText;
+                        }
+                    }
+                    var cellToInputSum = $("thead>tr.maxpoints>th>p#automat-title").empty().append(maxMarksSum + "/100");
+                    //debugger;
+                    return maxMarksSum;
+                }
+                function getECTS(finishMark) {
+                    if (finishMark >= 0 && finishMark <= 34) {
+                        return "F";
+                    }
+                    else if (finishMark >= 35 && finishMark <= 59) {
+                        return "FX";
+                    }
+                    else if (finishMark >= 60 && finishMark <= 67) {
+                        return "E";
+                    }
+                    else if (finishMark >= 68 && finishMark <= 74) {
+                        return "D";
+                    }
+                    else if (finishMark >= 75 && finishMark <= 82) {
+                        return "C";
+                    }
+                    else if (finishMark >= 83 && finishMark <= 89) {
+                        return "B";
+                    }
+                    else if (finishMark >= 90 && finishMark <= 100) {
+                        return "A";
+                    }
+                    return "FX";
+                }
+                function inputData(id, automat, ECTS) {
+                    var inputToPasteAutomat = $("tbody.tablecontent>tr#" + id + ">td.automat>p#" + id + "_automat").empty().append(automat);
+                    var inputToPasteECTS = $("tbody.tablecontent>tr#" + id + ">td.ECTS>p#" + id + "_ECTS").empty().append(ECTS);
+                }
+            })();
+    </script>
+}
+

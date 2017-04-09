@@ -1,0 +1,82 @@
+﻿@model MonitoringSystem.Models.Mark
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Mark</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.GroupID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.GroupID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject.SubjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject.SubjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Teacher.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Teacher.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LabNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LabNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfReport)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfReport)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfProgram)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfProgram)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TheMark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TheMark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdditionalPoints)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdditionalPoints)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MarkID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

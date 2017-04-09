@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@using (Html.BeginForm("SearchStudent", "Home"))
+{
+    <fieldset>
+        <legend></legend>
+        <div class="form-group has-success">
+            <label class="control-label" for="inputSuccess">Поиск по № зачетки</label>
+            <input type="text" class="form-control" id="inputSuccess" name="RecordBookNumberID">
+        </div>
+       <p>
+            <input type="submit" class="btn btn-success" value="Найти" />
+        </p>
+    </fieldset>
+}
+<hr />
+
+    @* courseNumber/groups *@
+    <p>Список групп</p>
+<table class="table">
+    <tr>
+        <th>
+            <p>1 Курс</p>
+        </th>
+        <th>
+            <p>2 Курс</p>
+        </th>
+        <th>
+            <p>3 курс</p>
+        </th>
+        <th>
+            <p>4 курс</p>
+        </th>
+        <th>
+            <p>5 курс</p>
+        </th>
+        <th>
+            <p>6 курс</p>
+        </th>
+    </tr>
+
+    
+        <tr>
+            <td>
+                @*1 course*@
+                <ul>                    
+                    <li>
+                        @Html.formRefsToSubjects("611п")
+                        @*@Html.RouteLink("611п", "toSubjects", new { controller = "Subjects", action = "ShowSubjectsByCourseNumber", groupId = "611п" })*@
+                    </li>                    
+                    <li>
+                        @Html.formRefsToSubjects("612п")
+                       @* @Html.RouteLink("612п", "toSubjects", new { controller = "Subjects", action = "ShowSubjectsByCourseNumber", groupId = "612п" })*@
+                    </li>
+                </ul>
+
+            </td>
+            <td>
+               @*2 course*@
+                <ul>
+                    <li>@Html.formRefsToSubjects("621п")</li>
+                    <li>@Html.formRefsToSubjects("622п")</li>
+                    <li>@Html.formRefsToSubjects("611пст")</li>
+                </ul>
+            </td>
+            <td>
+                @*3 course*@
+                <ul>
+                    <li>@Html.formRefsToSubjects("631п")</li>
+                    <li>@Html.formRefsToSubjects("632п")</li>
+                    <li>@Html.formRefsToSubjects("621пст")</li>
+                </ul>
+            </td>
+            <td>
+                @*4 course*@
+                <ul>
+                    <li>@Html.formRefsToSubjects("641п")</li>
+                    <li>@Html.formRefsToSubjects("642п")</li>
+                    <li>@Html.formRefsToSubjects("631пст")</li>
+                </ul>
+            </td>
+            <td>
+                @*5 course*@
+            </td>
+            <td>
+                @*6 course*@
+            </td>
+        </tr>
+</table>
