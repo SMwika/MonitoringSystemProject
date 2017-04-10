@@ -11,7 +11,7 @@ namespace MonitoringSystem.Models
         public int SubjectID { get; set; }
         public int LabNumber { get; set; }
 
-        public short MaxPoint { get; set; }
+        public int MaxPoint { get; set; }
 
         public virtual Subject Subject { get; set; }
     }
@@ -22,7 +22,7 @@ namespace MonitoringSystem.Models
         public int SubjectID { get; set; }
         public int HWNumber { get; set; }
 
-        public short MaxPoint { get; set; }
+        public int MaxPoint { get; set; }
 
         public virtual Subject Subject { get; set; }
     }
@@ -33,7 +33,7 @@ namespace MonitoringSystem.Models
         public int SubjectID { get; set; }
         public int ModuleNumber { get; set; }
 
-        public short MaxPoint { get; set; }
+        public int MaxPoint { get; set; }
 
         public virtual Subject Subject { get; set; }
     }
@@ -43,7 +43,7 @@ namespace MonitoringSystem.Models
         public int AttMaxPointID { get; set; }
         public int SubjectID { get; set; }
         
-        public short MaxAmount { get; set; }
+        public int MaxAmount { get; set; }
 
         public virtual Subject Subject { get; set; }
     }

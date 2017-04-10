@@ -16,6 +16,7 @@ namespace MonitoringSystem.Models
             CourseProjectLines = new HashSet<CourseProjectLine>();
             HomeWorks = new HashSet<HomeWork>();
             Modules = new HashSet<Module>();
+            FreeMarkFields = new HashSet<FreeMarkField>();
         }
 
         public int TeacherID { get; set; }
@@ -36,5 +37,6 @@ namespace MonitoringSystem.Models
         public virtual ICollection<CourseProjectLine> CourseProjectLines { get; set; }
         public virtual ICollection<HomeWork> HomeWorks { get; set; }
         public virtual ICollection<Module> Modules { get; set; }
+        public virtual ICollection<FreeMarkField> FreeMarkFields { get; set; }
     }
 }

@@ -194,6 +194,7 @@ namespace MonitoringSystem.Controllers
 
             ///выборка оценок
             marks = db.Marks.Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId).ToList();
+            
 
             //выборка оценок по дз
             HWs = db.HomeWorks
@@ -246,6 +247,87 @@ namespace MonitoringSystem.Controllers
             return View(modelList);
         }       
         
+        public ActionResult AddMarkColumn(string groupId, int? subjectId)
+        {
+            //получаем максимальный номер лабы по предмету
+            //получаем максимальный ИД в таблице
+            // в цикле по студентам каждому студенту присваиваем ноль по лабе с данным номером
+            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+
+            int MaxLabNumber = db.Marks
+                .Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId)
+                .Max(m => m.LabNumber);
+            int MaxLabID = db.Marks.Max(m => m.MarkID);
+            int MaxLabMaxPointID = db.LabMaxPoints.Max(m => m.LabMaxPointID);
+            db.LabMaxPoints.Add(new LabMaxPoint() { LabMaxPointID = MaxLabMaxPointID + 1, LabNumber = MaxLabNumber + 1, MaxPoint = 0, SubjectID = (int)subjectId });
+            foreach (var student in studentsInGroup)
+            {
+                MaxLabID++;
+                student.Marks.Add(new Mark()
+                {
+                    MarkID = MaxLabID,
+                    LabNumber = (MaxLabNumber + 1),
+                    RecordBookNumberID = student.RecordBookNumberID,
+                    DateOfProgram = DateTime.Now,
+                    DateOfReport = DateTime.Now,
+                    SubjectID = Convert.ToInt32(subjectId),
+                    TeacherID = 1,
+                    TheMark = 0
+                });                
+            }
+
+            db.SaveChanges();
+            return RedirectToAction(getUrl(groupId,subjectId));
+        }
+
+        public ActionResult AddHomeWorkColumn(string groupId, int? subjectId)
+        {
+            return RedirectToAction(getUrl(groupId, subjectId));
+        }
+
+        public ActionResult AddModuleColumn(string groupId, int? subjectId)
+        {
+            return RedirectToAction(getUrl(groupId, subjectId));
+        }
+
+        public ActionResult AddFreeFieldColumn(string groupId, int? subjectId)
+        {
+            return RedirectToAction(getUrl(groupId, subjectId));
+        }
+
+        public ActionResult RemoveMarkColumn(string groupId, int? subjectId)
+        {
+            // взять все оценки в группе  по предмету и удалить те, где 
+            // номер лабы = максимальный номер лабы
+            int MaxLabNumber = db.Marks
+                                 .Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId)
+                                 .Max(m => m.LabNumber);
+            int MaxLabMaxPointID = db.LabMaxPoints.Max(m => m.LabMaxPointID);
+
+            db.LabMaxPoints
+              .RemoveRange(db.LabMaxPoints
+                             .Where(m => m.LabMaxPointID == MaxLabMaxPointID)
+               );
+
+
+            IEnumerable<Mark> marks = db.Marks.Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId);
+
+            db.Marks.RemoveRange(db.Marks.Where(m => m.LabNumber == MaxLabNumber));
+
+            db.SaveChanges();
+
+
+
+            return RedirectToAction(getUrl(groupId, subjectId));
+        }
+
+        protected string getUrl(string groupId, int? subjectId)
+        {
+            string url = string.Empty;
+            url = "Showmarks/" + groupId + "/" + subjectId.ToString();
+            return url;
+        }
+
         [HttpPost]
         public ActionResult SaveChanges(List<TemplateToMarks> dataToSend)
         {

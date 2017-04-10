@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace MonitoringSystem.Models
 {
-    [Table("Marks")]
-    public class Mark
-    {   
-        public int MarkID { get; set; }
-
-        [Index("IX_LabNumberRecordBookNumberIDSubjectID", 1, IsUnique =true)]
-        public int LabNumber { get; set; }
+    [Table("FreeMarkFields")]
+    public class FreeMarkField
+    {
+        public int FreeMarkFieldID { get; set; }
+        public string FieldName { get; set; }
+        
+        [Index("IX_FieldsNumberRecordBookNumberIDSubjectID", 1, IsUnique = true)]
+        public short FieldNumber { get; set; }
 
         [Index("IX_LabNumberRecordBookNumberIDSubjectID", 2, IsUnique = true)]
         public string RecordBookNumberID { get; set; }
@@ -22,12 +22,10 @@ namespace MonitoringSystem.Models
         public int SubjectID { get; set; }
 
         public int TeacherID { get; set; }
-        public DateTime DateOfReport { get; set; }
-        public DateTime DateOfProgram { get; set; }
-        public int TheMark { get; set; }
-        
+        public short FieldPoint { get; set; }
+
         public virtual Student Student { get; set; }
         public virtual Subject Subject { get; set; }
-        public virtual Teacher Teacher { get; set; }        
+        public virtual Teacher Teacher { get; set; }
     }
 }

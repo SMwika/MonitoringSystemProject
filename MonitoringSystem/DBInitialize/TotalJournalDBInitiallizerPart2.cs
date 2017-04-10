@@ -160,59 +160,59 @@ namespace MonitoringSystem.Models
         protected void MarkInit(ref TotalJournalContext context)
         {
             //// оценки
-            context.Marks.Add(new Mark() { MarkID = 1, LabNumber = 1, RecordBookNumberID = "436001", AdditionalPoints = 2, TheMark = 5, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
-            context.Marks.Add(new Mark() { MarkID = 2, LabNumber = 2, RecordBookNumberID = "436001", AdditionalPoints = 2, TheMark = 4, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
-            context.Marks.Add(new Mark() { MarkID = 3, LabNumber = 3, RecordBookNumberID = "436001", AdditionalPoints = 3, TheMark = 3, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
-
-            context.Marks.Add(new Mark() { MarkID = 4, LabNumber = 1, RecordBookNumberID = "436001", AdditionalPoints = 1, TheMark = 1, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 5, LabNumber = 2, RecordBookNumberID = "436001", AdditionalPoints = 0, TheMark = 1, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 6, LabNumber = 3, RecordBookNumberID = "436001", AdditionalPoints = 1, TheMark = 1, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-
-            context.Marks.Add(new Mark() { MarkID = 7, LabNumber = 1, RecordBookNumberID = "436001", AdditionalPoints = 2, TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
-            context.Marks.Add(new Mark() { MarkID = 8, LabNumber = 2, RecordBookNumberID = "436001", AdditionalPoints = 2, TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
-            context.Marks.Add(new Mark() { MarkID = 9, LabNumber = 3, RecordBookNumberID = "436001", AdditionalPoints = 3, TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
-
-            context.Marks.Add(new Mark() { MarkID = 10, LabNumber = 1, RecordBookNumberID = "436001", AdditionalPoints = 2, TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 11, LabNumber = 2, RecordBookNumberID = "436001", AdditionalPoints = 0, TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 12, LabNumber = 3, RecordBookNumberID = "436001", AdditionalPoints = 3, TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-
-
-
-
-            context.Marks.Add(new Mark() { MarkID = 13, LabNumber = 1, RecordBookNumberID = "436002", AdditionalPoints = 2, TheMark = 5, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
-            context.Marks.Add(new Mark() { MarkID = 14, LabNumber = 2, RecordBookNumberID = "436002", AdditionalPoints = 1, TheMark = 5, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
-            context.Marks.Add(new Mark() { MarkID = 15, LabNumber = 3, RecordBookNumberID = "436002", AdditionalPoints = 0, TheMark = 5, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
-
-            context.Marks.Add(new Mark() { MarkID = 16, LabNumber = 1, RecordBookNumberID = "436002", AdditionalPoints = 0, TheMark = 4, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 17, LabNumber = 2, RecordBookNumberID = "436002", AdditionalPoints = 1, TheMark = 4, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 18, LabNumber = 3, RecordBookNumberID = "436002", AdditionalPoints = 1, TheMark = 4, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-
-            context.Marks.Add(new Mark() { MarkID = 19, LabNumber = 1, RecordBookNumberID = "436002", AdditionalPoints = 2, TheMark = 3, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
-            context.Marks.Add(new Mark() { MarkID = 20, LabNumber = 2, RecordBookNumberID = "436002", AdditionalPoints = 2, TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
-            context.Marks.Add(new Mark() { MarkID = 21, LabNumber = 3, RecordBookNumberID = "436002", AdditionalPoints = 3, TheMark = 4, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
-
-            context.Marks.Add(new Mark() { MarkID = 22, LabNumber = 1, RecordBookNumberID = "436002", AdditionalPoints = 4, TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 23, LabNumber = 2, RecordBookNumberID = "436002", AdditionalPoints = 0, TheMark = 5, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 24, LabNumber = 3, RecordBookNumberID = "436002", AdditionalPoints = 3, TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-
-
-
-
-            context.Marks.Add(new Mark() { MarkID = 25, LabNumber = 1, RecordBookNumberID = "436003", AdditionalPoints = 2, TheMark = 4, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
-            context.Marks.Add(new Mark() { MarkID = 26, LabNumber = 2, RecordBookNumberID = "436003", AdditionalPoints = 2, TheMark = 4, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
-            context.Marks.Add(new Mark() { MarkID = 27, LabNumber = 3, RecordBookNumberID = "436003", AdditionalPoints = 3, TheMark = 4, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
-
-            context.Marks.Add(new Mark() { MarkID = 28, LabNumber = 1, RecordBookNumberID = "436003", AdditionalPoints = 1, TheMark = 5, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 29, LabNumber = 2, RecordBookNumberID = "436003", AdditionalPoints = 0, TheMark = 3, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 30, LabNumber = 3, RecordBookNumberID = "436003", AdditionalPoints = 1, TheMark = 5, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-
-            context.Marks.Add(new Mark() { MarkID = 31, LabNumber = 1, RecordBookNumberID = "436003", AdditionalPoints = 2, TheMark = 4, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
-            context.Marks.Add(new Mark() { MarkID = 32, LabNumber = 2, RecordBookNumberID = "436003", AdditionalPoints = 2, TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
-            context.Marks.Add(new Mark() { MarkID = 33, LabNumber = 3, RecordBookNumberID = "436003", AdditionalPoints = 3, TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
-
-            context.Marks.Add(new Mark() { MarkID = 34, LabNumber = 1, RecordBookNumberID = "436003", AdditionalPoints = 2, TheMark = 5, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 35, LabNumber = 2, RecordBookNumberID = "436003", AdditionalPoints = 0, TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
-            context.Marks.Add(new Mark() { MarkID = 36, LabNumber = 3, RecordBookNumberID = "436003", AdditionalPoints = 3, TheMark = 3, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 1, LabNumber = 1, RecordBookNumberID = "436001",  TheMark = 5, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
+            context.Marks.Add(new Mark() { MarkID = 2, LabNumber = 2, RecordBookNumberID = "436001",  TheMark = 4, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
+            context.Marks.Add(new Mark() { MarkID = 3, LabNumber = 3, RecordBookNumberID = "436001",  TheMark = 3, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 4, LabNumber = 1, RecordBookNumberID = "436001",  TheMark = 1, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 5, LabNumber = 2, RecordBookNumberID = "436001",  TheMark = 1, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 6, LabNumber = 3, RecordBookNumberID = "436001",  TheMark = 1, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 7, LabNumber = 1, RecordBookNumberID = "436001",  TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
+            context.Marks.Add(new Mark() { MarkID = 8, LabNumber = 2, RecordBookNumberID = "436001",  TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
+            context.Marks.Add(new Mark() { MarkID = 9, LabNumber = 3, RecordBookNumberID = "436001",  TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 10, LabNumber = 1, RecordBookNumberID = "436001", TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 11, LabNumber = 2, RecordBookNumberID = "436001", TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 12, LabNumber = 3, RecordBookNumberID = "436001", TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+                                                                                                      
+                                                                                                      
+                                                                                                      
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 13, LabNumber = 1, RecordBookNumberID = "436002", TheMark = 5, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
+            context.Marks.Add(new Mark() { MarkID = 14, LabNumber = 2, RecordBookNumberID = "436002", TheMark = 5, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
+            context.Marks.Add(new Mark() { MarkID = 15, LabNumber = 3, RecordBookNumberID = "436002", TheMark = 5, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 16, LabNumber = 1, RecordBookNumberID = "436002", TheMark = 4, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 17, LabNumber = 2, RecordBookNumberID = "436002", TheMark = 4, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 18, LabNumber = 3, RecordBookNumberID = "436002", TheMark = 4, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 19, LabNumber = 1, RecordBookNumberID = "436002", TheMark = 3, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
+            context.Marks.Add(new Mark() { MarkID = 20, LabNumber = 2, RecordBookNumberID = "436002", TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
+            context.Marks.Add(new Mark() { MarkID = 21, LabNumber = 3, RecordBookNumberID = "436002", TheMark = 4, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 22, LabNumber = 1, RecordBookNumberID = "436002", TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 23, LabNumber = 2, RecordBookNumberID = "436002", TheMark = 5, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 24, LabNumber = 3, RecordBookNumberID = "436002", TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+                                                                                                      
+                                                                                                      
+                                                                                                      
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 25, LabNumber = 1, RecordBookNumberID = "436003", TheMark = 4, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
+            context.Marks.Add(new Mark() { MarkID = 26, LabNumber = 2, RecordBookNumberID = "436003", TheMark = 4, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
+            context.Marks.Add(new Mark() { MarkID = 27, LabNumber = 3, RecordBookNumberID = "436003", TheMark = 4, SubjectID = 35, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 8 });
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 28, LabNumber = 1, RecordBookNumberID = "436003", TheMark = 5, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 29, LabNumber = 2, RecordBookNumberID = "436003", TheMark = 3, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 30, LabNumber = 3, RecordBookNumberID = "436003", TheMark = 5, SubjectID = 32, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 31, LabNumber = 1, RecordBookNumberID = "436003", TheMark = 4, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
+            context.Marks.Add(new Mark() { MarkID = 32, LabNumber = 2, RecordBookNumberID = "436003", TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
+            context.Marks.Add(new Mark() { MarkID = 33, LabNumber = 3, RecordBookNumberID = "436003", TheMark = 5, SubjectID = 34, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 22 });
+                                                                                                      
+            context.Marks.Add(new Mark() { MarkID = 34, LabNumber = 1, RecordBookNumberID = "436003", TheMark = 5, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 35, LabNumber = 2, RecordBookNumberID = "436003", TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
+            context.Marks.Add(new Mark() { MarkID = 36, LabNumber = 3, RecordBookNumberID = "436003", TheMark = 3, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, TeacherID = 5 });
         }
 
         /// <summary>
@@ -281,20 +281,20 @@ namespace MonitoringSystem.Models
         //студент получил оценку modulepoint по предмету по модулю № modulePoint
         protected void ModuleInit(ref TotalJournalContext context)
         {
-            context.Modules.Add(new Module() { ModuleID=1, SubjectID=35, TeacherID=8, RecordBookNumberID= "436001", ModulePoint = 10, ModuleNumber=1, AdditionalPoints=3, OlympiadPoints=2});
-            context.Modules.Add(new Module() { ModuleID = 2, SubjectID = 32, TeacherID = 5, RecordBookNumberID = "436001", ModulePoint = 8, ModuleNumber = 1, AdditionalPoints = 2, OlympiadPoints = 2 });
-            context.Modules.Add(new Module() { ModuleID = 3, SubjectID = 34, TeacherID = 22, RecordBookNumberID = "436001", ModulePoint = 9, ModuleNumber = 1, AdditionalPoints = 3, OlympiadPoints = 2 });
-            context.Modules.Add(new Module() { ModuleID = 4, SubjectID = 33, TeacherID = 5, RecordBookNumberID = "436001", ModulePoint = 9, ModuleNumber = 1, AdditionalPoints = 5, OlympiadPoints = 2 });
+            context.Modules.Add(new Module() { ModuleID=1, SubjectID=35, TeacherID=8, RecordBookNumberID= "436001", ModulePoint = 10, ModuleNumber=1,         });
+            context.Modules.Add(new Module() { ModuleID = 2, SubjectID = 32, TeacherID = 5, RecordBookNumberID = "436001", ModulePoint = 8, ModuleNumber = 1});
+            context.Modules.Add(new Module() { ModuleID = 3, SubjectID = 34, TeacherID = 22, RecordBookNumberID = "436001", ModulePoint = 9, ModuleNumber = 1 });
+            context.Modules.Add(new Module() { ModuleID = 4, SubjectID = 33, TeacherID = 5, RecordBookNumberID = "436001", ModulePoint = 9, ModuleNumber = 1});
 
-            context.Modules.Add(new Module() { ModuleID = 5, SubjectID = 35, TeacherID = 8, RecordBookNumberID = "436002", ModulePoint = 7, ModuleNumber = 1, AdditionalPoints = 1, OlympiadPoints = 2 });
-            context.Modules.Add(new Module() { ModuleID = 6, SubjectID = 32, TeacherID = 5, RecordBookNumberID = "436002", ModulePoint = 8, ModuleNumber = 1, AdditionalPoints = 3, OlympiadPoints = 2 });
-            context.Modules.Add(new Module() { ModuleID = 7, SubjectID = 34, TeacherID = 22, RecordBookNumberID = "436002", ModulePoint = 9, ModuleNumber = 1, AdditionalPoints = 4, OlympiadPoints = 2 });
-            context.Modules.Add(new Module() { ModuleID = 8, SubjectID = 34, TeacherID = 8, RecordBookNumberID = "436002", ModulePoint = 10, ModuleNumber = 1, AdditionalPoints = 2, OlympiadPoints = 2 });
+            context.Modules.Add(new Module() { ModuleID = 5, SubjectID = 35, TeacherID = 8, RecordBookNumberID = "436002", ModulePoint = 7, ModuleNumber = 1});
+            context.Modules.Add(new Module() { ModuleID = 6, SubjectID = 32, TeacherID = 5, RecordBookNumberID = "436002", ModulePoint = 8, ModuleNumber = 1});
+            context.Modules.Add(new Module() { ModuleID = 7, SubjectID = 34, TeacherID = 22, RecordBookNumberID = "436002", ModulePoint = 9, ModuleNumber = 1 });
+            context.Modules.Add(new Module() { ModuleID = 8, SubjectID = 34, TeacherID = 8, RecordBookNumberID = "436002", ModulePoint = 10, ModuleNumber = 1 });
 
-            context.Modules.Add(new Module() { ModuleID = 9, SubjectID = 35, TeacherID = 8, RecordBookNumberID = "436003", ModulePoint = 10, ModuleNumber = 1, AdditionalPoints = 3, OlympiadPoints = 2 });
-            context.Modules.Add(new Module() { ModuleID = 10, SubjectID = 32, TeacherID = 5, RecordBookNumberID = "436003", ModulePoint = 8, ModuleNumber = 1, AdditionalPoints = 1, OlympiadPoints = 2 });
-            context.Modules.Add(new Module() { ModuleID = 11, SubjectID = 34, TeacherID = 22, RecordBookNumberID = "436003", ModulePoint = 10, ModuleNumber = 1, AdditionalPoints = 1, OlympiadPoints = 2 });
-            context.Modules.Add(new Module() { ModuleID = 12, SubjectID = 34, TeacherID = 8, RecordBookNumberID = "436003", ModulePoint = 9, ModuleNumber = 1, AdditionalPoints = 3, OlympiadPoints = 2 });
+            context.Modules.Add(new Module() { ModuleID = 9, SubjectID = 35, TeacherID = 8, RecordBookNumberID = "436003", ModulePoint = 10, ModuleNumber = 1 });
+            context.Modules.Add(new Module() { ModuleID = 10, SubjectID = 32, TeacherID = 5, RecordBookNumberID = "436003", ModulePoint = 8, ModuleNumber = 1 });
+            context.Modules.Add(new Module() { ModuleID = 11, SubjectID = 34, TeacherID = 22, RecordBookNumberID = "436003", ModulePoint = 10, ModuleNumber = 1 });
+            context.Modules.Add(new Module() { ModuleID = 12, SubjectID = 34, TeacherID = 8, RecordBookNumberID = "436003", ModulePoint = 9, ModuleNumber = 1});
         }
 
         //тот же самый предмет, только курсовой . в скобках лучше дописывать КП

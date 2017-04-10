@@ -140,6 +140,7 @@
     <Compile Include="Helpers\TagBuilderhelper.cs" />
     <Compile Include="Models\Entities\Attendance.cs" />
     <Compile Include="Models\Entities\CourseProjectLine.cs" />
+    <Compile Include="Models\Entities\FreeMarkField.cs" />
     <Compile Include="Models\Entities\Group.cs" />
     <Compile Include="Models\Entities\HomeWork.cs" />
     <Compile Include="Models\Entities\MaxPoints.cs" />

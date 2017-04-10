@@ -11,20 +11,17 @@ namespace MonitoringSystem.Models
     {
         public int ModuleID { get; set; }
 
-        [Index("IX_RecordBookNumberIDHomeWorkIDModuleModulePoint", 1, IsUnique = true)]
+        [Index("IX_RecordBookNumberIDModuleIDModuleModulePoint", 1, IsUnique = true)]
         public string RecordBookNumberID { get; set; }
 
-        [Index("IX_RecordBookNumberIDHomeWorkIDModuleModulePoint", 2, IsUnique = true)]
+        [Index("IX_RecordBookNumberIDModuleIDModuleModulePoint", 2, IsUnique = true)]
         public int SubjectID { get; set; }
 
-        [Index("IX_RecordBookNumberIDHomeWorkIDModuleModulePoint", 3, IsUnique = true)]
-        public short? ModulePoint { get; set; }
+        [Index("IX_RecordBookNumberIDModuleIDModuleModulePoint", 3, IsUnique = true)]
+        public int ModulePoint { get; set; }
 
-        [Index("IX_RecordBookNumberIDHomeWorkIDModuleModulePoint", 4, IsUnique = true)]
-        public short ModuleNumber { get; set; }
-
-        public short? OlympiadPoints { get; set; }
-        public short? AdditionalPoints { get; set; }
+        [Index("IX_RecordBookNumberIDModuleIDModuleModulePoint", 4, IsUnique = true)]
+        public int ModuleNumber { get; set; }
 
         public int TeacherID { get; set; }
 

@@ -11,16 +11,16 @@ namespace MonitoringSystem.Models
     {
         public int HomeWorkID { get; set; }
 
-        [Index("IX_RecordBookNumberIDSubjectIDModule1Module2Module3Module4", 1, IsUnique = true)]
+        [Index("IX_RecordBookNumberIDSubjectIDHomeWorkIDHWNumber", 1, IsUnique = true)]
         public string RecordBookNumberID { get; set; }
 
-        [Index("IX_RecordBookNumberIDSubjectIDModule1Module2Module3Module4", 2, IsUnique = true)]
+        [Index("IX_RecordBookNumberIDSubjectIDHomeWorkIDHWNumber", 2, IsUnique = true)]
         public int SubjectID { get; set; }
 
-        [Index("IX_RecordBookNumberIDSubjectIDModule1Module2Module3Module4", 3, IsUnique = true)]
-        public short? HWPoint { get; set; }
+        [Index("IX_RecordBookNumberIDSubjectIDHomeWorkIDHWNumber", 3, IsUnique = true)]
+        public int HWPoint { get; set; }
 
-        [Index("IX_RecordBookNumberIDSubjectIDModule1Module2Module3Module4", 4, IsUnique = true)]
+        [Index("IX_RecordBookNumberIDSubjectIDHomeWorkIDHWNumber", 4, IsUnique = true)]
         public int HWNumber { get; set; }
 
         public DateTime DateOfReport { get; set; }

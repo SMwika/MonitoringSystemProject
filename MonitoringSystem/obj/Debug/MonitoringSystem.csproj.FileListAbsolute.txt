@@ -97,5 +97,6 @@ F:\MonitoringSystemProject\MonitoringSystem\bin\ru\System.Web.Razor.resources.dl
 F:\MonitoringSystemProject\MonitoringSystem\bin\ru\System.Web.WebPages.resources.dll
 F:\MonitoringSystemProject\MonitoringSystem\bin\ru\System.Web.WebPages.Deployment.resources.dll
 F:\MonitoringSystemProject\MonitoringSystem\bin\ru\System.Web.WebPages.Razor.resources.dll
+F:\MonitoringSystemProject\MonitoringSystem\obj\Debug\MonitoringSystem.csprojResolveAssemblyReference.cache
 F:\MonitoringSystemProject\MonitoringSystem\obj\Debug\MonitoringSystem.dll
 F:\MonitoringSystemProject\MonitoringSystem\obj\Debug\MonitoringSystem.pdb
