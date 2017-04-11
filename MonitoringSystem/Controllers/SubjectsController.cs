@@ -184,10 +184,12 @@ namespace MonitoringSystem.Controllers
             List<HomeWork> HWs = new List<HomeWork>();
             List<Module> modules = new List<Module>();
             List<Attendance> atts = new List<Attendance>();
-            List<LabMaxPoint> lmp = new List<LabMaxPoint>();
-            List<HWMaxPoint> hwmp = new List<HWMaxPoint>();
-            List<ModuleMaxPoint> mmp = new List<ModuleMaxPoint>();
-            List<AttMaxPoint> atmp = new List<AttMaxPoint>();
+            List<LabMaxPoint> labMaxPoint = new List<LabMaxPoint>();
+            List<HWMaxPoint> hwMaxPoint = new List<HWMaxPoint>();
+            List<ModuleMaxPoint> moduleMaxPoint = new List<ModuleMaxPoint>();
+            List<AttMaxPoint> attendanceMaxPoint = new List<AttMaxPoint>();
+            List<FreeMarkField> freeMarkFields = new List<FreeMarkField>();
+            List<FreeMarkFieldMaxPoint> freeMarkFieldMaxPoint = new List<FreeMarkFieldMaxPoint>();
 
             //выборка студентов
             students = db.Students.Where(s => s.GroupID == groupId).ToList();
@@ -204,15 +206,20 @@ namespace MonitoringSystem.Controllers
             modules = db.Modules
                 .Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId).ToList();
 
+            //выбрать  оценки по доп.столбцам
+            freeMarkFields = db.FreeMarkFields
+                .Where(point => point.Subject.SubjectID == subjectId && point.Student.GroupID == groupId).ToList();
+
             //выбрать посещаемость
             atts = db.Attendances
                 .Where(at => at.Subject.SubjectID == subjectId && at.Student.GroupID == groupId).ToList();
 
-            lmp = db.LabMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
-            hwmp = db.HWMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
-            mmp = db.ModuleMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
-            atmp = db.AttMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
             
+            labMaxPoint = db.LabMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
+            hwMaxPoint = db.HWMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
+            moduleMaxPoint = db.ModuleMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
+            attendanceMaxPoint = db.AttMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
+            freeMarkFieldMaxPoint = db.FreeMarkFieldMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
 
             int[] attendances = new int[students.Count];
             for (int i = 0; i < students.Count; i++)
@@ -240,10 +247,12 @@ namespace MonitoringSystem.Controllers
             modelList.hwToShow = HWs;
             modelList.modulesToShow = modules;
             modelList.attendanceAmount = attendances;
-            modelList.lmps = lmp;
-            modelList.hwmps = hwmp;
-            modelList.mmps = mmp;
-            modelList.atmps = atmp;
+            modelList.labMaxPoints = labMaxPoint;
+            modelList.hwMaxPoints = hwMaxPoint;
+            modelList.moduleMaxPoints = moduleMaxPoint;
+            modelList.attendanceMaxPoints = attendanceMaxPoint;
+            modelList.freeMarkFields = freeMarkFields;
+            modelList.freeMarkFieldMaxPoints = freeMarkFieldMaxPoint;
             return View(modelList);
         }       
         
@@ -282,16 +291,88 @@ namespace MonitoringSystem.Controllers
 
         public ActionResult AddHomeWorkColumn(string groupId, int? subjectId)
         {
+            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+
+            int MaxHWNumber = db.HomeWorks
+                .Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId)
+                .Max(m => m.HWNumber);
+            int MaxHWID = db.HomeWorks.Max(m => m.HomeWorkID);
+            int MaxModuleMaxPointID = db.HWMaxPoints.Max(m => m.HWMaxPointID);
+            db.HWMaxPoints.Add(new HWMaxPoint() { HWMaxPointID = MaxModuleMaxPointID + 1, HWNumber = MaxHWNumber + 1, MaxPoint = 0, SubjectID = (int)subjectId });
+            foreach (var student in studentsInGroup)
+            {
+                MaxHWID++;
+                student.Homeworks.Add(new HomeWork()
+                {
+                    HomeWorkID = MaxHWID,
+                    HWNumber = (MaxHWNumber + 1),
+                    RecordBookNumberID = student.RecordBookNumberID,
+                    DateOfProgram = DateTime.Now,
+                    DateOfReport = DateTime.Now,
+                    SubjectID = Convert.ToInt32(subjectId),
+                    TeacherID = 1,
+                    HWPoint = 0
+                });
+            }
+
+            db.SaveChanges();
             return RedirectToAction(getUrl(groupId, subjectId));
         }
 
         public ActionResult AddModuleColumn(string groupId, int? subjectId)
         {
+            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+
+            int MaxModuleNumber = db.Modules
+                .Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId)
+                .Max(m => m.ModuleNumber);
+            int MaxModuleID = db.Modules.Max(m => m.ModuleID);
+            int MaxModuleMaxPointID = db.HWMaxPoints.Max(m => m.HWMaxPointID);
+            db.ModuleMaxPoints.Add(new ModuleMaxPoint() { ModuleMaxPointID = MaxModuleMaxPointID + 1, ModuleNumber = MaxModuleNumber + 1, MaxPoint = 0, SubjectID = (int)subjectId });
+            foreach (var student in studentsInGroup)
+            {
+                MaxModuleID++;
+                student.Modules.Add(new Module()
+                {
+                    ModuleID = MaxModuleID,
+                    ModuleNumber = (MaxModuleNumber + 1),
+                    RecordBookNumberID = student.RecordBookNumberID,
+                    SubjectID = Convert.ToInt32(subjectId),
+                    TeacherID = 1,
+                    ModulePoint = 0
+                });
+            }
+
+            db.SaveChanges();
             return RedirectToAction(getUrl(groupId, subjectId));
         }
 
         public ActionResult AddFreeFieldColumn(string groupId, int? subjectId)
         {
+            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+
+            int MaxFreeMarkFieldNumber = db.FreeMarkFields
+                .Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId)
+                .Max(m => m.FieldNumber);
+            int MaxFreeMaxMarkID = db.FreeMarkFields.Max(m => m.FreeMarkFieldID);
+            int MaxFreeMaxMarkMaxPointID = db.FreeMarkFieldMaxPoints.Max(m => m.FreeMarkFieldMaxPointID);
+            db.FreeMarkFieldMaxPoints.Add(new FreeMarkFieldMaxPoint() { FreeMarkFieldMaxPointID = MaxFreeMaxMarkMaxPointID + 1, FieldNumber = MaxFreeMarkFieldNumber + 1, MaxPoint = 0, FieldName = "Новый столбец" , SubjectID = (int)subjectId });
+            foreach (var student in studentsInGroup)
+            {
+                MaxFreeMaxMarkID++;
+                student.FreeMarkFields.Add(new FreeMarkField()
+                {
+                    FreeMarkFieldID = MaxFreeMaxMarkID,
+                    FieldNumber = (MaxFreeMarkFieldNumber + 1),
+                    RecordBookNumberID = student.RecordBookNumberID,
+                    SubjectID = Convert.ToInt32(subjectId),
+                    TeacherID = 1,
+                    FieldPoint = 0,
+                    FieldName = "Новый столбец"
+                });
+            }
+
+            db.SaveChanges();
             return RedirectToAction(getUrl(groupId, subjectId));
         }
 
@@ -313,11 +394,64 @@ namespace MonitoringSystem.Controllers
             IEnumerable<Mark> marks = db.Marks.Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId);
 
             db.Marks.RemoveRange(db.Marks.Where(m => m.LabNumber == MaxLabNumber));
-
             db.SaveChanges();
+            return RedirectToAction(getUrl(groupId, subjectId));
+        }
 
+        public ActionResult RemoveHomeWorkColumn(string groupId, int? subjectId)
+        {
+            // взять все оценки в группе  по предмету и удалить те, где 
+            // номер лабы = максимальный номер лабы
+            int MaxHWNumber = db.HomeWorks
+                                 .Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId)
+                                 .Max(m => m.HWNumber);
+            int MaxHWMaxPointID = db.HWMaxPoints.Max(m => m.HWMaxPointID);
 
+            db.HWMaxPoints
+              .RemoveRange(db.HWMaxPoints
+                             .Where(m => m.HWMaxPointID == MaxHWMaxPointID)
+               );
 
+            db.HomeWorks.RemoveRange(db.HomeWorks.Where(m => m.HWNumber == MaxHWNumber));
+            db.SaveChanges();
+            return RedirectToAction(getUrl(groupId, subjectId));
+        }
+
+        public ActionResult RemoveModuleColumn(string groupId, int? subjectId)
+        {
+            // взять все оценки в группе  по предмету и удалить те, где 
+            // номер лабы = максимальный номер лабы
+            int MaxModuleNumber = db.Modules
+                                 .Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId)
+                                 .Max(m => m.ModuleNumber);
+            int MaxModuleMaxPointID = db.ModuleMaxPoints.Max(m => m.ModuleMaxPointID);
+
+            db.ModuleMaxPoints
+              .RemoveRange(db.ModuleMaxPoints
+                             .Where(m => m.ModuleMaxPointID == MaxModuleMaxPointID)
+               );
+
+            db.Modules.RemoveRange(db.Modules.Where(m => m.ModuleNumber == MaxModuleNumber));
+            db.SaveChanges();
+            return RedirectToAction(getUrl(groupId, subjectId));
+        }
+
+        public ActionResult RemoveFreeFieldColumn(string groupId, int? subjectId)
+        {
+            // взять все оценки в группе  по предмету и удалить те, где 
+            // номер лабы = максимальный номер лабы
+            int MaxFreeFieldNumber = db.FreeMarkFields
+                                 .Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId)
+                                 .Max(m => m.FieldNumber);
+            int MaxFreeFieldMaxPointID = db.FreeMarkFieldMaxPoints.Max(m => m.FreeMarkFieldMaxPointID);
+
+            db.FreeMarkFieldMaxPoints
+              .RemoveRange(db.FreeMarkFieldMaxPoints
+                             .Where(m => m.FreeMarkFieldMaxPointID == MaxFreeFieldMaxPointID)
+               );
+
+            db.FreeMarkFields.RemoveRange(db.FreeMarkFields.Where(m => m.FieldNumber == MaxFreeFieldNumber));
+            db.SaveChanges();
             return RedirectToAction(getUrl(groupId, subjectId));
         }
 
@@ -338,30 +472,38 @@ namespace MonitoringSystem.Controllers
                 {
                     case "lab":
                         Mark mark = db.Marks.Find(Convert.ToInt32(dataToSend[i].inputId));                        
-                        mark.TheMark = Convert.ToInt16(dataToSend[i].inputvalue);
+                        mark.TheMark = Convert.ToInt32(dataToSend[i].inputvalue);
                         mark.DateOfProgram = Convert.ToDateTime(dataToSend[i].dateOfProgram);
                         mark.DateOfReport = Convert.ToDateTime(dataToSend[i].dateOfReport);
                         break;
                     case "hw":
                         HomeWork homework = db.HomeWorks.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        homework.HWPoint = Convert.ToInt16(dataToSend[i].inputvalue);
+                        homework.HWPoint = Convert.ToInt32(dataToSend[i].inputvalue);
                         homework.DateOfProgram = Convert.ToDateTime(dataToSend[i].dateOfProgram);
                         homework.DateOfReport = Convert.ToDateTime(dataToSend[i].dateOfReport);
                         break;                    
                     case "module":
-                        Module module = db.Modules.Find(Convert.ToInt16(dataToSend[i].inputId));
-                        module.ModulePoint = Convert.ToInt16(dataToSend[i].inputvalue);
+                        Module module = db.Modules.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        module.ModulePoint = Convert.ToInt32(dataToSend[i].inputvalue);
                         break;
-                    case "maxlab": LabMaxPoint lmp = db.LabMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        lmp.MaxPoint = Convert.ToInt16(dataToSend[i].inputvalue);
+                    case "freemarkfield":
+                        FreeMarkField freeMarkField = db.FreeMarkFields.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        freeMarkField.FieldPoint = Convert.ToInt32(dataToSend[i].inputvalue);
+                        break;
+                    case "maxlab": LabMaxPoint labMaxPoint = db.LabMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        labMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
                         break;
                     case "maxhw":
-                        HWMaxPoint hwmp = db.HWMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        hwmp.MaxPoint = Convert.ToInt16(dataToSend[i].inputvalue);
+                        HWMaxPoint hwMaxPoint = db.HWMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        hwMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
                         break;
                     case "maxmodule":
-                        ModuleMaxPoint mmp = db.ModuleMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        mmp.MaxPoint = Convert.ToInt16(dataToSend[i].inputvalue);
+                        ModuleMaxPoint moduleMaxPoint = db.ModuleMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        moduleMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
+                        break;
+                    case "maxfreefieldpoint":
+                        FreeMarkFieldMaxPoint freeFieldMaxPoint = db.FreeMarkFieldMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        freeFieldMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
                         break;
                     default:
                         break;
@@ -437,10 +579,12 @@ namespace MonitoringSystem.Controllers
         public List<Mark> marksToShow { get; set;}
         public List<Module> modulesToShow { get; set; }
         public List<HomeWork> hwToShow { get; set; }
-        public List<LabMaxPoint> lmps { get; set; }
-        public List<HWMaxPoint> hwmps { get; set; }
-        public List<ModuleMaxPoint> mmps { get; set; }
-        public List<AttMaxPoint> atmps { get; set; }
+        public List<LabMaxPoint> labMaxPoints { get; set; }
+        public List<HWMaxPoint> hwMaxPoints { get; set; }
+        public List<ModuleMaxPoint> moduleMaxPoints { get; set; }
+        public List<AttMaxPoint> attendanceMaxPoints { get; set; }
+        public List<FreeMarkField> freeMarkFields { get; set; }
+        public List<FreeMarkFieldMaxPoint> freeMarkFieldMaxPoints { get; set; }
         public string GroupName { get; set; }
         public string SubjectName { get; set; }
         public int SubjectId { get; set; }

@@ -41,10 +41,20 @@ namespace MonitoringSystem.Models
     public class AttMaxPoint
     {
         public int AttMaxPointID { get; set; }
-        public int SubjectID { get; set; }
-        
+        public int SubjectID { get; set; }        
         public int MaxAmount { get; set; }
 
+        public virtual Subject Subject { get; set; }
+    }
+
+    public class FreeMarkFieldMaxPoint
+    {
+        public int FreeMarkFieldMaxPointID { get; set; }
+        public int FieldNumber { get; set; }
+        public string FieldName { get; set; }
+        public int MaxPoint { get; set; }
+
+        public int SubjectID { get; set; }
         public virtual Subject Subject { get; set; }
     }
 

@@ -21,6 +21,7 @@ namespace MonitoringSystem.Models
             HWMaxPoints = new HashSet<HWMaxPoint>();
             AttsMaxPoints = new HashSet<AttMaxPoint>();
             FreeMarkFields = new HashSet<FreeMarkField>();
+            FreeMarkFieldMaxPoints = new HashSet<FreeMarkFieldMaxPoint>();
         }
      
         public int SubjectID { get; set; }
@@ -43,6 +44,7 @@ namespace MonitoringSystem.Models
         public virtual ICollection<ModuleMaxPoint> ModuleMaxPoints { get; set; }
         public virtual ICollection<AttMaxPoint> AttsMaxPoints { get; set; }
         public virtual ICollection<FreeMarkField> FreeMarkFields { get; set; }
+        public virtual ICollection <FreeMarkFieldMaxPoint> FreeMarkFieldMaxPoints { get; set; }
     }
 
     public enum SubjectType

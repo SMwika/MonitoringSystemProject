@@ -13,16 +13,16 @@ namespace MonitoringSystem.Models
         public string FieldName { get; set; }
         
         [Index("IX_FieldsNumberRecordBookNumberIDSubjectID", 1, IsUnique = true)]
-        public short FieldNumber { get; set; }
+        public int FieldNumber { get; set; }
 
-        [Index("IX_LabNumberRecordBookNumberIDSubjectID", 2, IsUnique = true)]
+        [Index("IX_FieldsNumberRecordBookNumberIDSubjectID", 2, IsUnique = true)]
         public string RecordBookNumberID { get; set; }
 
-        [Index("IX_LabNumberRecordBookNumberIDSubjectID", 3, IsUnique = true)]
+        [Index("IX_FieldsNumberRecordBookNumberIDSubjectID", 3, IsUnique = true)]
         public int SubjectID { get; set; }
 
         public int TeacherID { get; set; }
-        public short FieldPoint { get; set; }
+        public int FieldPoint { get; set; }
 
         public virtual Student Student { get; set; }
         public virtual Subject Subject { get; set; }

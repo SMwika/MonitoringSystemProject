@@ -61,7 +61,7 @@
         width: 45px;
     }
 
-    .student-point, .student-point-module {
+    .student-point, .student-point-module, .student-point-freemarkfield {
         width: 45px;
     }
 
@@ -213,7 +213,6 @@
     ViewBag.Title = Model.GroupName + ", " + Model.SubjectName;
 }
 <h2 class="group-info">@Model.GroupName, @Model.SubjectName</h2>
-    
     <div id="toggles">
         <input type="checkbox" name="checkbox1" id="checkbox-date-to-mark" class="ios-toggle" checked="checked" />
         <label for="checkbox-date-to-mark" class="checkbox-label" data-off="даты" data-on="оценки"></label>
@@ -251,7 +250,7 @@
 				<li>@Html.RouteLink("Добавить свободный столбец", "toMarks", new
                {
                    controller = "Subjects",
-                   action = "AddMarkColumn",
+                   action = "AddFreeFieldColumn",
                    groupId = Model.GroupName,
                    subjectId = Model.SubjectId
                })
@@ -274,34 +273,34 @@
                     subjectId = Model.SubjectId
                 })
                 </li>
-				<li>@Html.RouteLink("Добавить РР", "toMarks", new
+				<li>@Html.RouteLink("Удалить Столбец РР", "toMarks", new
                 {
                     controller = "Subjects",
-                    action = "AddHomeWorkColumn",
+                    action = "RemoveHomeWorkColumn",
                     groupId = Model.GroupName,
                     subjectId = Model.SubjectId
                 })
                  </li>
-                <li>@Html.RouteLink("Добавить Модуль", "toMarks", new
+                <li>@Html.RouteLink("Удалить столбец Модуль", "toMarks", new
                {
                    controller = "Subjects",
-                   action = "AddModuleColumn",
+                   action = "RemoveModuleColumn",
                    groupId = Model.GroupName,
                    subjectId = Model.SubjectId
                })
                 </li>
-				<li>@Html.RouteLink("Добавить свободный столбец", "toMarks", new
+				<li>@Html.RouteLink("Удалить свободный столбец", "toMarks", new
                {
                    controller = "Subjects",
-                   action = "AddMarkColumn",
+                   action = "RemoveFreeFieldColumn",
                    groupId = Model.GroupName,
-                   subjectId = Model.SubjectId
+                   subjectId = Model.SubjectId,
                })
                  </li>
 			</ul>
 		</div>
 	</div>
-
+ 
 
 <table class="table table-bordered table-hover" border="1" cellspacing="0">
     @* ВЕРХ ТАБЛИЦЫ *@
@@ -311,46 +310,62 @@
             @for (int i = 1; i <= Model.marksToShow.Max(l => l.LabNumber); i++)
             {
                 string labNumber = "labnumber_" + i.ToString();
-            <th id=@labNumber>ЛР @i</th>
+                <th id=@labNumber>ЛР @i</th>
             }
             @for (int i = 1; i <= Model.hwToShow.Max(hw => hw.HWNumber); i++)
             {
                 string hwNumber = "hwnumber_" + i.ToString();
-            <th id=@hwNumber>РР @i</th>
+                <th id=@hwNumber>РР @i</th>
             }
             @for (int i = 1; i <= Model.modulesToShow.Max(m => m.ModuleNumber); i++)
             {
                 string moduleNumber = "modulenumber_" + i.ToString();
-            <th id=@moduleNumber>Mодуль @i</th>
+                <th id=@moduleNumber>Mодуль @i</th>
+            }
+            @for (int i = 0; i < Model.freeMarkFieldMaxPoints.Max(m => m.FieldNumber); i++)
+            {
+                string freeFieldNumber = "freefieldnumber_" + i.ToString();
+                <th id=@freeFieldNumber>
+                    @*<input type="text" value= class="freefieldname">*@                
+                    @Model.freeMarkFieldMaxPoints[i].FieldName.ToString()
+                </th>
             }
             <th>Лекции</th>
             <th>Сумма</th>
             <th>Автомат</th>
         </tr>
+
         <tr class="maxpoints">
             <th><p id="max-points-title">Максмальные баллы</p></th>
-            @for (int i = 0; i < Model.lmps.Max(ln => ln.LabNumber); i++)
+            @for (int i = 0; i < Model.labMaxPoints.Max(ln => ln.LabNumber); i++)
             {
-                string currentMaxLabId = Model.lmps[i].LabMaxPointID.ToString() + "_maxlab";
+                string currentMaxLabId = Model.labMaxPoints[i].LabMaxPointID.ToString() + "_maxlab";
             <th class="maxlab">
-                <input class="max-point" type="number" value=@Model.lmps[i].MaxPoint.ToString() id=@currentMaxLabId>
+                <input class="max-point" type="number" value=@Model.labMaxPoints[i].MaxPoint.ToString() id=@currentMaxLabId>
             </th>
             }
-            @for (int i = 0; i < Model.hwmps.Max(ln => ln.HWNumber); i++)
+            @for (int i = 0; i < Model.hwMaxPoints.Max(ln => ln.HWNumber); i++)
             {
-                string currentMaxHWId = Model.hwmps[i].HWMaxPointID.ToString() + "_maxhw";
+                string currentMaxHWId = Model.hwMaxPoints[i].HWMaxPointID.ToString() + "_maxhw";
             <th class="maxhw">
-                <input class="max-point" type="number" value=@Model.hwmps[i].MaxPoint.ToString() id=@currentMaxHWId>
+                <input class="max-point" type="number" value=@Model.hwMaxPoints[i].MaxPoint.ToString() id=@currentMaxHWId>
             </th>
             }
-            @for (int i = 0; i < Model.mmps.Max(ln => ln.ModuleNumber); i++)
+            @for (int i = 0; i < Model.moduleMaxPoints.Max(ln => ln.ModuleNumber); i++)
             {
-                string currentMaxModuleId = Model.mmps[i].ModuleMaxPointID.ToString() + "_maxmodule";
+                string currentMaxModuleId = Model.moduleMaxPoints[i].ModuleMaxPointID.ToString() + "_maxmodule";
             <th class="maxmodule">
-                <input class="max-point" type="number" value=@Model.mmps[i].MaxPoint.ToString() id=@currentMaxModuleId>
+                <input class="max-point" type="number" value=@Model.moduleMaxPoints[i].MaxPoint.ToString() id=@currentMaxModuleId>
             </th>
             }
-            <th><p id="maxlectures">@Model.atmps[0].MaxAmount</p></th>
+            @for (int i = 0; i < Model.freeMarkFieldMaxPoints.Max(fr => fr.FieldNumber); i++)
+            {
+                string currentMaxFreeFieldPoint = Model.freeMarkFieldMaxPoints[i].FreeMarkFieldMaxPointID.ToString() + "_maxfreefieldpoint";
+                <th class="maxfreefieldpoint">
+                    <input class="max-point" type="number" value=@Model.freeMarkFieldMaxPoints[i].MaxPoint.ToString() id=@currentMaxFreeFieldPoint>
+                </th>
+            }
+            <th><p id="maxlectures">@Model.attendanceMaxPoints[0].MaxAmount</p></th>
             <th><p id="automat-title">100</p></th>
             <th><p id="ECTS-title">ECTS</p></th>
         </tr>
@@ -454,6 +469,32 @@
                             }
                         }
                     }
+
+                    List<FreeMarkField>
+                        freeMarkFields = Model.freeMarkFields
+                        .Where(m => m.RecordBookNumberID == Model.studentsToShow[i].RecordBookNumberID).ToList();
+                    if (freeMarkFields != null)
+                    {
+                        for (int j = 0; j < Model.freeMarkFields.Max(m => m.FieldNumber); j++)
+                        {
+                            if (j < freeMarkFields.Count)
+                            {
+                                if (freeMarkFields[j] != null)
+                                {
+                                    string currentFreeFieldId = freeMarkFields[j].FreeMarkFieldID.ToString() + "_freemarkfield";
+                                    <td class="freemarkfield">
+                                        <div class="point-module">
+                                            <input type="number" class="student-point-freemarkfield" id=@currentFreeFieldId value=@freeMarkFields[j].FieldPoint.ToString() />
+                                        </div>
+                                    </td>
+                                }
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+                        }
+                    }
                     <td class="lectures">
                         <p id="studentAttends">@Model.attendanceAmount[i]</p>
                     </td>
@@ -546,10 +587,11 @@
             });
             function getDatesToSend() {
                 var moduleInputs = $("tbody.tablecontent>tr#" + recordBookNumbersList[0] + ">td.module");
+                var freeFieldInputs = $("tbody.tablecontent>tr#" + recordBookNumbersList[0] + ">td.freemarkfield");
                 for (var i = 0; i < recordBookNumbersList.length; i++) {
                     var currentStudent = $("tbody.tablecontent>tr#" + recordBookNumbersList[i]); // currentStudent - строка таблицы для i-го студента
                     var rowLengthAll = currentStudent.children().length;
-                    for (var j = 1; j < rowLengthAll - moduleInputs.length - 3; j++) {
+                    for (var j = 1; j < rowLengthAll - moduleInputs.length - freeFieldInputs.length - 3; j++) {
                         var currentCell = currentStudent[0].children[j];
                         if (currentCell.children.length > 0) {
                             for (var k = 0; k < arrayOfInputData.length; k++) {
