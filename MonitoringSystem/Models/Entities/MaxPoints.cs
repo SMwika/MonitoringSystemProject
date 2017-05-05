@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace MonitoringSystem.Models
+﻿namespace MonitoringSystem.Models
 {
     public class LabMaxPoint
     {
         public int LabMaxPointID { get; set; }
         public int SubjectID { get; set; }
         public int LabNumber { get; set; }
-
         public int MaxPoint { get; set; }
 
         public virtual Subject Subject { get; set; }
@@ -21,7 +15,6 @@ namespace MonitoringSystem.Models
         public int HWMaxPointID { get; set; }
         public int SubjectID { get; set; }
         public int HWNumber { get; set; }
-
         public int MaxPoint { get; set; }
 
         public virtual Subject Subject { get; set; }
@@ -32,7 +25,6 @@ namespace MonitoringSystem.Models
         public int ModuleMaxPointID { get; set; }
         public int SubjectID { get; set; }
         public int ModuleNumber { get; set; }
-
         public int MaxPoint { get; set; }
 
         public virtual Subject Subject { get; set; }

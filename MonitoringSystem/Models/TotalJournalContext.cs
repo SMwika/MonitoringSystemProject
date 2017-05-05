@@ -24,6 +24,8 @@ namespace MonitoringSystem.Models
 
 
         public virtual DbSet<Attendance> Attendances { get; set; }
+        public virtual DbSet<AttendanceDate> AttendanceDates { get; set; }
+        public virtual DbSet<OneItemPoint> OneItemPoints { get; set; }
         public virtual DbSet<Module> Modules { get; set; }
         public virtual DbSet<Mark> Marks { get; set; }
         public virtual DbSet<HomeWork> HomeWorks { get; set;}

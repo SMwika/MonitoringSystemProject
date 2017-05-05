@@ -12,11 +12,8 @@ namespace MonitoringSystem.Models
     {
         public Teacher()
         {
-            Marks = new HashSet<Mark>();
-            CourseProjectLines = new HashSet<CourseProjectLine>();
-            HomeWorks = new HashSet<HomeWork>();
-            Modules = new HashSet<Module>();
-            FreeMarkFields = new HashSet<FreeMarkField>();
+            Subjects = new HashSet<Subject>();
+            SubjectsCPs = new HashSet<SubjectCP>();
         }
 
         public int TeacherID { get; set; }
@@ -33,10 +30,7 @@ namespace MonitoringSystem.Models
         [Required(ErrorMessage = "Введите научную степень"), Display(Name = "Научная степень")]
         public string AcadDegree { get; set; }
 
-        public virtual ICollection<Mark> Marks { get; set; }
-        public virtual ICollection<CourseProjectLine> CourseProjectLines { get; set; }
-        public virtual ICollection<HomeWork> HomeWorks { get; set; }
-        public virtual ICollection<Module> Modules { get; set; }
-        public virtual ICollection<FreeMarkField> FreeMarkFields { get; set; }
+        public virtual ICollection<Subject> Subjects { get; set; }
+        public virtual ICollection<SubjectCP> SubjectsCPs { get; set; }
     }
 }

@@ -1,9 +1,4 @@
-﻿/*.contanier-groups {
-    margin:auto;
-}*/
-
-
-.target-courses {
+﻿.target-courses {
     width: 25%;
     border: 1px solid black;
     display: inline-block;

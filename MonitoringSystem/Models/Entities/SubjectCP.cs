@@ -17,12 +17,13 @@ namespace MonitoringSystem.Models
 
         [Key]
         public int SubjectCP_ID { get; set; }
-
+        public int TeacherID { get; set; }
         public string SubjectCPName { get; set; }
 
         [Required(ErrorMessage = "Введите № семестра"), Display(Name = "№ семестра")]
         public int Term { get; set; }
-
+        public virtual Teacher Teacher { get; set; }
         public ICollection<CourseProjectLine> CourseProjectLines { get; set; }
+
     }
 }

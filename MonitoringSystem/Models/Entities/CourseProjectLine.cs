@@ -24,7 +24,6 @@ namespace MonitoringSystem.Models
 
         public int TeacherID { get; set; }
 
-        public virtual Teacher Teacher { get; set; }
         public virtual Student Student { get; set; }
         public virtual SubjectCP SubjectCP { get; set; }
     }

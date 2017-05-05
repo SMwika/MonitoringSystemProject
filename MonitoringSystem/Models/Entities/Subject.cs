@@ -22,9 +22,12 @@ namespace MonitoringSystem.Models
             AttsMaxPoints = new HashSet<AttMaxPoint>();
             FreeMarkFields = new HashSet<FreeMarkField>();
             FreeMarkFieldMaxPoints = new HashSet<FreeMarkFieldMaxPoint>();
+            AttendanceDates = new HashSet<AttendanceDate>();
+            OneItemPoints = new HashSet<OneItemPoint>();
         }
      
         public int SubjectID { get; set; }
+        public int TeacherID { get; set; }
 
         [Required(ErrorMessage = "Введите название предмета"), Display(Name = "Название предмета")]
         public string SubjectName { get; set; }
@@ -44,7 +47,9 @@ namespace MonitoringSystem.Models
         public virtual ICollection<ModuleMaxPoint> ModuleMaxPoints { get; set; }
         public virtual ICollection<AttMaxPoint> AttsMaxPoints { get; set; }
         public virtual ICollection<FreeMarkField> FreeMarkFields { get; set; }
-        public virtual ICollection <FreeMarkFieldMaxPoint> FreeMarkFieldMaxPoints { get; set; }
+        public virtual ICollection<FreeMarkFieldMaxPoint> FreeMarkFieldMaxPoints { get; set; }
+        public virtual ICollection<AttendanceDate> AttendanceDates { get; set; }
+        public virtual ICollection<OneItemPoint> OneItemPoints { get; set; }
     }
 
     public enum SubjectType

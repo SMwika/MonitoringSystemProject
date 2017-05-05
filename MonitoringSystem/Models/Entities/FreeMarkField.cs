@@ -21,11 +21,9 @@ namespace MonitoringSystem.Models
         [Index("IX_FieldsNumberRecordBookNumberIDSubjectID", 3, IsUnique = true)]
         public int SubjectID { get; set; }
 
-        public int TeacherID { get; set; }
         public int FieldPoint { get; set; }
 
         public virtual Student Student { get; set; }
         public virtual Subject Subject { get; set; }
-        public virtual Teacher Teacher { get; set; }
     }
 }

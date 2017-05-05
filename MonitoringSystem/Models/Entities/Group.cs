@@ -20,20 +20,7 @@ namespace MonitoringSystem.Models
         MaxLength(6, ErrorMessage = "Длина названия группы - максимум 6 символов")]
         public string GroupID { get; set; }
 
-        //[NotMapped]
-        //[Display (Name ="Номер курса")]
-        //public int CourseNumber
-        //{
-        //    // 4 characters or more
-        //    get
-        //    {
-        //        if (GroupID.Length == 4)
-        //        {
-        //            return Int32.Parse(GroupID.Substring(1, 1));
-        //        }
-        //        return Int32.Parse(GroupID.Substring(1, 1)) + 1;
-        //    }
-        //}
+        
         public int CourseNumber { get; set; }
         
         public virtual ICollection<Student> Students { get; set; }

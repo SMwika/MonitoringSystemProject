@@ -17,7 +17,7 @@ namespace MonitoringSystem.Controllers
         // GET: Marks
         public ActionResult Index()
         {
-            var marks = db.Marks.Include(m => m.Student).Include(m => m.Subject).Include(m => m.Teacher);
+            var marks = db.Marks.Include(m => m.Student).Include(m => m.Subject);
             return View(marks.ToList());
         }
 
@@ -50,7 +50,7 @@ namespace MonitoringSystem.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MarkID,LabNumber,RecordBookNumberID,SubjectID,TeacherID,DateOfReport,DateOfProgram,TheMark,AdditionalPoints")] Mark mark)
+        public ActionResult Create([Bind(Include = "MarkID,LabNumber,RecordBookNumberID,SubjectID,DateOfReport,DateOfProgram,TheMark,AdditionalPoints")] Mark mark)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +61,6 @@ namespace MonitoringSystem.Controllers
 
             ViewBag.RecordBookNumberID = new SelectList(db.Students, "RecordBookNumberID", "RecordBookNumberID", mark.RecordBookNumberID);
             ViewBag.SubjectID = new SelectList(db.Subjects, "SubjectID", "SubjectName", mark.SubjectID);
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "FirstName", mark.TeacherID);
             return View(mark);
         }
 
@@ -79,7 +78,6 @@ namespace MonitoringSystem.Controllers
             }
             ViewBag.RecordBookNumberID = new SelectList(db.Students, "RecordBookNumberID", "RecordBookNumberID", mark.RecordBookNumberID);
             ViewBag.SubjectID = new SelectList(db.Subjects, "SubjectID", "SubjectName", mark.SubjectID);
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "FirstName", mark.TeacherID);
             return View(mark);
         }
 
@@ -88,7 +86,7 @@ namespace MonitoringSystem.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MarkID,LabNumber,RecordBookNumberID,SubjectID,TeacherID,DateOfReport,DateOfProgram,TheMark,AdditionalPoints")] Mark mark)
+        public ActionResult Edit([Bind(Include = "MarkID,LabNumber,RecordBookNumberID,SubjectID,DateOfReport,DateOfProgram,TheMark,AdditionalPoints")] Mark mark)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +96,6 @@ namespace MonitoringSystem.Controllers
             }
             ViewBag.RecordBookNumberID = new SelectList(db.Students, "RecordBookNumberID", "RecordBookNumberID", mark.RecordBookNumberID);
             ViewBag.SubjectID = new SelectList(db.Subjects, "SubjectID", "SubjectName", mark.SubjectID);
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "FirstName", mark.TeacherID);
             return View(mark);
         }
 

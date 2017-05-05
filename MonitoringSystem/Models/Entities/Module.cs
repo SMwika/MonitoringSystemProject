@@ -23,9 +23,6 @@ namespace MonitoringSystem.Models
         [Index("IX_RecordBookNumberIDModuleIDModuleModulePoint", 4, IsUnique = true)]
         public int ModuleNumber { get; set; }
 
-        public int TeacherID { get; set; }
-
-        public virtual Teacher Teacher { get; set; }
         public virtual Student Student { get; set; }
         public virtual Subject Subject { get; set; }
     }
