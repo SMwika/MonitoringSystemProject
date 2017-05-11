@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MonitoringSystem.Models;
-using Newtonsoft.Json;
 
 namespace MonitoringSystem.Controllers
 {
@@ -19,7 +18,6 @@ namespace MonitoringSystem.Controllers
         {
             return View(db.Subjects.ToList());
         }
-
         // GET: Subjects/Details/5
         public ActionResult Details(int? id)
         {
@@ -34,13 +32,11 @@ namespace MonitoringSystem.Controllers
             }
             return View(subject);
         }
-
         // GET: Subjects/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: Subjects/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -57,7 +53,6 @@ namespace MonitoringSystem.Controllers
 
             return View(subject);
         }
-
         // GET: Subjects/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -72,7 +67,6 @@ namespace MonitoringSystem.Controllers
             }
             return View(subject);
         }
-
         // POST: Subjects/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -88,7 +82,6 @@ namespace MonitoringSystem.Controllers
             }
             return View(subject);
         }
-
         // GET: Subjects/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -103,7 +96,6 @@ namespace MonitoringSystem.Controllers
             }
             return View(subject);
         }
-
         // POST: Subjects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -114,7 +106,6 @@ namespace MonitoringSystem.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         //дописать обработчики на 5 и 6 курс
         public ActionResult ShowSubjectsByCourseNumber(string groupId)
         {
@@ -169,7 +160,6 @@ namespace MonitoringSystem.Controllers
             }
             return -1;
         }
-
         public ActionResult ShowMarks(string groupId, int? subjectId)
         {
             if (groupId == null || subjectId == null)
@@ -193,8 +183,7 @@ namespace MonitoringSystem.Controllers
             students = db.Students.Where(s => s.GroupID == groupId).ToList();
 
             ///выборка оценок
-            marks = db.Marks.Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId).ToList();
-            
+            marks = db.Marks.Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId).ToList();            
 
             //выборка оценок по дз
             HWs = db.HomeWorks
@@ -233,8 +222,7 @@ namespace MonitoringSystem.Controllers
                 else
                 {
                     attendances[i] = 0;
-                }
-                
+                }                
             }
 
             modelList.GroupName = groupId;
@@ -252,8 +240,7 @@ namespace MonitoringSystem.Controllers
             modelList.freeMarkFields = freeMarkFields;
             modelList.freeMarkFieldMaxPoints = freeMarkFieldMaxPoint;
             return View(modelList);
-        }       
-        
+        }            
         public ActionResult AddMarkColumn(string groupId, int? subjectId)
         {
             //получаем максимальный номер лабы по предмету
@@ -446,7 +433,6 @@ namespace MonitoringSystem.Controllers
             url = action + "/" + groupId + "/" + subjectId.ToString();
             return url;
         }
-
         [HttpPost]
         public ActionResult SaveChanges(List<TemplateToMarks> dataToSend)
         {
@@ -501,8 +487,8 @@ namespace MonitoringSystem.Controllers
         [HttpPost]
         public ActionResult SaveOneItemPoint(string value, string url)
         {
-            int indexOfLastSlach = url.LastIndexOf('/');
-            int subjectId = Convert.ToInt32(url.Substring(indexOfLastSlach + 1));
+            int indexOfLastSlash = url.LastIndexOf('/');
+            int subjectId = Convert.ToInt32(url.Substring(indexOfLastSlash + 1));
 
             List<OneItemPoint> oneItemPoints = db.OneItemPoints.Where(atts => atts.Subject.SubjectID == subjectId).ToList();
             foreach(OneItemPoint oneItemPoint in oneItemPoints)
@@ -542,7 +528,6 @@ namespace MonitoringSystem.Controllers
             model.oneItemPoint = db.OneItemPoints.Where(pt => pt.SubjectId == subjectId).ToList();
             return View(model);            
         } 
-
         //[HttpPost]
         public ActionResult AddAttendanceDate(string groupId, string subjectId)
         {
@@ -578,7 +563,6 @@ namespace MonitoringSystem.Controllers
             db.SaveChanges();
             return RedirectToAction(getUrl("EditAttendance", groupId, Convert.ToInt32(subjectId)));
         }
-
         public ActionResult RemoveAttendanceDate(string groupId, int? subjectId)
         {
             // удалить все посещения, где индекс = максимальный индекс
@@ -597,7 +581,6 @@ namespace MonitoringSystem.Controllers
             db.SaveChanges();
             return RedirectToAction(getUrl("EditAttendance", groupId, subjectId));
         }
-
         [HttpPost]
         public ActionResult SaveAttendances(List<Attendance> attendances, List<AttendanceDate> attendanceDates, string url)
         {
@@ -615,8 +598,8 @@ namespace MonitoringSystem.Controllers
                 _attendanceDate.Date = attendanceDate.Date;
                 _attendanceDate.Index = attendanceDate.Index;                
             }
-            int indexOfLastSlach = url.LastIndexOf('/');
-            int subjectId = Convert.ToInt32(url.Substring(indexOfLastSlach + 1));
+            int indexOfLastSlash = url.LastIndexOf('/');
+            int subjectId = Convert.ToInt32(url.Substring(indexOfLastSlash + 1));
             List<AttMaxPoint> attMaxPoints = db.AttMaxPoints.Where(pt => pt.Subject.SubjectID == subjectId).ToList();
             foreach(AttMaxPoint attMaxPoint in attMaxPoints)
             {
@@ -626,7 +609,6 @@ namespace MonitoringSystem.Controllers
             db.SaveChanges();
             return View();
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

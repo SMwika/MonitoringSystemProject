@@ -210,7 +210,6 @@ namespace MonitoringSystem.Models
             context.Marks.Add(new Mark() { MarkID = 35, LabNumber = 2, RecordBookNumberID = "436003", TheMark = 4, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, });
             context.Marks.Add(new Mark() { MarkID = 36, LabNumber = 3, RecordBookNumberID = "436003", TheMark = 3, SubjectID = 33, DateOfProgram = DateTime.Now.Date, DateOfReport = DateTime.Now.Date, });
         }
-
         /// <summary>
         /// Те данные, которые внес я, они чисто для примера и могут быт ошибочны, ибо я не проверяю их достоверность
         /// потому лучше их удалить и писать 
@@ -272,8 +271,6 @@ namespace MonitoringSystem.Models
             //context.Attendances.Add(new Attendance() { AttendanceID = 36, RecordBookNumberID = "436003", SubjectID = 33, ClassDate = DateTime.Now.Date, IsVisited = true });
         
         }
-
-
         //студент получил оценку modulepoint по предмету по модулю № modulePoint
         protected void ModuleInit(ref TotalJournalContext context)
         {
@@ -292,32 +289,28 @@ namespace MonitoringSystem.Models
             context.Modules.Add(new Module() { ModuleID = 11, SubjectID = 34, RecordBookNumberID = "436003", ModulePoint = 10, ModuleNumber = 1 });
             context.Modules.Add(new Module() { ModuleID = 12, SubjectID = 34, RecordBookNumberID = "436003", ModulePoint = 9, ModuleNumber = 1});
         }
-
         //тот же самый предмет, только курсовой . в скобках лучше дописывать КП
         protected void SubjectCPInit(ref TotalJournalContext context)
         {
-            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 1, SubjectCPName = "Основы программирования(КП)", Term = 3, TeacherID= 8 });
-            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 2, SubjectCPName = "Объектно-ориентированное программирование(КП)", Term = 4, TeacherID = 8 });
-            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 3, SubjectCPName = "Алгоритмы и структуры данных(КП)", Term = 5, TeacherID = 8 });
-            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 4, SubjectCPName = "Операционные системы(КП)", Term = 6, TeacherID = 8 });
-            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 5, SubjectCPName = "Базы данных(КП)", Term = 7, TeacherID = 8 });
-            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 6, SubjectCPName = "Проектирование распределенных систем ЭОП(КП)", Term = 8, TeacherID = 8 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 1, SubjectCPName = "Основы программирования(КП)", Term = 3, TeacherID = 1});
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 2, SubjectCPName = "Объектно-ориентированное программирование(КП)", Term = 4, TeacherID = 1 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 3, SubjectCPName = "Алгоритмы и структуры данных(КП)", Term = 5, TeacherID = 1 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 4, SubjectCPName = "Операционные системы(КП)", Term = 6, TeacherID = 1 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 5, SubjectCPName = "Базы данных(КП)", Term = 7, TeacherID = 1 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 6, SubjectCPName = "Проектирование распределенных систем ЭВМ(КП)", Term = 8, TeacherID = 1 });
         }
-
-
         //оценка за выполнение определенного этапа КП студентом по предмету
         protected void CourseProjectLineInit(ref TotalJournalContext context)
         {
-            context.CourseProjectLines.Add(new CourseProjectLine() {  CourseProjectLineID=1, RecordBookNumberID="436001", SubjectCP_ID=6, LineName="Постановка задачи", TheMark=5, TeacherID= 1});
-            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 2, RecordBookNumberID = "436002", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 4, TeacherID = 1 });
+            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID=1,  RecordBookNumberID = "436001", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 5,  DateOfPassing=DateTime.Now, LineIndex=1 });
+            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 2, RecordBookNumberID = "436002", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 4,  DateOfPassing = DateTime.Now, LineIndex = 1 });
 
-            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 3, RecordBookNumberID = "436003", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 4, TeacherID = 1 });
-            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 4, RecordBookNumberID = "436004", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 5, TeacherID = 1 });
+            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 3, RecordBookNumberID = "436003", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 4,  DateOfPassing = DateTime.Now, LineIndex = 1 });
+            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 4, RecordBookNumberID = "436004", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 5,  DateOfPassing = DateTime.Now, LineIndex = 1 });
 
-            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 5, RecordBookNumberID = "436005", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 5, TeacherID = 1 });
-            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 6, RecordBookNumberID = "436006", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 5, TeacherID = 1 });
+            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 5, RecordBookNumberID = "436005", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 5,  DateOfPassing = DateTime.Now, LineIndex = 1 });
+            context.CourseProjectLines.Add(new CourseProjectLine() { CourseProjectLineID = 6, RecordBookNumberID = "436006", SubjectCP_ID = 6, LineName = "Постановка задачи", TheMark = 5,  DateOfPassing = DateTime.Now, LineIndex = 1 });
         }
-
         // оценка за расчетную работу. смысл тот же
         protected void HomeWorkInit(ref TotalJournalContext context)
         {

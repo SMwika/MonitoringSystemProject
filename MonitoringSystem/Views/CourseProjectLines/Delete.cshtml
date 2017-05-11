@@ -1,0 +1,64 @@
+﻿@model MonitoringSystem.Models.CourseProjectLine
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CourseProjectLine</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.GroupID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.GroupID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubjectCP.SubjectCPName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubjectCP.SubjectCPName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LineName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LineName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TheMark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TheMark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TeacherID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeacherID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

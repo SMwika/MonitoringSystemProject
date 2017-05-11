@@ -13,6 +13,7 @@ namespace MonitoringSystem.Models
         public SubjectCP()
         {
             CourseProjectLines = new HashSet<CourseProjectLine>();
+            CPLineMaxPoints = new HashSet<CPLineMaxPoint>();
         }
 
         [Key]
@@ -23,7 +24,7 @@ namespace MonitoringSystem.Models
         [Required(ErrorMessage = "Введите № семестра"), Display(Name = "№ семестра")]
         public int Term { get; set; }
         public virtual Teacher Teacher { get; set; }
-        public ICollection<CourseProjectLine> CourseProjectLines { get; set; }
-
+        public virtual ICollection<CourseProjectLine> CourseProjectLines { get; set; }
+        public virtual ICollection<CPLineMaxPoint> CPLineMaxPoints { get; set; }
     }
 }

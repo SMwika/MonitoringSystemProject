@@ -104,7 +104,7 @@
 <table class="table table-bordered table-hover" border="1" cellspacing="0">
     @* ВЕРХ ТАБЛИЦЫ *@
     <thead>
-        <tr id="head-title">
+        <tr>
             <th id="group=name">@Model.GroupName</th>
             @for (int i = 1; i <= Model.marksToShow.Max(l => l.LabNumber); i++)
             {
@@ -125,7 +125,6 @@
             {
                 string freeFieldNumber = "freefieldnumber_" + i.ToString();
                 <th id=@freeFieldNumber>
-                    @*<input type="text" value= class="freefieldname">*@
                     @Model.freeMarkFieldMaxPoints[i].FieldName.ToString()
                 </th>
             }
@@ -330,6 +329,7 @@
 
 @section scripts
 {
+    @*<script src="~/Scripts/showMarksJsHandler.js"></script>*@
     <script>
         (function () {
             var tablecontent = $("tbody.tablecontent").children();

@@ -129,30 +129,34 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="Content\ShowMarksStyleSheet.css" />
+    <Compile Include="Controllers\CourseProjectLinesController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
-    <Compile Include="Controllers\HelpersToAttendances.cs" />
-    <Compile Include="Controllers\HelpersToShowMarks.cs" />
+    <Compile Include="Controllers\SubjectCPsHelper.cs" />
+    <Compile Include="Controllers\SubjectsComtrollers\HelpersToAttendances.cs" />
+    <Compile Include="Controllers\SubjectsComtrollers\HelpersToShowMarks.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MarksController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
-    <Compile Include="Controllers\SubjectsController.cs" />
+    <Compile Include="Controllers\SubjectCPsController.cs" />
+    <Compile Include="Controllers\SubjectsComtrollers\SubjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="DBInitialize\TotalJournalDBInitiallizerPart1Seed.cs" />
     <Compile Include="Helpers\TagBuilderhelper.cs" />
-    <Compile Include="Models\Entities\Attendance.cs" />
-    <Compile Include="Models\Entities\AttendanceDate.cs" />
+    <Compile Include="Models\Entities\CPLineMaxPoint.cs" />
+    <Compile Include="Models\Entities\ForSubjects\Attendance.cs" />
+    <Compile Include="Models\Entities\ForSubjects\AttendanceDate.cs" />
     <Compile Include="Models\Entities\CourseProjectLine.cs" />
-    <Compile Include="Models\Entities\FreeMarkField.cs" />
+    <Compile Include="Models\Entities\ForSubjects\FreeMarkField.cs" />
     <Compile Include="Models\Entities\Group.cs" />
-    <Compile Include="Models\Entities\HomeWork.cs" />
-    <Compile Include="Models\Entities\MaxPoints.cs" />
-    <Compile Include="Models\Entities\Mark.cs" />
-    <Compile Include="Models\Entities\Module.cs" />
-    <Compile Include="Models\Entities\OneItemPoint.cs" />
+    <Compile Include="Models\Entities\ForSubjects\HomeWork.cs" />
+    <Compile Include="Models\Entities\ForSubjects\MaxPoints.cs" />
+    <Compile Include="Models\Entities\ForSubjects\Mark.cs" />
+    <Compile Include="Models\Entities\ForSubjects\Module.cs" />
+    <Compile Include="Models\Entities\ForSubjects\OneItemPoint.cs" />
     <Compile Include="Models\Entities\Student.cs" />
-    <Compile Include="Models\Entities\Subject.cs" />
+    <Compile Include="Models\Entities\ForSubjects\Subject.cs" />
     <Compile Include="Models\Entities\SubjectCP.cs" />
     <Compile Include="Models\Entities\Teacher.cs" />
     <Compile Include="Models\TotalJournalContext.cs" />
@@ -180,6 +184,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\showMarksJsHandler.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -220,6 +225,17 @@
     <Content Include="Views\Subjects\ShowMarks.cshtml" />
     <Content Include="Views\Subjects\EditAttendance.cshtml" />
     <Content Include="Views\Subjects\_AttendanceTable.cshtml" />
+    <Content Include="Views\SubjectCPs\Create.cshtml" />
+    <Content Include="Views\SubjectCPs\Delete.cshtml" />
+    <Content Include="Views\SubjectCPs\Details.cshtml" />
+    <Content Include="Views\SubjectCPs\Edit.cshtml" />
+    <Content Include="Views\SubjectCPs\Index.cshtml" />
+    <Content Include="Views\CourseProjectLines\Create.cshtml" />
+    <Content Include="Views\CourseProjectLines\Delete.cshtml" />
+    <Content Include="Views\CourseProjectLines\Details.cshtml" />
+    <Content Include="Views\CourseProjectLines\Edit.cshtml" />
+    <Content Include="Views\CourseProjectLines\Index.cshtml" />
+    <Content Include="Views\SubjectCPs\ShowMarks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

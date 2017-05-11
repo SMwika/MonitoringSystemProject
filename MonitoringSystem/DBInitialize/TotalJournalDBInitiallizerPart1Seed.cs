@@ -36,8 +36,8 @@ namespace MonitoringSystem.Models
             context.FreeMarkFields.Add(new FreeMarkField() { FreeMarkFieldID = 3, FieldName = "Доп.баллы", FieldNumber = 1, FieldPoint = 5, RecordBookNumberID = "436003", SubjectID = 32 });
             context.FreeMarkFieldMaxPoints.Add(new FreeMarkFieldMaxPoint() { FreeMarkFieldMaxPointID = 1, FieldName = "Доп.баллы", MaxPoint = 10, FieldNumber = 1, SubjectID = 32 });
 
-            //temporary object. have to be removed after refactoring
-            context.OneItemPoints.Add(new OneItemPoint() { OneItemPointID=1, SubjectId=32, Value="1"});
+           context.OneItemPoints.Add(new OneItemPoint() { OneItemPointID=1, SubjectId=32, Value="1"});
+            context.CPLineMaxPoints.Add(new CPLineMaxPoint() { CPLineMaxPointID = 1, LineIndex = 1, LineName = "Постановка задачи", MaxPoint = 5, SubjectCPID = 6 });
 
             context.SaveChanges();
             base.Seed(context);

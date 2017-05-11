@@ -12,17 +12,18 @@ namespace MonitoringSystem.Models
         public int CourseProjectLineID { get; set; }
 
         public string LineName { get; set; }
+        public int LineIndex { get; set; }
 
-        [Index("IX_RecordBookNumberIDSubjectCP_IDTheMark", 1, IsUnique = true)]
+        //[Index("IX_RecordBookNumberIDSubjectCP_IDTheMark", 1, IsUnique = true)]
         public string RecordBookNumberID { get; set; }
 
-        [Index("IX_RecordBookNumberIDSubjectCP_IDTheMark", 2, IsUnique = true)]
+       // [Index("IX_RecordBookNumberIDSubjectCP_IDTheMark", 2, IsUnique = true)]
         public int SubjectCP_ID { get; set; }
 
-        [Index("IX_RecordBookNumberIDSubjectCP_IDTheMark", 3, IsUnique = true)]
+        //[Index("IX_RecordBookNumberIDSubjectCP_IDTheMark", 3, IsUnique = true)]
         public int TheMark { get; set; }
 
-        public int TeacherID { get; set; }
+        public DateTime DateOfPassing { get; set; }
 
         public virtual Student Student { get; set; }
         public virtual SubjectCP SubjectCP { get; set; }

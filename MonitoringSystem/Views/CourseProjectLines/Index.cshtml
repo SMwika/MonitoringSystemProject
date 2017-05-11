@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MonitoringSystem.Models.CourseProjectLine>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.GroupID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectCP.SubjectCPName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LineName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TheMark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TeacherID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student.GroupID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubjectCP.SubjectCPName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LineName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TheMark)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TeacherID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CourseProjectLineID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CourseProjectLineID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseProjectLineID })
+        </td>
+    </tr>
+}
+
+</table>

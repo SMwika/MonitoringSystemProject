@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-
+﻿using System.Data.Entity;
 
 namespace MonitoringSystem.Models
 {
     public class TotalJournalContext : DbContext
     {
         public TotalJournalContext() 
-            : base("name=TotalJournalContext")
-        {
-        }
+            : base("name=TotalJournalContext") {}
 
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Student> Students { get; set; }
-        public virtual DbSet<Teacher> Teachers { get; set; }
-        
+        public virtual DbSet<Teacher> Teachers { get; set; }        
 
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<SubjectCP> SubjectCPs { get; set; }
-
 
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<AttendanceDate> AttendanceDates { get; set; }
@@ -37,7 +28,6 @@ namespace MonitoringSystem.Models
         public virtual DbSet<FreeMarkFieldMaxPoint> FreeMarkFieldMaxPoints { get; set; }
 
         public virtual DbSet<CourseProjectLine> CourseProjectLines { get; set; }
-
-
+        public virtual DbSet<CPLineMaxPoint> CPLineMaxPoints { get; set; }
     }
 }

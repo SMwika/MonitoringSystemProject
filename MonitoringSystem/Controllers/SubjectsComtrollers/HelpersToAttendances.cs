@@ -1,8 +1,5 @@
-﻿using System;
-using MonitoringSystem.Models;
+﻿using MonitoringSystem.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MonitoringSystem.Controllers
 {

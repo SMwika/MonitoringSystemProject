@@ -12,8 +12,6 @@ namespace MonitoringSystem
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-
             //показывает все предметы для группы
             routes.MapRoute(
                 name: "toSubjects",
@@ -24,12 +22,22 @@ namespace MonitoringSystem
             routes.MapRoute(
                 name: "toMarks",
                 url: "Subjects/{action}/{groupId}/{subjectId}",
-                defaults: new { controller = "Subjects", action = "Index",
+                defaults: new {
+                    controller = "Subjects", action = "Index",
                     groupId = UrlParameter.Optional,
                     subjectId = UrlParameter.Optional }
                 );
 
-
+            routes.MapRoute(
+                name: "toCPMarks",
+                url: "SubjectCPs/{action}/{groupId}/{subjectId}",
+                defaults: new
+                {
+                    controller = "SubjectCPs",
+                    action = "Index",
+                    groupId = UrlParameter.Optional,
+                    subjectId = UrlParameter.Optional }
+                );
 
             ///Default Route
             routes.MapRoute(
