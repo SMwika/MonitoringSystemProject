@@ -18,14 +18,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Имя", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink(" ", "Index", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-home", @aria_hidden = true, @style = "top:10px;font-size:30px;"})
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>*@
-                </ul>
+            <div class="navbar-collapse collapse">                
                 @using (Html.BeginForm("SearchStudent", "Home", FormMethod.Post, new { @class = "navbar-form navbar-left", @role = "search" }))
                 {
                     <div class="form-group">
@@ -41,7 +36,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year TGR. All rights reserved.</p>
+            <p>&copy; @DateTime.Now.Year GTR. All rights reserved.</p>
         </footer>
     </div>
 

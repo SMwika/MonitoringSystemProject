@@ -23,7 +23,7 @@ namespace MonitoringSystem.Models
         protected void StudentInit(ref TotalJournalContext context)
         {
             //                                  номер зачетки                   имя                  фамилия             отчество
-            context.Students.Add(new Student() { RecordBookNumberID = "436001", FirstName = "Катерина", LastName = "Андрющенко", MiddleName = "Сергеевна", GroupID = "641п" });
+            context.Students.Add(new Student() { RecordBookNumberID = "436001", FirstName = "Катерина", LastName = "Андрющенко", MiddleName = "Сергеевна", GroupID = "641п"});
             context.Students.Add(new Student() { RecordBookNumberID = "436002", FirstName = "Денис", LastName = "Билецкий", MiddleName = "Романович", GroupID = "641п" });
             context.Students.Add(new Student() { RecordBookNumberID = "436003", FirstName = "Илья", LastName = "Вирич", MiddleName = "Васильевич", GroupID = "641п" });
             context.Students.Add(new Student() { RecordBookNumberID = "436004", FirstName = "Роман", LastName = "Гайдук", MiddleName = "Валерьевич", GroupID = "641п" });
@@ -89,7 +89,7 @@ namespace MonitoringSystem.Models
         protected void SubjectInit(ref TotalJournalContext context)
         {
             //                                  имя предмета                                тип (экз, зачет)          №семестра  
-            context.Subjects.Add(new Subject() {SubjectID = 1, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 1, TeacherID=8 });//
+            context.Subjects.Add(new Subject() {SubjectID = 1, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 1, TeacherID=8,  });//
             context.Subjects.Add(new Subject() {SubjectID = 2, SubjectName = "Основы программной инженерии", SubjectType = SubjectType.Exam, Term = 1, TeacherID = 8 });
             context.Subjects.Add(new Subject() {SubjectID = 3, SubjectName = "Компьтерная дискретная математика", SubjectType = SubjectType.Exam, Term = 2, TeacherID = 8 });
             context.Subjects.Add(new Subject() {SubjectID = 4, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 2, TeacherID = 8 });

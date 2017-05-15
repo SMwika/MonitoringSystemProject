@@ -54,7 +54,6 @@
                 </li>
             </ul>
         </div>
-
         <div class="remove">
             <a href="#" class="dropdown-toggle customized-primary" data-toggle="dropdown" aria-expanded="true">
                 <span class="glyphicon glyphicon-minus"></span>
@@ -106,81 +105,107 @@
     <thead>
         <tr>
             <th id="group=name">@Model.GroupName</th>
-            @for (int i = 1; i <= Model.marksToShow.Max(l => l.LabNumber); i++)
-            {
-                string labNumber = "labnumber_" + i.ToString();
-                <th id=@labNumber>ЛР @i</th>
-            }
-            @for (int i = 1; i <= Model.hwToShow.Max(hw => hw.HWNumber); i++)
-            {
-                string hwNumber = "hwnumber_" + i.ToString();
-                <th id=@hwNumber>РР @i</th>
-            }
-            @for (int i = 1; i <= Model.modulesToShow.Max(m => m.ModuleNumber); i++)
-            {
-                string moduleNumber = "modulenumber_" + i.ToString();
-                <th id=@moduleNumber>Mодуль @i</th>
-            }
-            @for (int i = 0; i < Model.freeMarkFieldMaxPoints.Max(m => m.FieldNumber); i++)
-            {
-                string freeFieldNumber = "freefieldnumber_" + i.ToString();
-                <th id=@freeFieldNumber>
-                    @Model.freeMarkFieldMaxPoints[i].FieldName.ToString()
-                </th>
+            @{
+                if (Model.labMaxPoints.Count != 0)
+                {
+                    for (int i = 1; i <= Model.labMaxPoints.Max(l => l.LabNumber); i++)
+                    {
+                        string labNumber = "labnumber_" + i.ToString();
+                        <th id=@labNumber>ЛР @i</th>
+                    }
+                }
+                if (Model.hwMaxPoints.Count != 0)
+                {
+                    for (int i = 1; i <= Model.hwMaxPoints.Max(hw => hw.HWNumber); i++)
+                    {
+                        string hwNumber = "hwnumber_" + i.ToString();
+                        <th id=@hwNumber>РР @i</th>
+                    }
+                }
+                if (Model.moduleMaxPoints.Count != 0)
+                {
+                    for (int i = 1; i <= Model.moduleMaxPoints.Max(m => m.ModuleNumber); i++)
+                    {
+                        string moduleNumber = "modulenumber_" + i.ToString();
+                        <th id=@moduleNumber>Mодуль @i</th>
+                    }
+                }
+                if (Model.freeMarkFieldMaxPoints.Count != 0)
+                {
+                    for (int i = 0; i < Model.freeMarkFieldMaxPoints.Max(m => m.FieldNumber); i++)
+                    {
+                        string freeFieldNumber = "freefieldnumber_" + i.ToString();
+                        <th id=@freeFieldNumber>@Model.freeMarkFieldMaxPoints[i].FieldName.ToString()</th>
+                    }
+                }
             }
             <th>Лекции</th>
             <th>Сумма</th>
             <th>Автомат</th>
         </tr>
-
         <tr class="maxpoints">
             <th><p id="max-points-title">Максмальные баллы</p></th>
-            @for (int i = 0; i < Model.labMaxPoints.Max(ln => ln.LabNumber); i++)
-            {
-                string currentMaxLabId = Model.labMaxPoints[i].LabMaxPointID.ToString() + "_maxlab";
-                <th class="maxlab">
-                    <input class="max-point" type="number" value=@Model.labMaxPoints[i].MaxPoint.ToString() id=@currentMaxLabId>
-                </th>
+            @{
+                if (Model.labMaxPoints.Count != 0)
+                {
+                    for (int i = 0; i < Model.labMaxPoints.Max(ln => ln.LabNumber); i++)
+                    {
+                        string currentMaxLabId = Model.labMaxPoints[i].LabMaxPointID.ToString() + "_maxlab";
+                        <th class="maxlab">
+                            <input class="max-point" type="number" value=@Model.labMaxPoints[i].MaxPoint.ToString() id=@currentMaxLabId>
+                        </th>
+                    }
+                }
+                if (Model.hwMaxPoints.Count != 0)
+                {
+                    for (int i = 0; i < Model.hwMaxPoints.Max(ln => ln.HWNumber); i++)
+                    {
+                        string currentMaxHWId = Model.hwMaxPoints[i].HWMaxPointID.ToString() + "_maxhw";
+                        <th class="maxhw">
+                            <input class="max-point" type="number" value=@Model.hwMaxPoints[i].MaxPoint.ToString() id=@currentMaxHWId>
+                        </th>
+                    }
+                }
+                if (Model.moduleMaxPoints.Count != 0)
+                {
+                    for (int i = 0; i < Model.moduleMaxPoints.Max(ln => ln.ModuleNumber); i++)
+                    {
+                        string currentMaxModuleId = Model.moduleMaxPoints[i].ModuleMaxPointID.ToString() + "_maxmodule";
+                        <th class="maxmodule">
+                            <input class="max-point" type="number" value=@Model.moduleMaxPoints[i].MaxPoint.ToString() id=@currentMaxModuleId>
+                        </th>
+                    }
+                }
+                if (Model.freeMarkFieldMaxPoints.Count != 0)
+                {
+                    for (int i = 0; i < Model.freeMarkFieldMaxPoints.Max(fr => fr.FieldNumber); i++)
+                    {
+                        string currentMaxFreeFieldPoint = Model.freeMarkFieldMaxPoints[i].FreeMarkFieldMaxPointID.ToString() + "_maxfreefieldpoint";
+                        <th class="maxfreefieldpoint">
+                            <input class="max-point" type="number" value=@Model.freeMarkFieldMaxPoints[i].MaxPoint.ToString() id=@currentMaxFreeFieldPoint>
+                        </th>
+                    }
+                }
             }
-            @for (int i = 0; i < Model.hwMaxPoints.Max(ln => ln.HWNumber); i++)
-            {
-                string currentMaxHWId = Model.hwMaxPoints[i].HWMaxPointID.ToString() + "_maxhw";
-                <th class="maxhw">
-                    <input class="max-point" type="number" value=@Model.hwMaxPoints[i].MaxPoint.ToString() id=@currentMaxHWId>
-                </th>
-            }
-            @for (int i = 0; i < Model.moduleMaxPoints.Max(ln => ln.ModuleNumber); i++)
-            {
-                string currentMaxModuleId = Model.moduleMaxPoints[i].ModuleMaxPointID.ToString() + "_maxmodule";
-                <th class="maxmodule">
-                    <input class="max-point" type="number" value=@Model.moduleMaxPoints[i].MaxPoint.ToString() id=@currentMaxModuleId>
-                </th>
-            }
-            @for (int i = 0; i < Model.freeMarkFieldMaxPoints.Max(fr => fr.FieldNumber); i++)
-            {
-                string currentMaxFreeFieldPoint = Model.freeMarkFieldMaxPoints[i].FreeMarkFieldMaxPointID.ToString() + "_maxfreefieldpoint";
-                <th class="maxfreefieldpoint">
-                    <input class="max-point" type="number" value=@Model.freeMarkFieldMaxPoints[i].MaxPoint.ToString() id=@currentMaxFreeFieldPoint>
-                </th>
-            }
-            <th><p id="maxlectures">@Model.attendanceMaxPoints[0].MaxAmount</p></th>
+            <th><p id="maxlectures">@Model.oneItemPoint</p></th>
             <th><p id="automat-title">100</p></th>
             <th><p id="ECTS-title">ECTS</p></th>
         </tr>
     </thead>
     <tbody class="tablecontent">
-        @for (int i = 0; i < Model.studentsToShow.Count; i++)
+        @for (int i = 0; i < Model.students.Count; i++)
         {
-            <tr id=@Model.studentsToShow[i].RecordBookNumberID.ToString()>
-                <td class="name">@Model.studentsToShow[i].LastName @Model.studentsToShow[i].FirstName.Substring(0, 1). @Model.studentsToShow[i].MiddleName.Substring(0, 1)</td>
+            <tr id=@Model.students[i].RecordBookNumberID.ToString()>
+                <td class="name">@Model.students[i].LastName @Model.students[i].FirstName.Substring(0, 1). @Model.students[i].MiddleName.Substring(0, 1)</td>
                 @{
                     //Оценки
                     List
                     <Mark>
-                        marks = Model.marksToShow.Where(m => m.RecordBookNumberID == Model.studentsToShow[i].RecordBookNumberID).ToList();
-                    if (marks != null)
+                        marks = Model.marks.Where(m => m.RecordBookNumberID == Model.students[i].RecordBookNumberID).ToList();
+                    // везде заменить на marks.count != 0
+                    if (marks.Count != 0)
                     {
-                        for (int j = 0; j < Model.marksToShow.Max(l => l.LabNumber); j++)
+                        for (int j = 0; j < Model.marks.Max(l => l.LabNumber); j++)
                         {
                             if (j < marks.Count)
                             {
@@ -210,11 +235,11 @@
 
                     //домашки
                     List<HomeWork>
-                        hws = Model.hwToShow
-                        .Where(hw => hw.RecordBookNumberID == Model.studentsToShow[i].RecordBookNumberID).ToList();
-                    if (hws != null)
+                        hws = Model.homeworks
+                        .Where(hw => hw.RecordBookNumberID == Model.students[i].RecordBookNumberID).ToList();
+                    if (hws.Count != 0)
                     {
-                        for (int j = 0; j < Model.hwToShow.Max(hw => hw.HWNumber); j++)
+                        for (int j = 0; j < Model.homeworks.Max(hw => hw.HWNumber); j++)
                         {
                             if (j < hws.Count)
                             {
@@ -243,11 +268,11 @@
                     }
 
                     List<Module>
-                        modules = Model.modulesToShow
-                        .Where(m => m.RecordBookNumberID == Model.studentsToShow[i].RecordBookNumberID).ToList();
-                    if (modules != null)
+                        modules = Model.modules
+                        .Where(m => m.RecordBookNumberID == Model.students[i].RecordBookNumberID).ToList();
+                    if (modules.Count != 0)
                     {
-                        for (int j = 0; j < Model.modulesToShow.Max(m => m.ModuleNumber); j++)
+                        for (int j = 0; j < Model.modules.Max(m => m.ModuleNumber); j++)
                         {
                             if (j < modules.Count)
                             {
@@ -270,8 +295,8 @@
 
                     List<FreeMarkField>
                         freeMarkFields = Model.freeMarkFields
-                        .Where(m => m.RecordBookNumberID == Model.studentsToShow[i].RecordBookNumberID).ToList();
-                    if (freeMarkFields != null)
+                        .Where(m => m.RecordBookNumberID == Model.students[i].RecordBookNumberID).ToList();
+                    if (freeMarkFields.Count != 0)
                     {
                         for (int j = 0; j < Model.freeMarkFields.Max(m => m.FieldNumber); j++)
                         {
@@ -296,8 +321,8 @@
                     <td class="lectures">
                         <p id="studentAttends">@Model.attendanceAmount[i]</p>
                     </td>
-                    string studentMark = Model.studentsToShow[i].RecordBookNumberID + "_automat";
-                    string studentECTS = Model.studentsToShow[i].RecordBookNumberID + "_ECTS";
+                    string studentMark = Model.students[i].RecordBookNumberID + "_automat";
+                    string studentECTS = Model.students[i].RecordBookNumberID + "_ECTS";
                     <td class="automat">
                         <p id=@studentMark></p>
                     </td>
@@ -306,7 +331,7 @@
                     </td>
                 }
             </tr>
-       }
+        }
     </tbody>
 </table>
 
@@ -329,25 +354,25 @@
 
 @section scripts
 {
-    @*<script src="~/Scripts/showMarksJsHandler.js"></script>*@
+    <script src="~/Scripts/common.js"></script>
     <script>
         (function () {
             var tablecontent = $("tbody.tablecontent").children();
             var arrayOfInputData = []; //массив объектов, который хранит информацию о каждом инпуте, который должен подвергаться редактированию
-            var recordBookNumbersList = getRecordBookNumbers(); // массив из id студентов группы
-            var maxMarksSum = getMaxMarkSum();
-            handleDataFromCells();
+            var recordBookNumbersList = getRecordBookNumbers(tablecontent); // массив из id студентов группы
+            var maxMarksSum = getMaxMarkSum(arrayOfInputData);
+            handleDataFromCells(recordBookNumbersList, arrayOfInputData, maxMarksSum);
             for (var i = 0; i < arrayOfInputData.length; i++) {
                 var currentInput;
                 if (arrayOfInputData[i].rbn === "") {
                     currentInput = $("thead>tr.maxpoints>th." + arrayOfInputData[i].markType + ">input#" + arrayOfInputData[i].inputId);
-                    currentInput.bind("change", recalculateMaxMarkSumWithStudentsAutomats);
+                    currentInput.on("change", $.proxy(recalculateMaxMarkSumWithStudentsAutomats, currentInput, arrayOfInputData, recordBookNumbersList));
                 }
                 else {
                     currentInput = $("tbody.tablecontent>tr#" + arrayOfInputData[i].rbn + ">td>div>input#" + arrayOfInputData[i].inputId);
-                    currentInput.bind("change", recalculateMaxMarkSumWithStudentsAutomats);
+                    currentInput.on("change", $.proxy(recalculateMaxMarkSumWithStudentsAutomats, currentInput, arrayOfInputData, recordBookNumbersList));
                 }
-            }
+            }            
             $("#btn-savechanges").bind("click", function () {
                 getDatesToSend();
                 var dataToSend = arrayOfInputData;
@@ -365,29 +390,7 @@
                         alert("data has been sent to server");
                     }
                 });
-            });
-            $("#checkbox-date-to-mark").bind("change", function () {
-                var pointInputs;
-                var dateIpnuts;
-                if (!$(this).is(":checked"))  //если от "оценок" к "датам"
-                {
-                    pointInputs = $("tbody.tablecontent .point-normal")
-                        .removeClass("point-normal")
-                        .addClass("point-hidden");
-                    dateIpnuts = $("tbody.tablecontent .date-process-hidden")
-                        .removeClass("date-process-hidden")
-                        .addClass("date-process-normal");
-                }
-                else // если от "дат" к "оценкам"
-                {
-                    dateIpnuts = $("tbody.tablecontent .date-process-normal")
-                        .removeClass("date-process-normal")
-                        .addClass("date-process-hidden");
-                    pointInputs = $("tbody.tablecontent .point-hidden").
-                        removeClass("point-hidden")
-                        .addClass("point-normal");
-                }
-            });
+            });            
             function getDatesToSend() {
                 var moduleInputs = $("tbody.tablecontent>tr#" + recordBookNumbersList[0] + ">td.module");
                 var freeFieldInputs = $("tbody.tablecontent>tr#" + recordBookNumbersList[0] + ">td.freemarkfield");
@@ -407,164 +410,7 @@
                     }
                 }
                 debugger;
-            }
-            function recalculateMaxMarkSumWithStudentsAutomats() {
-                var table = $(this).closest("table");
-                var body = table[0].children[1];
-                var maxMarksSum = 0;
-                var maxPointsRow = $("thead>tr.maxpoints>th");
-                var cells = maxPointsRow.children();
-                // обработка thead
-                for (var i = 1; i < cells.length - 2; i++) {
-                    if (cells[i].localName === "input") {
-                        for (var k = 0; k < arrayOfInputData.length; k++) {
-                            if (arrayOfInputData[k].inputId === cells[i].id) {
-                                arrayOfInputData[k].inputvalue = cells[i].value;
-                                maxMarksSum += +cells[i].value;
-                            }
-                        }
-                    }
-                    else if (cells[i].localName === "p") {
-                        maxMarksSum += +cells[i].innerText;
-                    }
-                }
-                var cellToInputSum = $("thead>tr.maxpoints>th>p#automat-title").empty().append(maxMarksSum + "/100");
-
-                //обработка tbody
-                for (var i = 0; i < body.children.length; i++) {
-                    var currentStudent = $("tbody.tablecontent>tr#" + recordBookNumbersList[i]); // currentStudent - строка таблицы для i-го студента
-                    var studentsTotalPointer = 0; // сумма всех отметок студента
-
-                    // собираем все данные с ячеек строки студента
-                    var rowLength = currentStudent.children().length;
-                    for (var j = 1; j < rowLength - 2; j++) {
-                        var currentCell = currentStudent[0].children[j]; // currentCell - текущий "ребенок" строки - ячейка <td>
-                        if (currentCell.children.length > 0) {
-                            if (currentCell.className != "lectures") {
-                                if (currentCell.children[0].children[0].localName === "input") {
-                                    for (var k = 0; k < arrayOfInputData.length; k++) {
-                                        if (arrayOfInputData[k].inputId === currentCell.children[0].children[0].id) {
-                                            arrayOfInputData[k].inputvalue = currentCell.children[0].children[0].value;
-                                            studentsTotalPointer += +currentCell.children[0].children[0].value;
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                studentsTotalPointer += +currentCell.children[0].innerText;
-                            }
-                        } else continue;
-                    }
-                    var studentsAutomat = calcAutomat(maxMarksSum, studentsTotalPointer);
-                    var studentsECTS = getECTS(studentsAutomat);
-                    inputData(recordBookNumbersList[i], studentsAutomat, studentsECTS);
-                }
-            }
-            function handleDataFromCells() {
-                for (var i = 0; i < recordBookNumbersList.length; i++) {
-                    var currentStudent = $("tbody.tablecontent>tr#" + recordBookNumbersList[i]); // currentStudent - строка таблицы для i-го студента
-                    var studentsTotalPointer = 0; // сумма всех отметок студента
-
-                    var rowLength = currentStudent.children().length;
-                    for (var j = 1; j < rowLength - 2; j++) {
-                        // currentCell - текущий "ребенок" строки - ячейка <td>
-                        var currentCell = currentStudent[0].children[j];
-                        if (currentCell.children.length > 0) {
-                            if (currentCell.className != "lectures") {
-                                if (currentCell.children[0].children[0].localName === "input") {
-                                    var inputObj = new inputObject();
-                                    inputObj.rbn = currentStudent[0].id;    // номер зачетки студента
-                                    inputObj.markType = currentCell.closest("td").className; // тип оценки
-                                    inputObj.inputvalue = currentCell.children[0].children[0].value; // оценка
-                                    inputObj.inputId = currentCell.children[0].children[0].id; // id оценки в БД
-                                    arrayOfInputData.push(inputObj);
-                                    studentsTotalPointer += +currentCell.children[0].children[0].value;
-                                }
-                            }
-                            else {
-                                studentsTotalPointer += +currentCell.children[0].innerText;
-                            }
-                        } else continue;
-                    }
-                    var studentsAutomat = calcAutomat(maxMarksSum, studentsTotalPointer);
-                    var studentsECTS = getECTS(studentsAutomat);
-                    inputData(recordBookNumbersList[i], studentsAutomat, studentsECTS);
-                }
-            }
-            function inputObject() {
-                this.rbn = "";
-                this.markType = "";
-                this.inputvalue = "";
-                this.inputId = "";
-                this.dateOfReport = "";
-                this.dateOfProgram = "";
-            }
-            function getRecordBookNumbers() {
-                var rbnList = [];
-                for (var i = 0; i < tablecontent.length; i++) {
-                    rbnList.push(tablecontent[i].id);
-                }
-                return rbnList;
-            }
-            function calcAutomat(maxMarksSum, studentTotalPointer) {
-                if (maxMarksSum == 100) {
-                    return Math.round(studentTotalPointer);
-                }
-                else {
-                    var total = (studentTotalPointer * 100) / maxMarksSum;
-                    return Math.round(total);
-                }
-            }
-            function getMaxMarkSum() {
-                var maxMarksSum = 0;
-                var maxPointsRow = $("thead>tr.maxpoints>th");
-                var cells = maxPointsRow.children();
-                for (var i = 1; i < cells.length - 2; i++) {
-                    if (cells[i].localName === "input") {
-                        var inputObj = new inputObject();
-                        inputObj.rbn = "";
-                        inputObj.markType = cells[i].closest("th").className;
-                        inputObj.inputvalue = cells[i].value;
-                        inputObj.inputId = cells[i].id;
-                        arrayOfInputData.push(inputObj);
-
-                        maxMarksSum += +cells[i].value;
-                    }
-                    else if (cells[i].localName === "p") {
-                        maxMarksSum += +cells[i].innerText;
-                    }
-                }
-                var cellToInputSum = $("thead>tr.maxpoints>th>p#automat-title").empty().append(maxMarksSum + "/100");
-                return maxMarksSum;
-            }
-            function getECTS(finishMark) {
-                if (finishMark >= 0 && finishMark <= 34) {
-                    return "F";
-                }
-                else if (finishMark >= 35 && finishMark <= 59) {
-                    return "FX";
-                }
-                else if (finishMark >= 60 && finishMark <= 67) {
-                    return "E";
-                }
-                else if (finishMark >= 68 && finishMark <= 74) {
-                    return "D";
-                }
-                else if (finishMark >= 75 && finishMark <= 82) {
-                    return "C";
-                }
-                else if (finishMark >= 83 && finishMark <= 89) {
-                    return "B";
-                }
-                else if (finishMark >= 90) {
-                    return "A";
-                }
-                return "FX";
-            }
-            function inputData(id, automat, ECTS) {
-                var inputToPasteAutomat = $("tbody.tablecontent>tr#" + id + ">td.automat>p#" + id + "_automat").empty().append(automat);
-                var inputToPasteECTS = $("tbody.tablecontent>tr#" + id + ">td.ECTS>p#" + id + "_ECTS").empty().append(ECTS);
-            }
+            }            
         })();
     </script>
 }

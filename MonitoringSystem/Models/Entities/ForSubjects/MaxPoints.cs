@@ -34,7 +34,7 @@
     {
         public int AttMaxPointID { get; set; }
         public int SubjectID { get; set; }        
-        public int MaxAmount { get; set; }
+        public double MaxAmount { get; set; }
 
         public virtual Subject Subject { get; set; }
     }

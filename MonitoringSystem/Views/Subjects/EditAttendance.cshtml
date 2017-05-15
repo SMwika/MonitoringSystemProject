@@ -4,10 +4,9 @@
     var options = new AjaxOptions()
     {
         UpdateTargetId = "datatable",
-       
+
     };
 }
-
 <style>
     .name {
         width: 220px;
@@ -63,7 +62,6 @@
     groupId = Model.groupId,
     subjectId = Model.subjectId
 }, options, new { @class = "btn btn-success" })
-    @*<input type="button" id="add-date-button" class="btn btn-success" value="Добавить дату" />*@
     @Html.RouteLink("Удалить дату", "toMarks", new
 {
     controller = "Subjects",
@@ -72,6 +70,9 @@
     subjectId = Model.subjectId
 }, new { @class = "btn btn-danger" })
     <div class="one-item-point-wrapper">
+        @*@{
+                double value = Model.oneItemPoint.Count > 0 ? Convert.ToDouble(Model.oneItemPoint[0].Value.Replace(',','.')) : 0;
+            }*@                 
         <p id="one-item-point">Балл за одно посещение: @Model.oneItemPoint[0].Value</p>
         <input type="text" value=@Model.oneItemPoint[0].Value class="one-item-point-input-hidden" />
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -110,53 +111,37 @@
                             @Html.CheckBoxFor(modelItem => att.IsVisited, new
                        {
                            @id = idCheckbox,
-                           @class = "checkbox-is-visited "+rowClass,
+                           @class = "checkbox-is-visited " + rowClass,
                            @data_id = att.AttendanceID,
                            @data_index = att.Index,
                            @data_classdate = att.ClassDate.ToString("yyyy-MM-dd")
                        })
-                            @*<p class="class-date @rowClass">@Html.DisplayFor(modelItem => att.ClassDate)</p>*@
                         </td>
 
                     }
                 }
-
                 <td><p class="total-point">0</p></td>
             </tr>
-                    }
-
+      }
 </table>
 
-<input type="button" id="save-changes-button" class="btn btn-primary" value="Сохранить изменения"/>
+<input type="button" id="save-changes-button" class="btn btn-primary" value="Сохранить изменения" />
 
 @section scripts
 {
+    <script src="~/Scripts/common.js"></script>
+    <script src="~/Scripts/editAttendance.js"></script>
     <script>
         (function () {
             var tablecontent = $("tbody.tablecontent").children();
             var oneItemPoint = $("#one-item-point");
-            var recordBookNumbersList = getRecordBookNumbers();
-            recalculateTotalAttendancePoint();
+            var recordBookNumbersList = getRecordBookNumbers(tablecontent);
+            recalculateTotalAttendancePoint(recordBookNumbersList, oneItemPoint);
             var groupId = "@Model.groupId";
             var subjectId = "@Model.subjectId";
             for (var i = 0; i < recordBookNumbersList.length; i++) {
                 var currentCheckbox = $("tbody.tablecontent>tr#" + recordBookNumbersList[i] + ">td>input.checkbox-is-visited");
-                currentCheckbox.bind("change", calcualteTotalAttendancePoint);
-            }
-            function calcualteTotalAttendancePoint() {
-                var currentStudent = $(this).closest("tr");
-                var outputParagraph = $("tbody.tablecontent>tr#" + currentStudent[0].id + " p.total-point");
-                var rowLength = currentStudent.children().length;
-                var oneItemPointValue = parseFloat(oneItemPoint[0].innerHTML.substr(oneItemPoint[0].innerText.lastIndexOf(" ") + 1));
-                var sum = 0;
-                for (var i = 1; i < rowLength - 1; i++) {
-                    var studentsCheckbox = $("tbody.tablecontent>tr#" + currentStudent[0].id + ">td>input#" + currentStudent[0].id + "-" + i);
-                    if (studentsCheckbox.is(":checked")) {
-                        sum += oneItemPointValue;
-                    }
-                }
-                sum = sum.toFixed(2);
-                outputParagraph.empty().append(sum);
+                currentCheckbox.bind("change", $.proxy(calcualteTotalAttendancePoint, currentCheckbox, oneItemPoint));
             }
             $(".glyphicon-pencil").bind("click", function () {
                 var input = $(".one-item-point-input-hidden")
@@ -165,7 +150,7 @@
                 oneItemPoint.empty().append("Балл за одно посещение: ");
             });
             $(".input-date").bind("change", function () {
-                var index = this.dataset.rowIndex;                
+                var index = this.dataset.rowIndex;
 
                 var dates = $(".class-date-" + index);
                 for (var i = 0; i < dates.length; i++) {
@@ -173,28 +158,21 @@
                 }
                 debugger;
             });
-            function getRecordBookNumbers() {
-                var rbnList = [];
-                for (var i = 0; i < tablecontent.length; i++) {
-                    rbnList.push(tablecontent[i].id);
-                }
-                return rbnList;
-            }
             $(".glyphicon-ok").bind("click", function () {
                 var input = $(".one-item-point-input");
                 var value = input[0].value;
                 input.removeClass("one-item-point-input")
                      .addClass("one-item-point-input-hidden");
                 oneItemPoint.empty().append("Балл за одно посещение: " + value);
-                recalculateTotalAttendancePoint();
-                
+                recalculateTotalAttendancePoint(recordBookNumbersList, oneItemPoint);
+
                 var url = decodeURI(window.location.href);
                 $.ajax({
                     url: "@Url.Action("SaveOneItemPoint")",
                     type: "POST",
                     data: JSON.stringify({
-                            "value": value,
-                            "url": url
+                        "value": value,
+                        "url": url
                     }),
                     contentType: 'application/json',
                     dataType: 'json',
@@ -231,7 +209,6 @@
                     'attendanceDates': attendanceDates,
                     'url': url
                 });
-
                 $.ajax({
                     url: "@Url.Action("SaveAttendances")",
                     type: "POST",
@@ -241,59 +218,8 @@
                     success: function (data) {
                         alert("data has been sent to server");
                     }
-                });                
+                });
             });
-            function recalculateTotalAttendancePoint() {
-                for (var i = 0; i < recordBookNumbersList.length; i++) {
-                    var outputParagraph = $("tbody.tablecontent>tr#" + recordBookNumbersList[i] + " p.total-point");
-                    var rowLength = $("tbody.tablecontent>tr#" + recordBookNumbersList[i]).children().length;
-                    var oneItemPointValue = parseFloat(oneItemPoint[0].innerHTML.substr(oneItemPoint[0].innerText.lastIndexOf(" ") + 1));
-                    var sum = 0;
-                    for (var j = 1; j < rowLength - 1; j++) {
-                        var studentsCheckbox = $("tbody.tablecontent>tr#" + recordBookNumbersList[i] + ">td>input#" + recordBookNumbersList[i] + "-" + j);
-                        if (studentsCheckbox.is(":checked")) {
-                            sum += oneItemPointValue;
-                        }
-                    }
-                    sum = sum.toFixed(2);
-                    outputParagraph.empty().append(sum);
-                }
-            }
-            function Attendance(AttendanceID, RecordBookNumberID, SubjectID, ClassDate, IsVisited, Index) {
-                this.AttendanceID = AttendanceID;
-                this.RecordBookNumberID = RecordBookNumberID;
-                this.SubjectID = SubjectID;
-                this.ClassDate = ClassDate;
-                this.IsVisited = IsVisited;
-                this.Index = Index;
-            }
-            function AttendanceDate(AttendanceDateId, Date, Index, SubjectId) {
-                this.AttendanceDateId = AttendanceDateId;
-                this.Date = Date;
-                this.Index = Index;
-                this.SubjectId = SubjectId;
-            }
         })();
     </script>
 }
-
-@*$("#add-date-button").bind("click", function () {
-
-        console.log("i work");
-
-        var datas = JSON.stringify({
-            'groupId': groupId,
-            'subjectId': subjectId
-        });
-
-        $.ajax({
-            url: "@Url.Action("AddAttendanceDate")",
-            type: "GET",
-            dataType: 'json',
-            contentType: 'application/json',
-            data: datas,
-            success: function (data) {
-                alert("data has been sent to server");
-            }
-        });
-    });*@

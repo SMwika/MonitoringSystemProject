@@ -14,8 +14,7 @@ namespace MonitoringSystem.Controllers
 
         public ActionResult Index()
         {
-            
-            return View();
+            return View(db.Groups.ToList());
         }
 
         public ActionResult About()
@@ -51,8 +50,11 @@ namespace MonitoringSystem.Controllers
 
             student = search.ToList();
             return View("SearchStudentResults",student);
-        }      
+        }
+    }
 
-        
+    public class GroupModel
+    {
+        public List<Group> groups { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace MonitoringSystem.Models
 
         public string GroupID { get; set; }
         public virtual Group Group { get; set; }
+        public virtual Subject Subject { get; set; }
 
         [Required (ErrorMessage ="Введите имя"), Display(Name ="Имя студента")]
         public string FirstName { get; set; }

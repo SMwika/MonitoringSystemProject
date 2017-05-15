@@ -131,14 +131,14 @@
     <Content Include="Content\ShowMarksStyleSheet.css" />
     <Compile Include="Controllers\CourseProjectLinesController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
-    <Compile Include="Controllers\SubjectCPsHelper.cs" />
-    <Compile Include="Controllers\SubjectsComtrollers\HelpersToAttendances.cs" />
-    <Compile Include="Controllers\SubjectsComtrollers\HelpersToShowMarks.cs" />
+    <Compile Include="Controllers\HelperToSubjectCPs.cs" />
+    <Compile Include="Controllers\HelperToAttendances.cs" />
+    <Compile Include="Controllers\HelperToSubjects.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MarksController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\SubjectCPsController.cs" />
-    <Compile Include="Controllers\SubjectsComtrollers\SubjectsController.cs" />
+    <Compile Include="Controllers\SubjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,6 +174,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\editAttendance.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

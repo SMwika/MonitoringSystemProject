@@ -1,53 +1,49 @@
 ﻿@using MonitoringSystem.Models
-@model IEnumerable<MonitoringSystem.Models.Subject>
+@model MonitoringSystem.Controllers.SubjectModel
 @{
     ViewBag.Title = "Список предметов";
 }
 
 <h2>Список предметов</h2>
-@{
-    IEnumerable<Subject> name = Model.Select(s =>
-        new Subject
-        {
-            SubjectID = s.SubjectID,
-            SubjectName = s.SubjectName,
-            Term = s.Term,
-            SubjectType = s.SubjectType
-        });
-    List<Subject> names = name.ToList();
-}
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SubjectName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Term)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubjectType)
-        </th>
-        <th></th>
+        <th>Название предмета</th>
+        <th>Семестр</th>
+        <th>Тип предмета</th>
     </tr>
-    @for (int i = 0; i < Model.Count(); i++)
-    {
-        <tr>
-            <td>
-                @Html.RouteLink(names[i].SubjectName, "toMarks",
+    @{
+        foreach (var subject in Model.subjects)
+        {
+            <tr>
+                <td>
+                    @Html.RouteLink(subject.SubjectName, "toMarks",
                                  new
                                  {
                                      controller = "Subjects",
                                      action = "ShowMarks",
                                      groupId = ViewBag.GroupNumber as string,
-                                     subjectId = names[i].SubjectID.ToString()
+                                     subjectId = subject.SubjectID
                                  })
-            </td>
-            <td>
-                <p>@names[i].Term</p>
-            </td>
-            <td>
-                <p>@names[i].SubjectType</p>
-            </td>
-        </tr>
+                </td>
+                <td>@subject.Term</td>
+                <td>@subject.SubjectType</td>
+            </tr>
+        }
+        foreach (var subjectCP in Model.subjectCPs)
+        {
+            <tr>
+                <td>
+                    @Html.RouteLink(subjectCP.SubjectCPName, "toCPMarks",
+                                 new
+                                 {
+                                     controller = "SubjectCPs",
+                                     action = "ShowMarks",
+                                     groupId = ViewBag.GroupNumber as string,
+                                     subjectId = subjectCP.SubjectCP_ID
+                                 })
+                </td>
+                <td>@subjectCP.Term</td>
+            </tr>
+        }
     }
 </table>
