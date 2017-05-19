@@ -139,12 +139,19 @@ namespace MonitoringSystem.Controllers
         {
             SubjectCP subject = db.SubjectCPs.Find(subjectId);
             List<Student> studentsInGroup = subject.Students.ToList();
+            int MaxLineIndex = 0, MaxCP_ID = 0, MaxCPLineMaxPointID = 0;
 
-            int MaxLineIndex = db.CourseProjectLines
+            if (db.CourseProjectLines.Count() > 0)
+            {
+                MaxLineIndex = db.CourseProjectLines
                 .Where(m => m.SubjectCP.SubjectCP_ID == subjectId && m.Student.GroupID == groupId)
                 .Max(m => m.LineIndex);
-            int MaxCP_ID = db.CourseProjectLines.Max(m => m.CourseProjectLineID);
-            int MaxCPLineMaxPointID = db.CPLineMaxPoints.Max(m => m.CPLineMaxPointID);
+                MaxCP_ID = db.CourseProjectLines.Max(m => m.CourseProjectLineID);
+            }
+            if (db.CPLineMaxPoints.Count() > 0)
+            {
+                MaxCPLineMaxPointID = db.CPLineMaxPoints.Max(m => m.CPLineMaxPointID);
+            }
             db.CPLineMaxPoints.Add(new CPLineMaxPoint() { CPLineMaxPointID = MaxCPLineMaxPointID + 1, LineIndex = MaxLineIndex + 1, MaxPoint = 0, SubjectCPID = (int)subjectId, LineName = "Новый этап"});
             foreach (var student in studentsInGroup)
             {
@@ -166,16 +173,23 @@ namespace MonitoringSystem.Controllers
 
         public ActionResult RemoveCPLine(string groupId, int? subjectId)
         {
-            int MaxLineIndex = db.CourseProjectLines
+            int MaxLineIndex = 0, MaxCPLineMaxPointID = 0; 
+            if (db.CourseProjectLines.Count() > 0)
+            {
+                MaxLineIndex = db.CourseProjectLines
                                  .Where(m => m.SubjectCP.SubjectCP_ID == subjectId && m.Student.GroupID == groupId)
                                  .Max(m => m.LineIndex);
-            int MaxCPLineMaxPointID = db.CPLineMaxPoints.Max(m => m.LineIndex);
-
-            db.CPLineMaxPoints
-              .RemoveRange(db.CPLineMaxPoints
-                             .Where(m => m.CPLineMaxPointID == MaxCPLineMaxPointID));
-
-            db.CourseProjectLines.RemoveRange(db.CourseProjectLines.Where(m => m.LineIndex == MaxLineIndex));
+            }
+            if (db.CPLineMaxPoints.Count() > 0)
+            {
+                MaxCPLineMaxPointID = db.CPLineMaxPoints.Max(m => m.LineIndex);
+                db.CPLineMaxPoints.RemoveRange(db.CPLineMaxPoints.Where(m => m.CPLineMaxPointID == MaxCPLineMaxPointID));
+            }
+            if (db.CourseProjectLines.Count() > 0)
+            {
+                db.CourseProjectLines.RemoveRange(db.CourseProjectLines.Where(m => m.LineIndex == MaxLineIndex));
+            }
+              
             db.SaveChanges();
             return RedirectToAction(getUrl("ShowMarks", groupId, Convert.ToInt32(subjectId)));
         }
