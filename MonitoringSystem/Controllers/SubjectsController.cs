@@ -243,7 +243,7 @@ namespace MonitoringSystem.Controllers
             foreach (var student in studentsInGroup)
             {
                 MaxLabID++;
-                student.Marks.Add(new Mark()
+                subject.Marks.Add(new Mark()
                 {
                     MarkID = MaxLabID,
                     LabNumber = (MaxLabNumber + 1),
@@ -280,20 +280,20 @@ namespace MonitoringSystem.Controllers
             {
                 MaxModuleMaxPointID = db.HWMaxPoints.Max(m => m.HWMaxPointID);
             }
-
+            
             db.HWMaxPoints.Add(new HWMaxPoint() { HWMaxPointID = MaxModuleMaxPointID + 1, HWNumber = MaxHWNumber + 1, MaxPoint = 0, SubjectID = (int)subjectId });
             foreach (var student in studentsInGroup)
             {
                 MaxHWID++;
-                student.Homeworks.Add(new HomeWork()
+                subject.HomeWorks.Add(new HomeWork()
                 {
                     HomeWorkID = MaxHWID,
                     HWNumber = (MaxHWNumber + 1),
                     RecordBookNumberID = student.RecordBookNumberID,
                     DateOfProgram = DateTime.Now,
                     DateOfReport = DateTime.Now,
-                    SubjectID = Convert.ToInt32(subjectId),
-                    HWPoint = 0
+                    SubjectID = Convert.ToInt32(subjectId),                    
+                    HWPoint = 0,
                 });
             }
 
@@ -326,7 +326,7 @@ namespace MonitoringSystem.Controllers
             foreach (var student in studentsInGroup)
             {
                 MaxModuleID++;
-                student.Modules.Add(new Module()
+                subject.Modules.Add(new Module()
                 {
                     ModuleID = MaxModuleID,
                     ModuleNumber = (MaxModuleNumber + 1),
@@ -365,7 +365,7 @@ namespace MonitoringSystem.Controllers
             foreach (var student in studentsInGroup)
             {
                 MaxFreeMaxMarkID++;
-                student.FreeMarkFields.Add(new FreeMarkField()
+                subject.FreeMarkFields.Add(new FreeMarkField()
                 {
                     FreeMarkFieldID = MaxFreeMaxMarkID,
                     FieldNumber = (MaxFreeMarkFieldNumber + 1),
@@ -571,7 +571,8 @@ namespace MonitoringSystem.Controllers
             model.subjectName = db.Subjects.Find(subjectId).SubjectName;
             model.attendances = db.Attendances.Where(att => att.Subject.SubjectID == subjectId && att.Student.GroupID == groupId).ToList();
             model.attendanceDates = attendanceDates;
-            model.oneItemPoint = db.OneItemPoints.Where(pt => pt.SubjectId == subjectId).ToList();
+            model.oneItemPoint = db.OneItemPoints.Where(pt => pt.SubjectId == subjectId).ToList().Count > 0 
+                ? db.OneItemPoints.Where(pt => pt.SubjectId == subjectId).ToList() : new List<OneItemPoint>() {  };
             return View(model);            
         } 
         //[HttpPost]
@@ -600,7 +601,7 @@ namespace MonitoringSystem.Controllers
             foreach (var student in studentsInGroup)
             {
                 maxAttendanceId++;
-                student.Attendances.Add(new Attendance()
+                subject.Attendances.Add(new Attendance()
                 {
                     AttendanceID = maxAttendanceId,
                     ClassDate = DateTime.Now,

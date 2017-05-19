@@ -137,7 +137,8 @@ namespace MonitoringSystem.Controllers
         }
         public ActionResult AddCPLine(string groupId, int? subjectId)
         {
-            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+            SubjectCP subject = db.SubjectCPs.Find(subjectId);
+            List<Student> studentsInGroup = subject.Students.ToList();
 
             int MaxLineIndex = db.CourseProjectLines
                 .Where(m => m.SubjectCP.SubjectCP_ID == subjectId && m.Student.GroupID == groupId)
@@ -148,7 +149,7 @@ namespace MonitoringSystem.Controllers
             foreach (var student in studentsInGroup)
             {
                 MaxCP_ID++;
-                student.CourseProjectLines.Add(new CourseProjectLine()
+                subject.CourseProjectLines.Add(new CourseProjectLine()
                 {
                     CourseProjectLineID = MaxCP_ID,
                     LineIndex = (MaxLineIndex + 1),
@@ -159,7 +160,6 @@ namespace MonitoringSystem.Controllers
                     LineName = "Новый этап"
                 });
             }
-
             db.SaveChanges();
             return RedirectToAction(getUrl("ShowMarks", groupId, Convert.ToInt32(subjectId)));
         }

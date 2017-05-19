@@ -24,7 +24,6 @@ namespace MonitoringSystem.Models
         public int HWNumber { get; set; }
 
         public DateTime DateOfReport { get; set; }
-
         public DateTime DateOfProgram { get; set; }
 
         public virtual Student Student { get; set; }

@@ -8,10 +8,11 @@ using System.Web;
 namespace MonitoringSystem.Models
 {
     public partial class TotalJournalDBInitializer : DropCreateDatabaseAlways<TotalJournalContext>
-    {       
+    {
         protected override void Seed(TotalJournalContext context)
         {
             GroupInit(ref context);
+            #region studentsInit 
             List<Student> students4 = new List<Student>
             {
                 new Student() { RecordBookNumberID = "436001", FirstName = "Катерина", LastName = "Андрющенко", MiddleName = "Сергеевна", GroupID = "641п", },
@@ -79,9 +80,9 @@ namespace MonitoringSystem.Models
             };
             students4.ForEach(s => context.Students.Add(s));
             context.SaveChanges();
+            #endregion studentsInit
             TeacherInit(ref context);
-
-
+            #region subInit
             List<Subject> subjects = new List<Subject>
             {
                 new Subject() { SubjectID = 1, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 1, TeacherID=8, Students = new List<Student>() },
@@ -122,7 +123,7 @@ namespace MonitoringSystem.Models
             };
             subjects.ForEach(s => context.Subjects.Add(s));
             context.SaveChanges();
-
+            #endregion subInit
             foreach (var subject in context.Subjects)
             {
                 foreach (var student in students4)
@@ -130,17 +131,33 @@ namespace MonitoringSystem.Models
                     subject.Students.Add(student);
                 }
             }
-
+            context.SaveChanges();
+            List<SubjectCP> subjectCPs = new List<SubjectCP>
+            {
+                new SubjectCP() { SubjectCP_ID = 1, SubjectCPName = "Основы программирования(КП)", Term = 3, TeacherID = 1, Students = new List<Student>() },
+                new SubjectCP() { SubjectCP_ID = 2, SubjectCPName = "Объектно-ориентированное программирование(КП)", Term = 4, TeacherID = 1,  Students = new List<Student>() },
+                new SubjectCP() { SubjectCP_ID = 3, SubjectCPName = "Алгоритмы и структуры данных(КП)", Term = 5, TeacherID = 1,  Students = new List<Student>() },
+                new SubjectCP() { SubjectCP_ID = 4, SubjectCPName = "Операционные системы(КП)", Term = 6, TeacherID = 1,  Students = new List<Student>() },
+                new SubjectCP() { SubjectCP_ID = 5, SubjectCPName = "Базы данных(КП)", Term = 7, TeacherID = 1, Students = new List<Student>() },
+                new SubjectCP() { SubjectCP_ID = 6, SubjectCPName = "Проектирование распределенных систем ЭВМ(КП)", Term = 8, TeacherID = 1, Students = new List<Student>() }
+            };
+            subjectCPs.ForEach(s => context.SubjectCPs.Add(s));
+            context.SaveChanges();
+            foreach (var subjectCP in context.SubjectCPs)
+            {
+                foreach (var student in students4)
+                {
+                    subjectCP.Students.Add(student);
+                }
+            }
             context.SaveChanges();
 
-
             //MarkInit(ref context);
-            SubjectCPInit(ref context);
-            CourseProjectLineInit(ref context);
+            //SubjectCPInit(ref context);
+            //CourseProjectLineInit(ref context);
             //ModuleInit(ref context);
             //HomeWorkInit(ref context);
             //AttendanceInit(ref context);
-
 
             //context.LabMaxPoints.Add(new LabMaxPoint() { LabMaxPointID = 1, LabNumber = 1, MaxPoint = 5, SubjectID = 32 });
             //context.LabMaxPoints.Add(new LabMaxPoint() { LabMaxPointID = 2, LabNumber = 2, MaxPoint = 5, SubjectID = 32 });
@@ -155,8 +172,8 @@ namespace MonitoringSystem.Models
             //context.FreeMarkFields.Add(new FreeMarkField() { FreeMarkFieldID = 3, FieldName = "Доп.баллы", FieldNumber = 1, FieldPoint = 5, RecordBookNumberID = "436003", SubjectID = 32 });
             //context.FreeMarkFieldMaxPoints.Add(new FreeMarkFieldMaxPoint() { FreeMarkFieldMaxPointID = 1, FieldName = "Доп.баллы", MaxPoint = 10, FieldNumber = 1, SubjectID = 32 });
 
-            context.OneItemPoints.Add(new OneItemPoint() { OneItemPointID=1, SubjectId=32, Value="1"});
             context.CPLineMaxPoints.Add(new CPLineMaxPoint() { CPLineMaxPointID = 1, LineIndex = 1, LineName = "Постановка задачи", MaxPoint = 5, SubjectCPID = 6 });
+            context.OneItemPoints.Add(new OneItemPoint() { OneItemPointID = 1, SubjectId = 32, Value = "1" });
 
             context.SaveChanges();
             base.Seed(context);

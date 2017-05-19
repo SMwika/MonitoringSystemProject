@@ -19,11 +19,8 @@ namespace MonitoringSystem.Controllers
         {
             var students = db.Students
                 .Include(s => s.Group)
-                .Include(s => s.Marks)
-                .Include(s => s.Homeworks)
-                .Include(s => s.Attendances)
-                .Include(s => s.Modules)
-                .Include(s => s.CourseProjectLines);
+                .Include(s => s.Subjects)  
+                .Include(s => s.SubjectCPs);
             return View(students.ToList());
         }
 
