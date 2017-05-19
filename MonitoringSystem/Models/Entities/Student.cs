@@ -18,6 +18,7 @@ namespace MonitoringSystem.Models
             CourseProjectLines = new HashSet<CourseProjectLine>();
             Homeworks = new HashSet<HomeWork>();
             FreeMarkFields = new HashSet<FreeMarkField>();
+            Subjects = new HashSet<Subject>();
         }
 
         [Key, Required (ErrorMessage ="Введите № зачетки студента"), Display(Name ="№ зачетки")]
@@ -25,7 +26,7 @@ namespace MonitoringSystem.Models
 
         public string GroupID { get; set; }
         public virtual Group Group { get; set; }
-        public virtual Subject Subject { get; set; }
+       // public virtual Subject Subject { get; set; }
 
         [Required (ErrorMessage ="Введите имя"), Display(Name ="Имя студента")]
         public string FirstName { get; set; }
@@ -42,5 +43,6 @@ namespace MonitoringSystem.Models
         public virtual ICollection<CourseProjectLine> CourseProjectLines { get; set; }
         public virtual ICollection<HomeWork> Homeworks { get; set; }
         public virtual ICollection<FreeMarkField> FreeMarkFields { get; set; }
+        public virtual ICollection<Subject> Subjects { get; set; }
     }
 }

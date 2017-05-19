@@ -203,7 +203,7 @@
                     <Mark>
                         marks = Model.marks.Where(m => m.RecordBookNumberID == Model.students[i].RecordBookNumberID).ToList();
                     // везде заменить на marks.count != 0
-                    if (marks.Count != 0)
+                    if (marks.Count > 0)
                     {
                         for (int j = 0; j < Model.marks.Max(l => l.LabNumber); j++)
                         {
@@ -237,7 +237,7 @@
                     List<HomeWork>
                         hws = Model.homeworks
                         .Where(hw => hw.RecordBookNumberID == Model.students[i].RecordBookNumberID).ToList();
-                    if (hws.Count != 0)
+                    if (hws.Count > 0)
                     {
                         for (int j = 0; j < Model.homeworks.Max(hw => hw.HWNumber); j++)
                         {
@@ -270,7 +270,7 @@
                     List<Module>
                         modules = Model.modules
                         .Where(m => m.RecordBookNumberID == Model.students[i].RecordBookNumberID).ToList();
-                    if (modules.Count != 0)
+                    if (modules.Count > 0)
                     {
                         for (int j = 0; j < Model.modules.Max(m => m.ModuleNumber); j++)
                         {
@@ -296,7 +296,7 @@
                     List<FreeMarkField>
                         freeMarkFields = Model.freeMarkFields
                         .Where(m => m.RecordBookNumberID == Model.students[i].RecordBookNumberID).ToList();
-                    if (freeMarkFields.Count != 0)
+                    if (freeMarkFields.Count > 0)
                     {
                         for (int j = 0; j < Model.freeMarkFields.Max(m => m.FieldNumber); j++)
                         {

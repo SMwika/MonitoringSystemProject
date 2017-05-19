@@ -217,7 +217,9 @@ namespace MonitoringSystem.Controllers
             //получаем максимальный номер лабы по предмету
             //получаем максимальный ИД в таблице
             // в цикле по студентам каждому студенту присваиваем ноль по лабе с данным номером
-            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+            // db.Students.Where(s => s.Subject.)
+            Subject subject = db.Subjects.Find(subjectId);
+            List<Student> studentsInGroup = subject.Students.ToList();
             int MaxLabNumber = 0, 
                 MaxLabID = 0,
                 MaxLabMaxPointID = 0;
@@ -258,7 +260,8 @@ namespace MonitoringSystem.Controllers
         }
         public ActionResult AddHomeWorkColumn(string groupId, int? subjectId)
         {
-            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+            Subject subject = db.Subjects.Find(subjectId);
+            List<Student> studentsInGroup = subject.Students.ToList();
             int MaxHWNumber = 0,
                 MaxHWID = 0,
                 MaxModuleMaxPointID = 0;
@@ -299,7 +302,8 @@ namespace MonitoringSystem.Controllers
         }
         public ActionResult AddModuleColumn(string groupId, int? subjectId)
         {
-            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+            Subject subject = db.Subjects.Find(subjectId);
+            List<Student> studentsInGroup = subject.Students.ToList();
             int MaxModuleNumber = 0,
                 MaxModuleID = 0,
                 MaxModuleMaxPointID = 0;
@@ -337,7 +341,8 @@ namespace MonitoringSystem.Controllers
         }
         public ActionResult AddFreeFieldColumn(string groupId, int? subjectId)
         {
-            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+            Subject subject = db.Subjects.Find(subjectId);
+            List<Student> studentsInGroup = subject.Students.ToList();
             int MaxFreeMarkFieldNumber = 0,
                 MaxFreeMaxMarkID = 0,
                 MaxFreeMaxMarkMaxPointID = 0;
@@ -424,7 +429,7 @@ namespace MonitoringSystem.Controllers
         }
         public ActionResult RemoveModuleColumn(string groupId, int? subjectId)
         {
-            // взять все оценки в группе  по предмету и удалить те, где 
+            // взять все оценки по предмету и удалить те, где 
             // номер лабы = максимальный номер лабы
             int MaxModuleNumber = 0, MaxModuleMaxPointID = 0;
             if (db.ModuleMaxPoints.Where(m => m.Subject.SubjectID == subjectId).Count() != 0)
@@ -447,7 +452,7 @@ namespace MonitoringSystem.Controllers
         }
         public ActionResult RemoveFreeFieldColumn(string groupId, int? subjectId)
         {
-            // взять все оценки в группе  по предмету и удалить те, где 
+            // взять все оценки в предмету и удалить те, где 
             // номер лабы = максимальный номер лабы
             int MaxFreeFieldNumber = 0, MaxFreeFieldMaxPointID = 0;
             if (db.FreeMarkFieldMaxPoints.Where(m => m.Subject.SubjectID == subjectId).Count() != 0)
@@ -572,7 +577,12 @@ namespace MonitoringSystem.Controllers
         //[HttpPost]
         public ActionResult AddAttendanceDate(string groupId, string subjectId)
         {
-            List<Student> studentsInGroup = db.Students.Where(s => s.GroupID == groupId).ToList();
+            int courseNumber = Cn(groupId);
+            int subId = Convert.ToInt32(subjectId);
+            // кааждому студенту, у которого есть данный предмет выставить по нем посещение
+            Subject subject = db.Subjects.Find(subId);
+            List<Student> studentsInGroup = subject.Students.ToList();
+
             int maxAttendanceDateId = 0;
             int maxAttendanceId = 0;
             int indexAttendanceDate = 0, indexAttendance = 0;
@@ -641,11 +651,7 @@ namespace MonitoringSystem.Controllers
             }
             int indexOfLastSlash = url.LastIndexOf('/');
             int subjectId = Convert.ToInt32(url.Substring(indexOfLastSlash + 1));
-            //List<AttMaxPoint> attMaxPoints = db.AttMaxPoints.Where(pt => pt.Subject.SubjectID == subjectId).ToList();
-            //foreach(AttMaxPoint attMaxPoint in attMaxPoints)
-            //{
-            //    attMaxPoint.MaxAmount = attendanceDates.Max(attD => attD.Index);
-            //}
+            
 
             db.SaveChanges();
             return View();

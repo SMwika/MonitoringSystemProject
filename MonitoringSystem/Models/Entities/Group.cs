@@ -13,6 +13,7 @@ namespace MonitoringSystem.Models
         public Group()
         {
             Students = new HashSet<Student>();
+            Subjects = new HashSet<Subject>();
         }
 
         [Display(Name = "Номер группы"), Required(ErrorMessage = "Введите номер группы"),
@@ -24,6 +25,7 @@ namespace MonitoringSystem.Models
         public int CourseNumber { get; set; }
         
         public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Subject> Subjects { get; set; }
     }
 
     
