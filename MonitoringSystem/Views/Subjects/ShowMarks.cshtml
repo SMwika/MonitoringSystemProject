@@ -187,7 +187,7 @@
                     }
                 }
             }
-            <th><p id="maxlectures">@Model.oneItemPoint</p></th>
+            <th><p id="maxlectures">@Model.oneItemPoint.ToString().Replace(',', '.')</p></th>
             <th><p id="automat-title">100</p></th>
             <th><p id="ECTS-title">ECTS</p></th>
         </tr>
@@ -319,7 +319,7 @@
                         }
                     }
                     <td class="lectures">
-                        <p id="studentAttends">@Model.attendanceAmount[i]</p>
+                        <p id="studentAttends">@Model.attendanceAmount[i].ToString().Replace(',','.')</p>
                     </td>
                     string studentMark = Model.students[i].RecordBookNumberID + "_automat";
                     string studentECTS = Model.students[i].RecordBookNumberID + "_ECTS";

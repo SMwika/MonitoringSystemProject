@@ -208,7 +208,22 @@ namespace MonitoringSystem.Controllers
                     attendances[i] = 0;
                 }                
             }
-            modelList.oneItemPoint = atts.Count > 0 ? Convert.ToDouble(oip[0].Value.Replace('.', ','))*atts.Max(at => at.Index) : 0;
+            //if (oip.Count() > 0)
+            //{
+            //    if (atts.Count() > 0)
+            //    {
+            //        modelList.oneItemPoint = Convert.ToDouble(oip[0].Value.Replace('.', ','))*atts.Max(at => at.Index);
+            //    }
+            //    else // atts.Count > 0
+            //    {
+            //        modelList.oneItemPoint = Convert.ToDouble(oip[0].Value.Replace('.', ','))*;
+            //    }
+            //}
+            //else
+            //{
+            //    modelList.oneItemPoint = 0;
+            //}
+            modelList.oneItemPoint = atts.Count() > 0 ? Convert.ToDouble(oip[0].Value.Replace('.', ','))*atts.Max(at => at.Index) : 0;
             modelList.attendanceAmount = attendances;
             return View(modelList);
         }            
@@ -535,12 +550,32 @@ namespace MonitoringSystem.Controllers
         {
             int indexOfLastSlash = url.LastIndexOf('/');
             int subjectId = Convert.ToInt32(url.Substring(indexOfLastSlash + 1));
+            int maxOneItemPointId = 0;
 
             List<OneItemPoint> oneItemPoints = db.OneItemPoints.Where(atts => atts.Subject.SubjectID == subjectId).ToList();
-            foreach(OneItemPoint oneItemPoint in oneItemPoints)
+
+            if (oneItemPoints.Count == 0)
             {
-                oneItemPoint.Value = value;
+                if (db.OneItemPoints.Count() > 0)
+                {
+                    maxOneItemPointId = db.OneItemPoints.Max(o => o.OneItemPointID);
+                    OneItemPoint oip = new OneItemPoint() { OneItemPointID = maxOneItemPointId + 1, SubjectId = subjectId, Value = value };
+                    db.OneItemPoints.Add(oip);
+                }
+                else // db.OneItemPoint.Count == 0  (the sequence is empty)
+                {
+                    db.OneItemPoints.Add(new OneItemPoint() { OneItemPointID = 1, SubjectId = subjectId, Value = value });
+                }
             }
+            else
+            {
+                foreach (OneItemPoint oneItemPoint in oneItemPoints)
+                {
+                    oneItemPoint.Value = value;
+                    db.SaveChanges();
+                }
+            }
+            
             int indexOfSubject = url.IndexOf("Subjects");
             url = url.Substring(indexOfSubject);
 
@@ -583,6 +618,10 @@ namespace MonitoringSystem.Controllers
             // кааждому студенту, у которого есть данный предмет выставить по нем посещение
             Subject subject = db.Subjects.Find(subId);
             List<Student> studentsInGroup = subject.Students.ToList();
+            if (studentsInGroup.Count() > 0)
+            {
+                return View("Error");
+            }
 
             int maxAttendanceDateId = 0;
             int maxAttendanceId = 0;
