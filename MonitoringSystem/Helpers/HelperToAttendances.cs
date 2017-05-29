@@ -12,6 +12,5 @@ namespace MonitoringSystem.Controllers
         public List<Student> students { get; set; }
         public List<Attendance> attendances { get; set; }
         public List<AttendanceDate> attendanceDates { get; set; }
-    }
-    
+    }    
 }

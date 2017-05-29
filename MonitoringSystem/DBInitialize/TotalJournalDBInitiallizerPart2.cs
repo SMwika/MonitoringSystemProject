@@ -360,12 +360,12 @@ namespace MonitoringSystem.Models
         }
         protected void SubjectCPInit(ref TotalJournalContext context)
         {
-        //    context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 1, SubjectCPName = "Основы программирования(КП)", Term = 3, TeacherID = 1,});
-        //    context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 2, SubjectCPName = "Объектно-ориентированное программирование(КП)", Term = 4, TeacherID = 1 });
-        //    context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 3, SubjectCPName = "Алгоритмы и структуры данных(КП)", Term = 5, TeacherID = 1 });
-        //    context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 4, SubjectCPName = "Операционные системы(КП)", Term = 6, TeacherID = 1 });
-        //    context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 5, SubjectCPName = "Базы данных(КП)", Term = 7, TeacherID = 1 });
-        //    context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 6, SubjectCPName = "Проектирование распределенных систем ЭВМ(КП)", Term = 8, TeacherID = 1 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 1, SubjectCPName = "Основы программирования(КП)", Term = 3, TeacherID = 1, });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 2, SubjectCPName = "Объектно-ориентированное программирование(КП)", Term = 4, TeacherID = 1 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 3, SubjectCPName = "Алгоритмы и структуры данных(КП)", Term = 5, TeacherID = 1 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 4, SubjectCPName = "Операционные системы(КП)", Term = 6, TeacherID = 1 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 5, SubjectCPName = "Базы данных(КП)", Term = 7, TeacherID = 1 });
+            context.SubjectCPs.Add(new SubjectCP() { SubjectCP_ID = 6, SubjectCPName = "Проектирование распределенных систем ЭВМ(КП)", Term = 8, TeacherID = 1 });
         }
         protected void CourseProjectLineInit(ref TotalJournalContext context)
         {

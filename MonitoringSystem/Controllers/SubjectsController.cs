@@ -169,14 +169,14 @@ namespace MonitoringSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ModelList modelList = new ModelList();
-            modelList.students = db.Students.Where(s => s.GroupID == groupId).ToList();
+            modelList.students = db.Students.Where(s => s.Group.GroupID == groupId).ToList();
             modelList.GroupName = groupId;
             modelList.SubjectName = db.Subjects.Find(subjectId).SubjectName;
             modelList.SubjectId = (int)subjectId;
-            modelList.students = db.Students.Where(s => s.GroupID == groupId).ToList();
-            modelList.marks = db.Marks.Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId).ToList();
-            modelList.homeworks = db.HomeWorks.Where(hw => hw.Subject.SubjectID == subjectId && hw.Student.GroupID == groupId).ToList();
-            modelList.modules = db.Modules.Where(m => m.Subject.SubjectID == subjectId && m.Student.GroupID == groupId).ToList();
+            modelList.students = db.Students.Where(s => s.Group.GroupID == groupId).ToList();
+            modelList.marks = db.Marks.Where(m => m.Subject.SubjectID == subjectId && m.Student.Group.GroupID == groupId).ToList();
+            modelList.homeworks = db.HomeWorks.Where(hw => hw.Subject.SubjectID == subjectId && hw.Student.Group.GroupID == groupId).ToList();
+            modelList.modules = db.Modules.Where(m => m.Subject.SubjectID == subjectId && m.Student.Group.GroupID == groupId).ToList();
             modelList.labMaxPoints = db.LabMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
             modelList.hwMaxPoints = db.HWMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
             modelList.moduleMaxPoints = db.ModuleMaxPoints.Where(point => point.Subject.SubjectID == subjectId).ToList();
@@ -186,8 +186,6 @@ namespace MonitoringSystem.Controllers
             List<Attendance> atts = db.Attendances
                 .Where(at => at.Subject.SubjectID == subjectId && at.Student.GroupID == groupId).ToList();
             List<OneItemPoint> oip = db.OneItemPoints.Where(oi => oi.SubjectId == subjectId).ToList();
-
-
             double[] attendances = new double[modelList.students.Count];
             for (int i = 0; i < modelList.students.Count; i++)
             {
@@ -207,22 +205,7 @@ namespace MonitoringSystem.Controllers
                 {
                     attendances[i] = 0;
                 }                
-            }
-            //if (oip.Count() > 0)
-            //{
-            //    if (atts.Count() > 0)
-            //    {
-            //        modelList.oneItemPoint = Convert.ToDouble(oip[0].Value.Replace('.', ','))*atts.Max(at => at.Index);
-            //    }
-            //    else // atts.Count > 0
-            //    {
-            //        modelList.oneItemPoint = Convert.ToDouble(oip[0].Value.Replace('.', ','))*;
-            //    }
-            //}
-            //else
-            //{
-            //    modelList.oneItemPoint = 0;
-            //}
+            }            
             modelList.oneItemPoint = atts.Count() > 0 ? Convert.ToDouble(oip[0].Value.Replace('.', ','))*atts.Max(at => at.Index) : 0;
             modelList.attendanceAmount = attendances;
             return View(modelList);
@@ -232,9 +215,16 @@ namespace MonitoringSystem.Controllers
             //получаем максимальный номер лабы по предмету
             //получаем максимальный ИД в таблице
             // в цикле по студентам каждому студенту присваиваем ноль по лабе с данным номером
-            // db.Students.Where(s => s.Subject.)
             Subject subject = db.Subjects.Find(subjectId);
-            List<Student> studentsInGroup = subject.Students.ToList();
+            List<Group> groups = subject.Groups.ToList();
+            Group group = db.Groups.Find(groupId);
+            // если в текущей группе нету студентов
+            if (group.Students.Count == 0)
+            {
+                ViewBag.ErrorText = "Сначала  добавьте студентов в группу!";
+                return View("Error");
+            }
+            #region
             int MaxLabNumber = 0, 
                 MaxLabID = 0,
                 MaxLabMaxPointID = 0;
@@ -254,33 +244,58 @@ namespace MonitoringSystem.Controllers
                 MaxLabMaxPointID = db.LabMaxPoints.Max(m => m.LabMaxPointID);
             }
             db.LabMaxPoints.Add(new LabMaxPoint() { LabMaxPointID = MaxLabMaxPointID + 1, LabNumber = MaxLabNumber + 1, MaxPoint = 0, SubjectID = (int)subjectId });
+            #endregion
 
-            foreach (var student in studentsInGroup)
+            foreach (var grp in groups)
             {
-                MaxLabID++;
-                subject.Marks.Add(new Mark()
+                foreach (var student in grp.Students)
                 {
-                    MarkID = MaxLabID,
-                    LabNumber = (MaxLabNumber + 1),
-                    RecordBookNumberID = student.RecordBookNumberID,
-                    DateOfProgram = DateTime.Now,
-                    DateOfReport = DateTime.Now,
-                    SubjectID = Convert.ToInt32(subjectId),
-                    TheMark = 0
-                });                
+                    MaxLabID++;
+                    subject.Marks.Add(new Mark()
+                    {
+                        MarkID = MaxLabID,
+                        LabNumber = (MaxLabNumber + 1),
+                        RecordBookNumberID = student.RecordBookNumberID,
+                        DateOfProgram = DateTime.Now,
+                        DateOfReport = DateTime.Now,
+                        SubjectID = Convert.ToInt32(subjectId),
+                        TheMark = 0
+                    });
+                }
             }
 
+
+            //foreach (var student in studentsInGroup)
+            //{
+            //    MaxLabID++;
+            //    subject.Marks.Add(new Mark()
+            //    {
+            //        MarkID = MaxLabID,
+            //        LabNumber = (MaxLabNumber + 1),
+            //        RecordBookNumberID = student.RecordBookNumberID,
+            //        DateOfProgram = DateTime.Now,
+            //        DateOfReport = DateTime.Now,
+            //        SubjectID = Convert.ToInt32(subjectId),
+            //        TheMark = 0
+            //    });                
+            //}
             db.SaveChanges();
             return RedirectToAction(getUrl("ShowMarks", groupId, subjectId));
         }
         public ActionResult AddHomeWorkColumn(string groupId, int? subjectId)
         {
             Subject subject = db.Subjects.Find(subjectId);
-            List<Student> studentsInGroup = subject.Students.ToList();
-            int MaxHWNumber = 0,
-                MaxHWID = 0,
-                MaxModuleMaxPointID = 0;
+            List<Group> groups = subject.Groups.ToList();
 
+            int MaxHWNumber = 0, MaxHWID = 0, MaxModuleMaxPointID = 0;
+            Group group = db.Groups.Find(groupId);
+            // если в текущей группе нету студентов
+            if (group.Students.Count == 0)
+            {
+                ViewBag.ErrorText = "Сначала  добавьте студентов в группу!";
+                return View("Error");
+            }
+            #region
             if (db.HWMaxPoints.Where(m => m.Subject.SubjectID == subjectId).Count() != 0)
             {
                 MaxHWNumber = db.HWMaxPoints
@@ -295,35 +310,43 @@ namespace MonitoringSystem.Controllers
             {
                 MaxModuleMaxPointID = db.HWMaxPoints.Max(m => m.HWMaxPointID);
             }
-            
+            #endregion
             db.HWMaxPoints.Add(new HWMaxPoint() { HWMaxPointID = MaxModuleMaxPointID + 1, HWNumber = MaxHWNumber + 1, MaxPoint = 0, SubjectID = (int)subjectId });
-            foreach (var student in studentsInGroup)
+            foreach (var grp in groups)
             {
-                MaxHWID++;
-                subject.HomeWorks.Add(new HomeWork()
+                foreach (var student in grp.Students)
                 {
-                    HomeWorkID = MaxHWID,
-                    HWNumber = (MaxHWNumber + 1),
-                    RecordBookNumberID = student.RecordBookNumberID,
-                    DateOfProgram = DateTime.Now,
-                    DateOfReport = DateTime.Now,
-                    SubjectID = Convert.ToInt32(subjectId),                    
-                    HWPoint = 0,
-                });
+                    MaxHWID++;
+                    subject.HomeWorks.Add(new HomeWork()
+                    {
+                        HomeWorkID = MaxHWID,
+                        HWNumber = (MaxHWNumber + 1),
+                        RecordBookNumberID = student.RecordBookNumberID,
+                        DateOfProgram = DateTime.Now,
+                        DateOfReport = DateTime.Now,
+                        SubjectID = Convert.ToInt32(subjectId),
+                        HWPoint = 0,
+                    });
+                }
             }
-
             db.SaveChanges();
             return RedirectToAction(getUrl("ShowMarks", groupId, subjectId));
         }
         public ActionResult AddModuleColumn(string groupId, int? subjectId)
         {
             Subject subject = db.Subjects.Find(subjectId);
-            List<Student> studentsInGroup = subject.Students.ToList();
-            int MaxModuleNumber = 0,
-                MaxModuleID = 0,
-                MaxModuleMaxPointID = 0;
+            List<Group> groups = subject.Groups.ToList();
 
-            if  (db.ModuleMaxPoints.Where(m => m.Subject.SubjectID == subjectId).Count() != 0)
+            int MaxModuleNumber = 0, MaxModuleID = 0, MaxModuleMaxPointID = 0;
+            Group group = db.Groups.Find(groupId);
+            // если в текущей группе нету студентов
+            if (group.Students.Count == 0)
+            {
+                ViewBag.ErrorText = "Сначала  добавьте студентов в группу!";
+                return View("Error");
+            }
+            #region
+            if (db.ModuleMaxPoints.Where(m => m.Subject.SubjectID == subjectId).Count() != 0)
             {
                 MaxModuleNumber = db.ModuleMaxPoints
                 .Where(m => m.Subject.SubjectID == subjectId).Max(m => m.ModuleNumber);
@@ -337,18 +360,22 @@ namespace MonitoringSystem.Controllers
             {
                 MaxModuleMaxPointID = db.ModuleMaxPoints.Max(m => m.ModuleMaxPointID);
             }
+            #endregion
             db.ModuleMaxPoints.Add(new ModuleMaxPoint() { ModuleMaxPointID = MaxModuleMaxPointID + 1, ModuleNumber = MaxModuleNumber + 1, MaxPoint = 0, SubjectID = (int)subjectId });
-            foreach (var student in studentsInGroup)
+            foreach (var grp in groups)
             {
-                MaxModuleID++;
-                subject.Modules.Add(new Module()
+                foreach (var student in grp.Students)
                 {
-                    ModuleID = MaxModuleID,
-                    ModuleNumber = (MaxModuleNumber + 1),
-                    RecordBookNumberID = student.RecordBookNumberID,
-                    SubjectID = Convert.ToInt32(subjectId),
-                    ModulePoint = 0
-                });
+                    MaxModuleID++;
+                    subject.Modules.Add(new Module()
+                    {
+                        ModuleID = MaxModuleID,
+                        ModuleNumber = (MaxModuleNumber + 1),
+                        RecordBookNumberID = student.RecordBookNumberID,
+                        SubjectID = Convert.ToInt32(subjectId),
+                        ModulePoint = 0
+                    });
+                }
             }
 
             db.SaveChanges();
@@ -357,11 +384,16 @@ namespace MonitoringSystem.Controllers
         public ActionResult AddFreeFieldColumn(string groupId, int? subjectId)
         {
             Subject subject = db.Subjects.Find(subjectId);
-            List<Student> studentsInGroup = subject.Students.ToList();
-            int MaxFreeMarkFieldNumber = 0,
-                MaxFreeMaxMarkID = 0,
-                MaxFreeMaxMarkMaxPointID = 0;
+            List<Group> groups = subject.Groups.ToList();
 
+            int MaxFreeMarkFieldNumber = 0, MaxFreeMaxMarkID = 0, MaxFreeMaxMarkMaxPointID = 0;
+            Group group = db.Groups.Find(groupId);
+            // если в текущей группе нету студентов
+            if (group.Students.Count == 0)
+            {
+                ViewBag.ErrorText = "Сначала  добавьте студентов в группу!";
+                return View("Error");
+            }
             if (db.FreeMarkFieldMaxPoints.Where(m => m.Subject.SubjectID == subjectId).Count() != 0)
             {
                 MaxFreeMarkFieldNumber = db.FreeMarkFieldMaxPoints
@@ -377,20 +409,22 @@ namespace MonitoringSystem.Controllers
                 MaxFreeMaxMarkMaxPointID = db.FreeMarkFieldMaxPoints.Max(m => m.FreeMarkFieldMaxPointID);
             }
             db.FreeMarkFieldMaxPoints.Add(new FreeMarkFieldMaxPoint() { FreeMarkFieldMaxPointID = MaxFreeMaxMarkMaxPointID + 1, FieldNumber = MaxFreeMarkFieldNumber + 1, MaxPoint = 0, FieldName = "Новый столбец" , SubjectID = (int)subjectId });
-            foreach (var student in studentsInGroup)
+            foreach (var grp in groups)
             {
-                MaxFreeMaxMarkID++;
-                subject.FreeMarkFields.Add(new FreeMarkField()
+                foreach (var student in grp.Students)
                 {
-                    FreeMarkFieldID = MaxFreeMaxMarkID,
-                    FieldNumber = (MaxFreeMarkFieldNumber + 1),
-                    RecordBookNumberID = student.RecordBookNumberID,
-                    SubjectID = Convert.ToInt32(subjectId),
-                    FieldPoint = 0,
-                    FieldName = "Новый столбец"
-                });
+                    MaxFreeMaxMarkID++;
+                    subject.FreeMarkFields.Add(new FreeMarkField()
+                    {
+                        FreeMarkFieldID = MaxFreeMaxMarkID,
+                        FieldNumber = (MaxFreeMarkFieldNumber + 1),
+                        RecordBookNumberID = student.RecordBookNumberID,
+                        SubjectID = Convert.ToInt32(subjectId),
+                        FieldPoint = 0,
+                        FieldName = "Новый столбец"
+                    });
+                }
             }
-
             db.SaveChanges();
             return RedirectToAction(getUrl("ShowMarks", groupId, subjectId));
         }
@@ -407,12 +441,12 @@ namespace MonitoringSystem.Controllers
             if (db.LabMaxPoints.Count() != 0)
             {
                 MaxLabMaxPointID = db.LabMaxPoints.Max(m => m.LabMaxPointID);
-                db.LabMaxPoints.RemoveRange(db.LabMaxPoints.Where(m => m.LabMaxPointID == MaxLabMaxPointID));
+                db.LabMaxPoints.RemoveRange(db.LabMaxPoints.Where(m => m.LabMaxPointID == MaxLabMaxPointID && m.SubjectID == subjectId));
             }
 
             if(db.Marks.Where(m => m.LabNumber == MaxLabNumber).Count() != 0)
             {
-                db.Marks.RemoveRange(db.Marks.Where(m => m.LabNumber == MaxLabNumber));
+                db.Marks.RemoveRange(db.Marks.Where(m => m.LabNumber == MaxLabNumber && m.SubjectID == subjectId));
             }
 
             db.SaveChanges();
@@ -432,11 +466,11 @@ namespace MonitoringSystem.Controllers
             if (db.HWMaxPoints.Count() != 0)
             {
                 MaxHWMaxPointID = db.HWMaxPoints.Max(m => m.HWMaxPointID);
-                db.HWMaxPoints.RemoveRange(db.HWMaxPoints.Where(m => m.HWMaxPointID == MaxHWMaxPointID));
+                db.HWMaxPoints.RemoveRange(db.HWMaxPoints.Where(m => m.HWMaxPointID == MaxHWMaxPointID && m.SubjectID == subjectId));
             }
             if (db.HomeWorks.Where(m => m.HWNumber == MaxHWNumber).Count() != 0)
             {
-                db.HomeWorks.RemoveRange(db.HomeWorks.Where(m => m.HWNumber == MaxHWNumber));
+                db.HomeWorks.RemoveRange(db.HomeWorks.Where(m => m.HWNumber == MaxHWNumber && m.SubjectID == subjectId));
             }
 
             db.SaveChanges();
@@ -455,11 +489,11 @@ namespace MonitoringSystem.Controllers
             if (db.ModuleMaxPoints.Count() != 0)
             {
                 MaxModuleMaxPointID = db.ModuleMaxPoints.Max(m => m.ModuleMaxPointID);
-                db.ModuleMaxPoints.RemoveRange(db.ModuleMaxPoints.Where(m => m.ModuleMaxPointID == MaxModuleMaxPointID));
+                db.ModuleMaxPoints.RemoveRange(db.ModuleMaxPoints.Where(m => m.ModuleMaxPointID == MaxModuleMaxPointID && m.SubjectID == subjectId));
             }
             if (db.Modules.Where(m => m.ModuleNumber == MaxModuleNumber).Count() !=0)
             {
-                db.Modules.RemoveRange(db.Modules.Where(m => m.ModuleNumber == MaxModuleNumber));
+                db.Modules.RemoveRange(db.Modules.Where(m => m.ModuleNumber == MaxModuleNumber && m.SubjectID == subjectId));
             }
 
             db.SaveChanges();
@@ -478,11 +512,11 @@ namespace MonitoringSystem.Controllers
             if (db.FreeMarkFieldMaxPoints.Count() !=0)
             {
                 MaxFreeFieldMaxPointID = db.FreeMarkFieldMaxPoints.Max(m => m.FreeMarkFieldMaxPointID);
-                db.FreeMarkFieldMaxPoints.RemoveRange(db.FreeMarkFieldMaxPoints.Where(m => m.FreeMarkFieldMaxPointID == MaxFreeFieldMaxPointID));
+                db.FreeMarkFieldMaxPoints.RemoveRange(db.FreeMarkFieldMaxPoints.Where(m => m.FreeMarkFieldMaxPointID == MaxFreeFieldMaxPointID && m.SubjectID == subjectId));
             }
             if (db.FreeMarkFields.Where(m => m.FieldNumber == MaxFreeFieldNumber).Count() !=0)
             {
-                db.FreeMarkFields.RemoveRange(db.FreeMarkFields.Where(m => m.FieldNumber == MaxFreeFieldNumber));
+                db.FreeMarkFields.RemoveRange(db.FreeMarkFields.Where(m => m.FieldNumber == MaxFreeFieldNumber && m.SubjectID == subjectId));
             }
 
             db.SaveChanges();
@@ -610,19 +644,17 @@ namespace MonitoringSystem.Controllers
                 ? db.OneItemPoints.Where(pt => pt.SubjectId == subjectId).ToList() : new List<OneItemPoint>() {  };
             return View(model);            
         } 
-        //[HttpPost]
         public ActionResult AddAttendanceDate(string groupId, string subjectId)
         {
-            int courseNumber = Cn(groupId);
-            int subId = Convert.ToInt32(subjectId);
-            // кааждому студенту, у которого есть данный предмет выставить по нем посещение
-            Subject subject = db.Subjects.Find(subId);
-            List<Student> studentsInGroup = subject.Students.ToList();
-            if (studentsInGroup.Count() > 0)
+            Subject subject = db.Subjects.Find(Convert.ToInt32(subjectId));
+            List<Group> groups = subject.Groups.ToList();
+            Group group = db.Groups.Find(groupId);
+            // если в текущей группе нету студентов
+            if (group.Students.Count == 0)
             {
+                ViewBag.ErrorText = "Сначала  добавьте студентов в группу!";
                 return View("Error");
             }
-
             int maxAttendanceDateId = 0;
             int maxAttendanceId = 0;
             int indexAttendanceDate = 0, indexAttendance = 0;
@@ -637,20 +669,22 @@ namespace MonitoringSystem.Controllers
                 indexAttendance = db.Attendances.Max(at => at.Index);
             }
             db.AttendanceDates.Add(new AttendanceDate() { AttendanceDateId = maxAttendanceDateId + 1, Date = DateTime.Now, SubjectId = Convert.ToInt32(subjectId), Index=indexAttendanceDate+1 });
-            foreach (var student in studentsInGroup)
+            foreach (var grp in groups)
             {
-                maxAttendanceId++;
-                subject.Attendances.Add(new Attendance()
+                foreach (var student in grp.Students)
                 {
-                    AttendanceID = maxAttendanceId,
-                    ClassDate = DateTime.Now,
-                    IsVisited = false,
-                    RecordBookNumberID = student.RecordBookNumberID,
-                    SubjectID = Convert.ToInt32(subjectId), 
-                    Index = indexAttendance + 1
-                });
+                    maxAttendanceId++;
+                    subject.Attendances.Add(new Attendance()
+                    {
+                        AttendanceID = maxAttendanceId,
+                        ClassDate = DateTime.Now,
+                        IsVisited = false,
+                        RecordBookNumberID = student.RecordBookNumberID,
+                        SubjectID = Convert.ToInt32(subjectId),
+                        Index = indexAttendance + 1
+                    });
+                }
             }
-
             db.SaveChanges();
             return RedirectToAction(getUrl("EditAttendance", groupId, Convert.ToInt32(subjectId)));
         }
@@ -666,8 +700,8 @@ namespace MonitoringSystem.Controllers
             {
                 maxAttendanceIndex = db.Attendances.Max(at => at.Index);
             }
-            db.AttendanceDates.RemoveRange(db.AttendanceDates.Where(att => att.Index == maxAttendanceDateIndex));
-            db.Attendances.RemoveRange(db.Attendances.Where(att => att.Index == maxAttendanceIndex));
+            db.AttendanceDates.RemoveRange(db.AttendanceDates.Where(att => att.Index == maxAttendanceDateIndex && att.SubjectId == subjectId));
+            db.Attendances.RemoveRange(db.Attendances.Where(att => att.Index == maxAttendanceIndex && att.SubjectID == subjectId));
 
             db.SaveChanges();
             return RedirectToAction(getUrl("EditAttendance", groupId, subjectId));

@@ -17,10 +17,7 @@ namespace MonitoringSystem.Controllers
         // GET: Students
         public ActionResult Index()
         {
-            var students = db.Students
-                .Include(s => s.Group)
-                .Include(s => s.Subjects)  
-                .Include(s => s.SubjectCPs);
+            var students = db.Students.Include(s => s.Group);
             return View(students.ToList());
         }
 
@@ -55,6 +52,7 @@ namespace MonitoringSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 db.Students.Add(student);
                 db.SaveChanges();
                 return RedirectToAction("Index");

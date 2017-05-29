@@ -131,14 +131,14 @@
     <Content Include="Content\ShowMarksStyleSheet.css" />
     <Compile Include="Controllers\CourseProjectLinesController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
-    <Compile Include="Controllers\HelperToSubjectCPs.cs" />
-    <Compile Include="Controllers\HelperToAttendances.cs" />
-    <Compile Include="Controllers\HelperToSubjects.cs" />
+    <Compile Include="Helpers\HelperToSubjectCPs.cs" />
+    <Compile Include="Helpers\HelperToAttendances.cs" />
+    <Compile Include="Helpers\HelperToSubjects.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MarksController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\SubjectCPsController.cs" />
     <Compile Include="Controllers\SubjectsController.cs" />
+    <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,11 +203,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Students\Create.cshtml" />
-    <Content Include="Views\Students\Delete.cshtml" />
-    <Content Include="Views\Students\Details.cshtml" />
-    <Content Include="Views\Students\Edit.cshtml" />
-    <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Groups\Create.cshtml" />
     <Content Include="Views\Groups\Delete.cshtml" />
     <Content Include="Views\Groups\Details.cshtml" />
@@ -225,9 +220,7 @@
     <Content Include="Views\Marks\Index.cshtml" />
     <Content Include="Views\Home\SearchStudentResults.cshtml" />
     <Content Include="Views\Subjects\ShowSubjectsByCourseNumber.cshtml" />
-    <Content Include="Views\Subjects\ShowMarks.cshtml" />
     <Content Include="Views\Subjects\EditAttendance.cshtml" />
-    <Content Include="Views\Subjects\_AttendanceTable.cshtml" />
     <Content Include="Views\SubjectCPs\Create.cshtml" />
     <Content Include="Views\SubjectCPs\Delete.cshtml" />
     <Content Include="Views\SubjectCPs\Details.cshtml" />
@@ -239,6 +232,17 @@
     <Content Include="Views\CourseProjectLines\Edit.cshtml" />
     <Content Include="Views\CourseProjectLines\Index.cshtml" />
     <Content Include="Views\SubjectCPs\ShowMarks.cshtml" />
+    <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Students\Delete.cshtml" />
+    <Content Include="Views\Students\Details.cshtml" />
+    <Content Include="Views\Students\Edit.cshtml" />
+    <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Teachers\Create.cshtml" />
+    <Content Include="Views\Teachers\Delete.cshtml" />
+    <Content Include="Views\Teachers\Details.cshtml" />
+    <Content Include="Views\Teachers\Edit.cshtml" />
+    <Content Include="Views\Teachers\Index.cshtml" />
+    <Content Include="Views\Subjects\ShowMarks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

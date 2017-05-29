@@ -88,7 +88,9 @@
                             var inputObj = new inputObject();
                             inputObj.rbn = currentStudent[0].id;    // номер зачетки студента
                             inputObj.markType = currentCell.closest("td").className; // тип оценки
-                            inputObj.inputvalue = currentCell.children[0].children[0].value; // оценка
+                            inputObj.inputvalue = +currentCell.children[0].children[0].value > 0 
+                                ? +currentCell.children[0].children[0].value
+                                : +currentCell.children[0].children[0].value * (-1); // оценка
                             inputObj.inputId = currentCell.children[0].children[0].id; // id оценки в БД
                             arrayOfInputData.push(inputObj);
                             studentsTotalPointer += +currentCell.children[0].children[0].value;
@@ -173,6 +175,7 @@
                     }
                 } else continue;
             }
+            studentsTotalPointer = studentsTotalPointer < 0 ? studentsTotalPointer * (-1) : studentsTotalPointer;
             var studentsAutomat = calcAutomat(maxMarksSum, studentsTotalPointer);
             var studentsECTS = getECTS(studentsAutomat);
             inputData(recordBookNumbersList[i], studentsAutomat, studentsECTS);

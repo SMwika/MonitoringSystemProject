@@ -35,11 +35,3 @@ namespace MonitoringSystem.Models
         public virtual ICollection<SubjectCP> SubjectCPs { get; set; }
     }
 }
-
-
-//public virtual ICollection<Mark> Marks { get; set; }
-//public virtual ICollection<Attendance> Attendances { get; set; }
-//public virtual ICollection<Module> Modules { get; set; }
-//public virtual ICollection<HomeWork> Homeworks { get; set; }
-//public virtual ICollection<FreeMarkField> FreeMarkFields { get; set; }
-//public virtual ICollection<CourseProjectLine> CourseProjectLines { get; set; }

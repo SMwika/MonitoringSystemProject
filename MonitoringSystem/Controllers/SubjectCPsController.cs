@@ -183,11 +183,11 @@ namespace MonitoringSystem.Controllers
             if (db.CPLineMaxPoints.Count() > 0)
             {
                 MaxCPLineMaxPointID = db.CPLineMaxPoints.Max(m => m.LineIndex);
-                db.CPLineMaxPoints.RemoveRange(db.CPLineMaxPoints.Where(m => m.CPLineMaxPointID == MaxCPLineMaxPointID));
+                db.CPLineMaxPoints.RemoveRange(db.CPLineMaxPoints.Where(m => m.CPLineMaxPointID == MaxCPLineMaxPointID && m.SubjectCPID == subjectId));
             }
             if (db.CourseProjectLines.Count() > 0)
             {
-                db.CourseProjectLines.RemoveRange(db.CourseProjectLines.Where(m => m.LineIndex == MaxLineIndex));
+                db.CourseProjectLines.RemoveRange(db.CourseProjectLines.Where(m => m.LineIndex == MaxLineIndex && m.SubjectCP_ID == subjectId));
             }
               
             db.SaveChanges();
@@ -249,8 +249,6 @@ namespace MonitoringSystem.Controllers
                 data[i].inputId = data[i].inputId.Substring(0, ceparatorIndex);
             }
         }
-
-
         protected string getUrl(string action, string groupId, int? subjectId)
         {
             string url = string.Empty;

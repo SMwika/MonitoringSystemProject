@@ -10,123 +10,112 @@ using MonitoringSystem.Models;
 
 namespace MonitoringSystem.Controllers
 {
-    public class MarksController : Controller
+    public class TeachersController : Controller
     {
         private TotalJournalContext db = new TotalJournalContext();
 
-        // GET: Marks
+        // GET: Teachers
         public ActionResult Index()
         {
-            var marks = db.Marks.Include(m => m.Student).Include(m => m.Subject);
-            return View(marks.ToList());
+            return View(db.Teachers.ToList());
         }
 
-        // GET: Marks/Details/5
+        // GET: Teachers/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Mark mark = db.Marks.Find(id);
-            if (mark == null)
+            Teacher teacher = db.Teachers.Find(id);
+            if (teacher == null)
             {
                 return HttpNotFound();
             }
-            return View(mark);
+            return View(teacher);
         }
 
-        // GET: Marks/Create
+        // GET: Teachers/Create
         public ActionResult Create()
         {
-            ViewBag.RecordBookNumberID = new SelectList(db.Students, "RecordBookNumberID", "RecordBookNumberID");
-            ViewBag.SubjectID = new SelectList(db.Subjects, "SubjectID", "SubjectName");
-            ViewBag.TeacherID = new SelectList(db.Teachers, "TeacherID", "FirstName");
             return View();
         }
 
-        // POST: Marks/Create
+        // POST: Teachers/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MarkID,LabNumber,RecordBookNumberID,SubjectID,DateOfReport,DateOfProgram,TheMark,AdditionalPoints")] Mark mark)
+        public ActionResult Create([Bind(Include = "TeacherID,FirstName,MiddleName,LastName,AcadDegree")] Teacher teacher)
         {
             if (ModelState.IsValid)
             {
-                db.Marks.Add(mark);
+                db.Teachers.Add(teacher);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RecordBookNumberID = new SelectList(db.Students, "RecordBookNumberID", "RecordBookNumberID", mark.RecordBookNumberID);
-            ViewBag.SubjectID = new SelectList(db.Subjects, "SubjectID", "SubjectName", mark.SubjectID);
-            return View(mark);
+            return View(teacher);
         }
 
-        // GET: Marks/Edit/5
+        // GET: Teachers/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Mark mark = db.Marks.Find(id);
-            if (mark == null)
+            Teacher teacher = db.Teachers.Find(id);
+            if (teacher == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.RecordBookNumberID = new SelectList(db.Students, "RecordBookNumberID", "RecordBookNumberID", mark.RecordBookNumberID);
-            ViewBag.SubjectID = new SelectList(db.Subjects, "SubjectID", "SubjectName", mark.SubjectID);
-            return View(mark);
+            return View(teacher);
         }
 
-        // POST: Marks/Edit/5
+        // POST: Teachers/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MarkID,LabNumber,RecordBookNumberID,SubjectID,DateOfReport,DateOfProgram,TheMark,AdditionalPoints")] Mark mark)
+        public ActionResult Edit([Bind(Include = "TeacherID,FirstName,MiddleName,LastName,AcadDegree")] Teacher teacher)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(mark).State = EntityState.Modified;
+                db.Entry(teacher).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RecordBookNumberID = new SelectList(db.Students, "RecordBookNumberID", "RecordBookNumberID", mark.RecordBookNumberID);
-            ViewBag.SubjectID = new SelectList(db.Subjects, "SubjectID", "SubjectName", mark.SubjectID);
-            return View(mark);
+            return View(teacher);
         }
 
-        // GET: Marks/Delete/5
+        // GET: Teachers/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Mark mark = db.Marks.Find(id);
-            if (mark == null)
+            Teacher teacher = db.Teachers.Find(id);
+            if (teacher == null)
             {
                 return HttpNotFound();
             }
-            return View(mark);
+            return View(teacher);
         }
 
-        // POST: Marks/Delete/5
+        // POST: Teachers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Mark mark = db.Marks.Find(id);
-            db.Marks.Remove(mark);
+            Teacher teacher = db.Teachers.Find(id);
+            db.Teachers.Remove(teacher);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-      
-    protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {

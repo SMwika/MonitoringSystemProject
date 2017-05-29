@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MonitoringSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
- 
+
 
 namespace MonitoringSystem.Models
 {
@@ -85,75 +86,107 @@ namespace MonitoringSystem.Models
             #region subInit
             List<Subject> subjects = new List<Subject>
             {
-                new Subject() { SubjectID = 1, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 1, TeacherID=8, Students = new List<Student>() },
-                new Subject() { SubjectID = 2, SubjectName = "Основы программной инженерии", SubjectType = SubjectType.Exam, Term = 1, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 3, SubjectName = "Компьтерная дискретная математика", SubjectType = SubjectType.Exam, Term = 2, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 4, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 2, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 5, SubjectName = "Групповая динамика и коммуникации", SubjectType = SubjectType.Credit, Term = 2, TeacherID = 8, Students =new List<Student>() },
-                new Subject() { SubjectID = 6, SubjectName = "Дискретные структуры", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 7, SubjectName = "Человеко-машинное взаимодействие", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 8, SubjectName = "Объектно-ориентированное программирование", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 9, SubjectName = "Теория вероятности и математическая статистика", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 10, SubjectName = "Профессиональная практика программной инженерии", SubjectType = SubjectType.Credit, Term = 3, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 11, SubjectName = "Алгоритмы и структуры данных", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students =new List<Student>() },
-                new Subject() { SubjectID = 12, SubjectName = "Архитектура ЭОМ", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 13, SubjectName = "Эмперические методы программной инженерии", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 14, SubjectName = "Конструирование программного обеспечения", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 15, SubjectName = "Организация компьтерных сетей", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 16, SubjectName = "Объектно-ориентированное программирование", SubjectType = SubjectType.Credit, Term = 4, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 17, SubjectName = "Инженерная и компьютерная графика", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 18, SubjectName = "Анализ требований к программному обеспечению", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 19, SubjectName = "Операционные системы", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 20, SubjectName = "Качество ПО и тестирование", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 21, SubjectName = "Английский язык", SubjectType = SubjectType.Credit, Term = 5, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 22, SubjectName = "Архитектура и проектирование ПО", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 23, SubjectName = "Базы данных", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 24, SubjectName = "Методы оптимизации и исследования операций", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 25, SubjectName = "Программирование интернет", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 26, SubjectName = "Системы искусственного интелекта", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 27, SubjectName = "Android", SubjectType = SubjectType.Credit, Term = 6, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 28, SubjectName = "Информационные технологии разработки ПО", SubjectType = SubjectType.Exam, Term = 7, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 29, SubjectName = "Безопасность программ и данных", SubjectType = SubjectType.Exam, Term = 7, TeacherID = 8, Students = new List<Student>()},
-                new Subject() { SubjectID = 30, SubjectName = "Проектирование распределенных систем ЭОМ", SubjectType = SubjectType.Exam, Term = 7, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 31, SubjectName = "Проектный практикум", SubjectType = SubjectType.Credit, Term = 7, TeacherID = 8, Students = new List<Student>()},
-                new Subject() { SubjectID = 32, SubjectName = "Менеджмент проектов ПО", SubjectType = SubjectType.Exam, Term = 8, TeacherID = 8, Students = new List<Student>()},
-                new Subject() { SubjectID = 33, SubjectName = "Проектирование производственных экспертных систем", SubjectType = SubjectType.Exam, Term = 8, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 34, SubjectName = "Международные стандарты программной инженерии", SubjectType = SubjectType.Exam, Term = 8, TeacherID = 8, Students = new List<Student>() },
-                new Subject() { SubjectID = 35, SubjectName = "Проектный практикум", SubjectType = SubjectType.Credit, Term = 8, TeacherID = 8, Students = new List<Student>() }
+                new Subject() { SubjectID = 1, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 1, TeacherID=8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 2, SubjectName = "Основы программной инженерии", SubjectType = SubjectType.Exam, Term = 1, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 3, SubjectName = "Компьтерная дискретная математика", SubjectType = SubjectType.Exam, Term = 2, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 4, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 2, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 5, SubjectName = "Групповая динамика и коммуникации", SubjectType = SubjectType.Credit, Term = 2, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 6, SubjectName = "Дискретные структуры", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 7, SubjectName = "Человеко-машинное взаимодействие", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 8, SubjectName = "Объектно-ориентированное программирование", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 9, SubjectName = "Теория вероятности и математическая статистика", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 10, SubjectName = "Профессиональная практика программной инженерии", SubjectType = SubjectType.Credit, Term = 3, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 11, SubjectName = "Алгоритмы и структуры данных", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 12, SubjectName = "Архитектура ЭОМ", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() {}  },
+                new Subject() { SubjectID = 13, SubjectName = "Эмперические методы программной инженерии", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 14, SubjectName = "Конструирование программного обеспечения", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 15, SubjectName = "Организация компьтерных сетей", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 16, SubjectName = "Объектно-ориентированное программирование", SubjectType = SubjectType.Credit, Term = 4, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 17, SubjectName = "Инженерная и компьютерная графика", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 18, SubjectName = "Анализ требований к программному обеспечению", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 19, SubjectName = "Операционные системы", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 20, SubjectName = "Качество ПО и тестирование", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 21, SubjectName = "Английский язык", SubjectType = SubjectType.Credit, Term = 5, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 22, SubjectName = "Архитектура и проектирование ПО", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 23, SubjectName = "Базы данных", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 24, SubjectName = "Методы оптимизации и исследования операций", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 25, SubjectName = "Программирование интернет", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 26, SubjectName = "Системы искусственного интелекта", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 27, SubjectName = "Android", SubjectType = SubjectType.Credit, Term = 6, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 28, SubjectName = "Информационные технологии разработки ПО", SubjectType = SubjectType.Exam, Term = 7, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 29, SubjectName = "Безопасность программ и данных", SubjectType = SubjectType.Exam, Term = 7, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>()},
+                new Subject() { SubjectID = 30, SubjectName = "Проектирование распределенных систем ЭОМ", SubjectType = SubjectType.Exam, Term = 7, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 31, SubjectName = "Проектный практикум", SubjectType = SubjectType.Credit, Term = 7, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 32, SubjectName = "Менеджмент проектов ПО", SubjectType = SubjectType.Exam, Term = 8, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 33, SubjectName = "Проектирование производственных экспертных систем", SubjectType = SubjectType.Exam, Term = 8, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 34, SubjectName = "Международные стандарты программной инженерии", SubjectType = SubjectType.Exam, Term = 8, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+                new Subject() { SubjectID = 35, SubjectName = "Проектный практикум", SubjectType = SubjectType.Credit, Term = 8, TeacherID = 8, /*Students = new List<Student>()*/ Groups = new List<Group>()}
             };
             subjects.ForEach(s => context.Subjects.Add(s));
             context.SaveChanges();
             #endregion subInit
             foreach (var subject in context.Subjects)
             {
-                foreach (var student in students4)
+                foreach (var group in context.Groups)
                 {
-                    subject.Students.Add(student);
+                    if (subject.Term == 7 || subject. Term == 8)
+                    {
+                        if (group.CourseNumber == 4)
+                        {
+                            subject.Groups.Add(group);
+                        }
+                    }
+                    if (subject.Term == 5 || subject.Term == 6)
+                    {
+                        if (group.CourseNumber == 3)
+                        {
+                            subject.Groups.Add(group);
+                        }
+                    }
+                    if (subject.Term == 3 || subject.Term == 4)
+                    {
+                        if (group.CourseNumber == 2)
+                        {
+                            subject.Groups.Add(group);
+                        }
+                    }
+                    if (subject.Term == 1 || subject.Term == 2)
+                    {
+                        if (group.CourseNumber == 1)
+                        {
+                            subject.Groups.Add(group);
+                        }
+                    }
                 }
             }
             context.SaveChanges();
-            List<SubjectCP> subjectCPs = new List<SubjectCP>
-            {
-                new SubjectCP() { SubjectCP_ID = 1, SubjectCPName = "Основы программирования(КП)", Term = 3, TeacherID = 1, Students = new List<Student>() },
-                new SubjectCP() { SubjectCP_ID = 2, SubjectCPName = "Объектно-ориентированное программирование(КП)", Term = 4, TeacherID = 1,  Students = new List<Student>() },
-                new SubjectCP() { SubjectCP_ID = 3, SubjectCPName = "Алгоритмы и структуры данных(КП)", Term = 5, TeacherID = 1,  Students = new List<Student>() },
-                new SubjectCP() { SubjectCP_ID = 4, SubjectCPName = "Операционные системы(КП)", Term = 6, TeacherID = 1,  Students = new List<Student>() },
-                new SubjectCP() { SubjectCP_ID = 5, SubjectCPName = "Базы данных(КП)", Term = 7, TeacherID = 1, Students = new List<Student>() },
-                new SubjectCP() { SubjectCP_ID = 6, SubjectCPName = "Проектирование распределенных систем ЭВМ(КП)", Term = 8, TeacherID = 1, Students = new List<Student>() }
-            };
-            subjectCPs.ForEach(s => context.SubjectCPs.Add(s));
-            context.SaveChanges();
-            foreach (var subjectCP in context.SubjectCPs)
-            {
-                foreach (var student in students4)
-                {
-                    subjectCP.Students.Add(student);
-                }
-            }
+            #region
+            //List<SubjectCP> subjectCPs = new List<SubjectCP>
+            //{
+            //    new SubjectCP() { SubjectCP_ID = 1, SubjectCPName = "Основы программирования(КП)", Term = 3, TeacherID = 1, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+            //    new SubjectCP() { SubjectCP_ID = 2, SubjectCPName = "Объектно-ориентированное программирование(КП)", Term = 4, TeacherID = 1,  /*Students = new List<Student>()*/ Groups = new List<Group>() },
+            //    new SubjectCP() { SubjectCP_ID = 3, SubjectCPName = "Алгоритмы и структуры данных(КП)", Term = 5, TeacherID = 1,  /*Students = new List<Student>()*/ Groups = new List<Group>() },
+            //    new SubjectCP() { SubjectCP_ID = 4, SubjectCPName = "Операционные системы(КП)", Term = 6, TeacherID = 1,  /*Students = new List<Student>()*/ Groups = new List<Group>() },
+            //    new SubjectCP() { SubjectCP_ID = 5, SubjectCPName = "Базы данных(КП)", Term = 7, TeacherID = 1, /*Students = new List<Student>()*/ Groups = new List<Group>() },
+            //    new SubjectCP() { SubjectCP_ID = 6, SubjectCPName = "Проектирование распределенных систем ЭВМ(КП)", Term = 8, TeacherID = 1, /*Students = new List<Student>()*/ Groups = new List<Group>() }
+            //};
+            //subjectCPs.ForEach(s => context.SubjectCPs.Add(s));
+            //context.SaveChanges();
+            //foreach (var subjectCP in context.SubjectCPs)
+            //{
+            //    foreach (var student in students4)
+            //    {
+            //        if (subjectCP.Term == 7 || subjectCP.Term == 8)
+            //        {
+            //            subjectCP.Students.Add(student);
+            //        }
+            //    }
+            //}
+            #endregion
             context.SaveChanges();
 
             //MarkInit(ref context);
-            //SubjectCPInit(ref context);
+            SubjectCPInit(ref context);
             //CourseProjectLineInit(ref context);
             //ModuleInit(ref context);
             //HomeWorkInit(ref context);
@@ -182,8 +215,7 @@ namespace MonitoringSystem.Models
 }
 
 
-
-
+#region comments
 //context.Marks.Add(new Mark() { MarkID = 70, LabNumber = 1, RecordBookNumberID = "136003", AdditionalPoints = 1, TheMark = 3, SubjectID = "Проектирование производственных экспертных систем", DateOfProgram = DateTime.Now, DateOfReport = DateTime.Now, TeacherID = 20, Term = 8 });
 //context.Marks.Add(new Mark() { MarkID = 71, LabNumber = 2, RecordBookNumberID = "136003", AdditionalPoints = 3, TheMark = 5, SubjectID = "Проектирование производственных экспертных систем", DateOfProgram = DateTime.Now, DateOfReport = DateTime.Now, TeacherID = 20, Term = 8 });
 //context.Marks.Add(new Mark() { MarkID = 72, LabNumber = 3, RecordBookNumberID = "136003", AdditionalPoints = 3, TheMark = 2, SubjectID = "Проектирование производственных экспертных систем", DateOfProgram = DateTime.Now, DateOfReport = DateTime.Now, TeacherID = 20, Term = 8 });
@@ -628,45 +660,4 @@ namespace MonitoringSystem.Models
 //context.Marks.Add(new Mark() { MarkID = 379, LabNumber = 1, RecordBookNumberID = "136059", AdditionalPoints = 3, TheMark = 4, SubjectID = "Проектирование производственных экспертных систем", DateOfProgram = DateTime.Now, DateOfReport = DateTime.Now, TeacherID = 20, Term = 8 });
 //context.Marks.Add(new Mark() { MarkID = 380, LabNumber = 2, RecordBookNumberID = "136059", AdditionalPoints = 2, TheMark = 5, SubjectID = "Проектирование производственных экспертных систем", DateOfProgram = DateTime.Now, DateOfReport = DateTime.Now, TeacherID = 20, Term = 8 });
 //context.Marks.Add(new Mark() { MarkID = 381, LabNumber = 3, RecordBookNumberID = "136059", AdditionalPoints = 1, TheMark = 4, SubjectID = "Проектирование производственных экспертных систем", DateOfProgram = DateTime.Now, DateOfReport = DateTime.Now, TeacherID = 20, Term = 8 });
-
-
-    /*
-     List<Subject> subjects = new List<Subject>
-            {
-                new Subject() { SubjectID = 1, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 1, TeacherID=8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 2, SubjectName = "Основы программной инженерии", SubjectType = SubjectType.Exam, Term = 1, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 3, SubjectName = "Компьтерная дискретная математика", SubjectType = SubjectType.Exam, Term = 2, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 4, SubjectName = "Основы программирования", SubjectType = SubjectType.Exam, Term = 2, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 5, SubjectName = "Групповая динамика и коммуникации", SubjectType = SubjectType.Credit, Term = 2, TeacherID = 8, Students =new List<Student>() {} },
-                new Subject() { SubjectID = 6, SubjectName = "Дискретные структуры", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 7, SubjectName = "Человеко-машинное взаимодействие", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 8, SubjectName = "Объектно-ориентированное программирование", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 9, SubjectName = "Теория вероятности и математическая статистика", SubjectType = SubjectType.Exam, Term = 3, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 10, SubjectName = "Профессиональная практика программной инженерии", SubjectType = SubjectType.Credit, Term = 3, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 11, SubjectName = "Алгоритмы и структуры данных", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students =new List<Student>() {}},
-                new Subject() { SubjectID = 12, SubjectName = "Архитектура ЭОМ", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 13, SubjectName = "Эмперические методы программной инженерии", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 14, SubjectName = "Конструирование программного обеспечения", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 15, SubjectName = "Организация компьтерных сетей", SubjectType = SubjectType.Exam, Term = 4, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 16, SubjectName = "Объектно-ориентированное программирование", SubjectType = SubjectType.Credit, Term = 4, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 17, SubjectName = "Инженерная и компьютерная графика", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 18, SubjectName = "Анализ требований к программному обеспечению", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 19, SubjectName = "Операционные системы", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 20, SubjectName = "Качество ПО и тестирование", SubjectType = SubjectType.Exam, Term = 5, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 21, SubjectName = "Английский язык", SubjectType = SubjectType.Credit, Term = 5, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 22, SubjectName = "Архитектура и проектирование ПО", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 23, SubjectName = "Базы данных", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() {}},
-                new Subject() { SubjectID = 24, SubjectName = "Методы оптимизации и исследования операций", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 25, SubjectName = "Программирование интернет", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 26, SubjectName = "Системы искусственного интелекта", SubjectType = SubjectType.Exam, Term = 6, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 27, SubjectName = "Android", SubjectType = SubjectType.Credit, Term = 6, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 28, SubjectName = "Информационные технологии разработки ПО", SubjectType = SubjectType.Exam, Term = 7, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 29, SubjectName = "Безопасность программ и данных", SubjectType = SubjectType.Exam, Term = 7, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 30, SubjectName = "Проектирование распределенных систем ЭОМ", SubjectType = SubjectType.Exam, Term = 7, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 31, SubjectName = "Проектный практикум", SubjectType = SubjectType.Credit, Term = 7, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 32, SubjectName = "Менеджмент проектов ПО", SubjectType = SubjectType.Exam, Term = 8, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 33, SubjectName = "Проектирование производственных экспертных систем", SubjectType = SubjectType.Exam, Term = 8, TeacherID = 8, Students = new List<Student>() {} },
-                new Subject() { SubjectID = 34, SubjectName = "Международные стандарты программной инженерии", SubjectType = SubjectType.Exam, Term = 8, TeacherID = 8, Students = new List<Student>() {}  },
-                new Subject() { SubjectID = 35, SubjectName = "Проектный практикум", SubjectType = SubjectType.Credit, Term = 8, TeacherID = 8, Students = new List<Student>() {} }
-            };
-*/
+#endregion
