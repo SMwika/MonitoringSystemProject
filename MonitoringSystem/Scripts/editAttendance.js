@@ -1,5 +1,6 @@
 ﻿(function () {
-    Attendance = function(AttendanceID, RecordBookNumberID, SubjectID, ClassDate, IsVisited, Index) {
+    //функция-констурктор с информацией о посещении студентаа
+    Attendance = function (AttendanceID, RecordBookNumberID, SubjectID, ClassDate, IsVisited, Index) {
         this.AttendanceID = AttendanceID;
         this.RecordBookNumberID = RecordBookNumberID;
         this.SubjectID = SubjectID;
@@ -7,12 +8,14 @@
         this.IsVisited = IsVisited;
         this.Index = Index;
     },
-    AttendanceDate = function(AttendanceDateId, Date, Index, SubjectId) {
+    //фукнция-конструктор с информацией о дате посещения для предмета
+    AttendanceDate = function (AttendanceDateId, Date, Index, SubjectId) {
         this.AttendanceDateId = AttendanceDateId;
         this.Date = Date;
         this.Index = Index;
         this.SubjectId = SubjectId;
     }
+    // расчет информации об успкваемости при инициализации таблицы
     calcualteTotalAttendancePoint = function (oneItemPoint) {
         var currentStudent = $(this).closest("tr");
         var outputParagraph = $("tbody.tablecontent>tr#" + currentStudent[0].id + " p.total-point");
@@ -28,6 +31,9 @@
         sum = sum.toFixed(2);
         outputParagraph.empty().append(sum);
     }
+    // перерасчет информацие при внесении данных в таблицу
+    //in: массив номеров зачеток
+    //   балл за одно посещение
     recalculateTotalAttendancePoint = function (recordBookNumbersList, oneItemPoint) {
         for (var i = 0; i < recordBookNumbersList.length; i++) {
             var outputParagraph = $("tbody.tablecontent>tr#" + recordBookNumbersList[i] + " p.total-point");

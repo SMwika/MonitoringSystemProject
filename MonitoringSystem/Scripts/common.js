@@ -1,4 +1,7 @@
-﻿(function () {
+﻿///набор функций для того, чтобы обрабатывать информации на стороне клиента в страницах EditAttendance и ShowMarks
+///
+(function () {
+    ///конструктор объекта, который служит для хранения информации, что будет передана на сервер
     inputObject = function() {
         this.rbn = "";
         this.markType = "";
@@ -7,22 +10,19 @@
         this.dateOfReport = "";
         this.dateOfProgram = "";
     },
-    getRecordBookNumbers = function(tablecontent) {
+    //получаем номера зачеток студентов (они исп. в других функциях)
+    //in: массив строкк таблицы с тела tbody
+    //out: массив номеров зачеток студентов с таблицы
+    getRecordBookNumbers = function (tablecontent) {
         var rbnList = [];
         for (var i = 0; i < tablecontent.length; i++) {
             rbnList.push(tablecontent[i].id);
         }
         return rbnList;
     },
-    calcAutomat =  function(maxMarksSum, studentTotalPointer) {
-        if (maxMarksSum == 100) {
-            return Math.round(studentTotalPointer);
-        }
-        else {
-            var total = (studentTotalPointer * 100) / maxMarksSum;
-            return Math.round(total);
-        }
-    },
+    /// вычисляет максимально возможную оценку (сумма макс.оценок) и отображает ее в таблицу
+    /// in: массив объектов inputObject
+    /// out: оценка студента
     getMaxMarkSum = function (arrayOfInputData) {
         var maxMarksSum = 0;
         var maxPointsRow = $("thead>tr.maxpoints>th");
@@ -45,7 +45,22 @@
         var cellToInputSum = $("thead>tr.maxpoints>th>p#automat-title").empty().append(maxMarksSum + "/100");
         return maxMarksSum;
     },
-    getECTS = function(finishMark) {
+    /// вычисляет оценки студента при инициализации таблицы
+    ///in: maxMarkSum(максимальная оценка)
+    ///    ,показатель студентаа
+    calcAutomat = function (maxMarksSum, studentTotalPointer) {
+        if (maxMarksSum == 100) {
+            return Math.round(studentTotalPointer);
+        }
+        else {
+            var total = (studentTotalPointer * 100) / maxMarksSum;
+            return Math.round(total);
+        }
+    },
+    ///тут я думаю и так понятно))
+    // in: оценка студента
+    ///out: ECTS отобразится в таблице
+    getECTS = function (finishMark) {
         if (finishMark >= 0 && finishMark <= 34) {
             return "F";
         }
@@ -69,10 +84,14 @@
         }
         return "FX";
     },
-    inputData = function(id, automat, ECTS) {
+    //вывод данные в таблицу
+    //in : id - зачетка студента
+    //      автомат и ects и так понятно
+    inputData = function (id, automat, ECTS) {
         var inputToPasteAutomat = $("tbody.tablecontent>tr#" + id + ">td.automat>p#" + id + "_automat").empty().append(automat);
         var inputToPasteECTS = $("tbody.tablecontent>tr#" + id + ">td.ECTS>p#" + id + "_ECTS").empty().append(ECTS);
     },
+    // сбор всех данных с ячеек в таблице
     handleDataFromCells = function (recordBookNumbersList, arrayOfInputData, maxMarksSum) {
         for (var i = 0; i < recordBookNumbersList.length; i++) {
             var currentStudent = $("tbody.tablecontent>tr#" + recordBookNumbersList[i]); // currentStudent - строка таблицы для i-го студента
@@ -106,6 +125,7 @@
             inputData(recordBookNumbersList[i], studentsAutomat, studentsECTS);
         }
     },
+    // переключатель режим дат на режим оценок
     $("#checkbox-date-to-mark").bind("change", function () {
         var pointInputs;
         var dateIpnuts;
@@ -128,6 +148,7 @@
                 .addClass("point-normal");
         }
     }),
+    // пересчитываем таблицу, если в нее внесены изменения
     recalculateMaxMarkSumWithStudentsAutomats = function (arrayOfInputData, recordBookNumbersList) {
         var table = $(this).closest("table");
         var body = table[0].children[1];
