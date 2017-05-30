@@ -19,13 +19,11 @@ namespace MonitoringSystem.Models
             LabMaxPoints = new HashSet<LabMaxPoint>();
             ModuleMaxPoints = new HashSet<ModuleMaxPoint>();
             HWMaxPoints = new HashSet<HWMaxPoint>();
-            AttsMaxPoints = new HashSet<AttMaxPoint>();
             FreeMarkFields = new HashSet<FreeMarkField>();
             FreeMarkFieldMaxPoints = new HashSet<FreeMarkFieldMaxPoint>();
             AttendanceDates = new HashSet<AttendanceDate>();
             OneItemPoints = new HashSet<OneItemPoint>();
 
-            //Students = new HashSet<Student>();
             Groups = new HashSet<Group>();
         }
      
@@ -49,13 +47,11 @@ namespace MonitoringSystem.Models
         public virtual ICollection<LabMaxPoint> LabMaxPoints { get; set; }
         public virtual ICollection<HWMaxPoint> HWMaxPoints { get; set; }
         public virtual ICollection<ModuleMaxPoint> ModuleMaxPoints { get; set; }
-        public virtual ICollection<AttMaxPoint> AttsMaxPoints { get; set; }
         public virtual ICollection<FreeMarkField> FreeMarkFields { get; set; }
         public virtual ICollection<FreeMarkFieldMaxPoint> FreeMarkFieldMaxPoints { get; set; }
         public virtual ICollection<AttendanceDate> AttendanceDates { get; set; }
         public virtual ICollection<OneItemPoint> OneItemPoints { get; set; } 
              
-        //public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
         
     }

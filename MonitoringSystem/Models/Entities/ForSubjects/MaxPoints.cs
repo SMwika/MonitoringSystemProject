@@ -28,16 +28,7 @@
         public int MaxPoint { get; set; }
 
         public virtual Subject Subject { get; set; }
-    }
-
-    public class AttMaxPoint
-    {
-        public int AttMaxPointID { get; set; }
-        public int SubjectID { get; set; }        
-        public double MaxAmount { get; set; }
-
-        public virtual Subject Subject { get; set; }
-    }
+    }    
 
     public class FreeMarkFieldMaxPoint
     {

@@ -46,7 +46,7 @@ namespace MonitoringSystem.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GroupID")] Group group)
+        public ActionResult Create([Bind(Include = "GroupID,CourseNumber")] Group group)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace MonitoringSystem.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GroupID")] Group group)
+        public ActionResult Edit([Bind(Include = "GroupID,CourseNumber")] Group group)
         {
             if (ModelState.IsValid)
             {

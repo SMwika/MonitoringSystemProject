@@ -23,7 +23,6 @@ namespace MonitoringSystem.Models
         public virtual DbSet<LabMaxPoint> LabMaxPoints { get; set; }
         public virtual DbSet<HWMaxPoint> HWMaxPoints { get; set; }
         public virtual DbSet<ModuleMaxPoint> ModuleMaxPoints { get; set; }
-        public virtual DbSet<AttMaxPoint> AttMaxPoints { get; set; }
         public virtual DbSet<FreeMarkField> FreeMarkFields { get; set; }
         public virtual DbSet<FreeMarkFieldMaxPoint> FreeMarkFieldMaxPoints { get; set; }
 

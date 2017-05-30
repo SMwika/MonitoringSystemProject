@@ -21,7 +21,7 @@ namespace MonitoringSystem.Models
         MaxLength(6, ErrorMessage = "Длина названия группы - максимум 6 символов")]
         public string GroupID { get; set; }
 
-        
+        [Display(Name = "Номер курса"), Required(ErrorMessage = "Введите номер курса")]
         public int CourseNumber { get; set; }
         
         public virtual ICollection<Student> Students { get; set; }

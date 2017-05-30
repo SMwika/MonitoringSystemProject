@@ -12,14 +12,15 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.GroupID)
+            @Html.DisplayNameFor(model => model.CourseNumber)
         </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.GroupID)
+            @Html.DisplayFor(modelItem => item.CourseNumber)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.GroupID }) |
