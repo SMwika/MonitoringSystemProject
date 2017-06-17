@@ -44,11 +44,7 @@ namespace MonitoringSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            List<Student> student = new List<Student>();
-
-            var search = db.Students.Where(rbn => rbn.RecordBookNumberID == RecordBookNumberID);
-
-            student = search.ToList();
+            Student student = db.Students.Find(RecordBookNumberID);
             return View("SearchStudentResults",student);
         }
     }

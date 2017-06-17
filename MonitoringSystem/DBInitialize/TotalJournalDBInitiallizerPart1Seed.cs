@@ -160,33 +160,56 @@ namespace MonitoringSystem.Models
                 }
             }
             context.SaveChanges();
-            #region
-            //List<SubjectCP> subjectCPs = new List<SubjectCP>
-            //{
-            //    new SubjectCP() { SubjectCP_ID = 1, SubjectCPName = "Основы программирования(КП)", Term = 3, TeacherID = 1, /*Students = new List<Student>()*/ Groups = new List<Group>() },
-            //    new SubjectCP() { SubjectCP_ID = 2, SubjectCPName = "Объектно-ориентированное программирование(КП)", Term = 4, TeacherID = 1,  /*Students = new List<Student>()*/ Groups = new List<Group>() },
-            //    new SubjectCP() { SubjectCP_ID = 3, SubjectCPName = "Алгоритмы и структуры данных(КП)", Term = 5, TeacherID = 1,  /*Students = new List<Student>()*/ Groups = new List<Group>() },
-            //    new SubjectCP() { SubjectCP_ID = 4, SubjectCPName = "Операционные системы(КП)", Term = 6, TeacherID = 1,  /*Students = new List<Student>()*/ Groups = new List<Group>() },
-            //    new SubjectCP() { SubjectCP_ID = 5, SubjectCPName = "Базы данных(КП)", Term = 7, TeacherID = 1, /*Students = new List<Student>()*/ Groups = new List<Group>() },
-            //    new SubjectCP() { SubjectCP_ID = 6, SubjectCPName = "Проектирование распределенных систем ЭВМ(КП)", Term = 8, TeacherID = 1, /*Students = new List<Student>()*/ Groups = new List<Group>() }
-            //};
-            //subjectCPs.ForEach(s => context.SubjectCPs.Add(s));
-            //context.SaveChanges();
-            //foreach (var subjectCP in context.SubjectCPs)
-            //{
-            //    foreach (var student in students4)
-            //    {
-            //        if (subjectCP.Term == 7 || subjectCP.Term == 8)
-            //        {
-            //            subjectCP.Students.Add(student);
-            //        }
-            //    }
-            //}
-            #endregion
+            
+            List<SubjectCP> subjectCPs = new List<SubjectCP>()
+            {
+                new SubjectCP() { SubjectCP_ID = 1, SubjectCPName = "Основы программирования(КП)", Term = 3, TeacherID = 1, Groups = new List<Group>() },
+                new SubjectCP() { SubjectCP_ID = 2, SubjectCPName = "Объектно-ориентированное программирование(КП)", Term = 4, TeacherID = 1, Groups = new List<Group>() },
+                new SubjectCP() { SubjectCP_ID = 3, SubjectCPName = "Алгоритмы и структуры данных(КП)", Term = 5, TeacherID = 1, Groups = new List<Group>() },
+                new SubjectCP() { SubjectCP_ID = 4, SubjectCPName = "Операционные системы(КП)", Term = 6, TeacherID = 1, Groups = new List<Group>() },
+                new SubjectCP() { SubjectCP_ID = 5, SubjectCPName = "Базы данных(КП)", Term = 7, TeacherID = 1 , Groups = new List<Group>()},
+                new SubjectCP() { SubjectCP_ID = 6, SubjectCPName = "Проектирование распределенных систем ЭВМ(КП)", Term = 8, TeacherID = 1, Groups = new List<Group>() }
+            };
+            subjectCPs.ForEach(s => context.SubjectCPs.Add(s));
+            context.SaveChanges();
+            foreach (var subjectCP in context.SubjectCPs)
+            {
+                foreach (var group in context.Groups)
+                {
+                    if (subjectCP.Term == 7 || subjectCP.Term == 8)
+                    {
+                        if (group.CourseNumber == 4)
+                        {
+                            subjectCP.Groups.Add(group);
+                        }
+                    }
+                    if (subjectCP.Term == 5 || subjectCP.Term == 6)
+                    {
+                        if (group.CourseNumber == 3)
+                        {
+                            subjectCP.Groups.Add(group);
+                        }
+                    }
+                    if (subjectCP.Term == 3 || subjectCP.Term == 4)
+                    {
+                        if (group.CourseNumber == 2)
+                        {
+                            subjectCP.Groups.Add(group);
+                        }
+                    }
+                    if (subjectCP.Term == 1 || subjectCP.Term == 2)
+                    {
+                        if (group.CourseNumber == 1)
+                        {
+                            subjectCP.Groups.Add(group);
+                        }
+                    }
+                }
+            }
             context.SaveChanges();
 
             //MarkInit(ref context);
-            SubjectCPInit(ref context);
+            //SubjectCPInit(ref context);
             //CourseProjectLineInit(ref context);
             //ModuleInit(ref context);
             //HomeWorkInit(ref context);

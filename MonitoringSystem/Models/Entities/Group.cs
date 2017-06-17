@@ -14,6 +14,7 @@ namespace MonitoringSystem.Models
         {
             Students = new HashSet<Student>();
             Subjects = new HashSet<Subject>();
+            SubjectCPs = new HashSet<SubjectCP>();
         }
 
         [Display(Name = "Номер группы"), Required(ErrorMessage = "Введите номер группы"),
@@ -26,6 +27,7 @@ namespace MonitoringSystem.Models
         
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<Subject> Subjects { get; set; }
+        public virtual ICollection<SubjectCP> SubjectCPs { get; set; }
     }
 
     

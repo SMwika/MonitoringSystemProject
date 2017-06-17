@@ -125,21 +125,28 @@ namespace MonitoringSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ModelListSubjectCPs model = new ModelListSubjectCPs();
-
-            model.studentsToShow = db.Students.Where(st => st.GroupID == groupId).ToList();
-            model.GroupName = groupId;
-            model.SubjectCPId = (int)subjectId;
-            model.SubjectCPName = db.SubjectCPs.Find(subjectId).SubjectCPName;
-            model.linesToShow = db.CourseProjectLines.Where(cpl => cpl.SubjectCP_ID == subjectId && cpl.Student.GroupID == groupId).ToList();
-            model.cpLinesMaxPoints = db.CPLineMaxPoints.Where(cplmp => cplmp.SubjectCPID == subjectId).ToList();
+            ModelListSubjectCPs model = new ModelListSubjectCPs()
+            {
+                studentsToShow = db.Students.Where(st => st.GroupID == groupId).ToList(),
+                GroupName = groupId,
+                SubjectCPId = (int)subjectId,
+                SubjectCPName = db.SubjectCPs.Find(subjectId).SubjectCPName,
+                linesToShow = db.CourseProjectLines.Where(cpl => cpl.SubjectCP_ID == subjectId && cpl.Student.GroupID == groupId).ToList(),
+                cpLinesMaxPoints = db.CPLineMaxPoints.Where(cplmp => cplmp.SubjectCPID == subjectId).ToList()
+            };
             return View(model);
         }
         public ActionResult AddCPLine(string groupId, int? subjectId)
         {
-            SubjectCP subject = db.SubjectCPs.Find(subjectId);
-            List<Student> studentsInGroup = subject.Students.ToList();
+            SubjectCP subjectCP = db.SubjectCPs.Find(subjectId);
+            List<Group> groups = subjectCP.Groups.ToList();
+            Group group = db.Groups.Find(groupId);
             int MaxLineIndex = 0, MaxCP_ID = 0, MaxCPLineMaxPointID = 0;
+            if (group.Students.Count == 0)
+            {
+                ViewBag.ErrorText = "Сначала  добавьте студентов в группу!";
+                return View("Error");
+            }
 
             if (db.CourseProjectLines.Count() > 0)
             {
@@ -153,22 +160,39 @@ namespace MonitoringSystem.Controllers
                 MaxCPLineMaxPointID = db.CPLineMaxPoints.Max(m => m.CPLineMaxPointID);
             }
             db.CPLineMaxPoints.Add(new CPLineMaxPoint() { CPLineMaxPointID = MaxCPLineMaxPointID + 1, LineIndex = MaxLineIndex + 1, MaxPoint = 0, SubjectCPID = (int)subjectId, LineName = "Новый этап"});
-            foreach (var student in studentsInGroup)
+            foreach (var grp in groups)
             {
-                MaxCP_ID++;
-                subject.CourseProjectLines.Add(new CourseProjectLine()
+                foreach (var student in grp.Students)
                 {
-                    CourseProjectLineID = MaxCP_ID,
-                    LineIndex = (MaxLineIndex + 1),
-                    RecordBookNumberID = student.RecordBookNumberID,
-                    DateOfPassing = DateTime.Now,
-                    SubjectCP_ID = Convert.ToInt32(subjectId),
-                    TheMark = 0,
-                    LineName = "Новый этап"
-                });
+                    MaxCP_ID++;
+                    subjectCP.CourseProjectLines.Add(new CourseProjectLine()
+                    {
+                        CourseProjectLineID = MaxCP_ID,
+                        LineIndex = (MaxLineIndex + 1),
+                        RecordBookNumberID = student.RecordBookNumberID,
+                        DateOfPassing = DateTime.Now,
+                        SubjectCP_ID = Convert.ToInt32(subjectId),
+                        TheMark = 0,
+                        LineName = "Новый этап"
+                    });
+                }
             }
+            //foreach (var student in studentsInGroup)
+            //{
+            //    MaxCP_ID++;
+            //    subject.CourseProjectLines.Add(new CourseProjectLine()
+            //    {
+            //        CourseProjectLineID = MaxCP_ID,
+            //        LineIndex = (MaxLineIndex + 1),
+            //        RecordBookNumberID = student.RecordBookNumberID,
+            //        DateOfPassing = DateTime.Now,
+            //        SubjectCP_ID = Convert.ToInt32(subjectId),
+            //        TheMark = 0,
+            //        LineName = "Новый этап"
+            //    });
+            //}
             db.SaveChanges();
-            return RedirectToAction(getUrl("ShowMarks", groupId, Convert.ToInt32(subjectId)));
+            return RedirectToAction(GetUrl("ShowMarks", groupId, Convert.ToInt32(subjectId)));
         }
 
         public ActionResult RemoveCPLine(string groupId, int? subjectId)
@@ -191,7 +215,7 @@ namespace MonitoringSystem.Controllers
             }
               
             db.SaveChanges();
-            return RedirectToAction(getUrl("ShowMarks", groupId, Convert.ToInt32(subjectId)));
+            return RedirectToAction(GetUrl("ShowMarks", groupId, Convert.ToInt32(subjectId)));
         }
         [HttpPost]
         public ActionResult SaveLineName(string value, string index, string url)
@@ -219,7 +243,7 @@ namespace MonitoringSystem.Controllers
         [HttpPost]
         public ActionResult SaveChanges(List<TemplateToMarks> dataToSend)
         {
-            getIDs(ref dataToSend);
+            GetIDs(ref dataToSend);
             for (int i = 0; i < dataToSend.Count - 1; i++)
             {
                 switch (dataToSend[i].markType)
@@ -241,7 +265,7 @@ namespace MonitoringSystem.Controllers
             string url = dataToSend[dataToSend.Count - 1].inputId.Substring(dataToSend[dataToSend.Count - 1].inputId.IndexOf("ShowMarks"));
             return RedirectToAction(url);
         }
-        public void getIDs(ref List<TemplateToMarks> data)
+        public void GetIDs(ref List<TemplateToMarks> data)
         {
             for (int i = 0; i < data.Count - 1; i++)
             {
@@ -249,7 +273,7 @@ namespace MonitoringSystem.Controllers
                 data[i].inputId = data[i].inputId.Substring(0, ceparatorIndex);
             }
         }
-        protected string getUrl(string action, string groupId, int? subjectId)
+        protected string GetUrl(string action, string groupId, int? subjectId)
         {
             string url = string.Empty;
             url = action + "/" + groupId + "/" + subjectId.ToString();

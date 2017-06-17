@@ -10,154 +10,10 @@ using MonitoringSystem.Models;
 
 namespace MonitoringSystem.Controllers
 {
-    public class SubjectsController : Controller
+    public partial class SubjectsController : Controller
     {
         private TotalJournalContext db = new TotalJournalContext();        
-        // GET: Subjects
-        public ActionResult Index()
-        {
-            return View(db.Subjects.ToList());
-        }
-        // GET: Subjects/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Subject subject = db.Subjects.Find(id);
-            if (subject == null)
-            {
-                return HttpNotFound();
-            }
-            return View(subject);
-        }
-        // GET: Subjects/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-        // POST: Subjects/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SubjectID,SubjectName,Term,SubjectType")] Subject subject)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Subjects.Add(subject);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(subject);
-        }
-        // GET: Subjects/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Subject subject = db.Subjects.Find(id);
-            if (subject == null)
-            {
-                return HttpNotFound();
-            }
-            return View(subject);
-        }
-        // POST: Subjects/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SubjectID,SubjectName,Term,SubjectType")] Subject subject)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(subject).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(subject);
-        }
-        // GET: Subjects/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Subject subject = db.Subjects.Find(id);
-            if (subject == null)
-            {
-                return HttpNotFound();
-            }
-            return View(subject);
-        }
-        // POST: Subjects/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Subject subject = db.Subjects.Find(id);
-            db.Subjects.Remove(subject);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        //дописать обработчики на 5 и 6 курс
-        public ActionResult ShowSubjectsByCourseNumber(string groupId)
-        {
-            SubjectModel model = new SubjectModel();
-            List<Subject> getSubjects;
-            List<SubjectCP> getSubjectCPs;
-            int courseNumber = Cn(groupId);
-            if (courseNumber != -1)
-            {
-                switch (courseNumber)
-                {
-                    case 1:
-                        getSubjects = db.Subjects.Where(subjects => (subjects.Term == 1 || subjects.Term == 2)).ToList();
-                        getSubjectCPs = db.SubjectCPs.Where(subjects => (subjects.Term == 1 || subjects.Term == 2)).ToList();
-                        break;
-                    case 2:
-                        getSubjects = db.Subjects.Where(subjects => (subjects.Term == 3 || subjects.Term == 4)).ToList();
-                        getSubjectCPs = db.SubjectCPs.Where(subjects => (subjects.Term == 3 || subjects.Term == 4)).ToList();
-                        break;
-                    case 3:
-                        getSubjects = db.Subjects.Where(subjects => (subjects.Term == 5 || subjects.Term == 6)).ToList();
-                        getSubjectCPs = db.SubjectCPs.Where(subjects => (subjects.Term == 5 || subjects.Term == 6)).ToList();
-                        break;
-                    case 4:
-                        getSubjects = db.Subjects.Where(subjects => (subjects.Term == 7 || subjects.Term == 8)).ToList();
-                        getSubjectCPs = db.SubjectCPs.Where(subjects => (subjects.Term == 7 || subjects.Term == 8)).ToList();
-                        break;
-                    case 5:
-                        getSubjects = db.Subjects.Where(subjects => (subjects.Term == 9 || subjects.Term == 10)).ToList();
-                        getSubjectCPs = db.SubjectCPs.Where(subjects => (subjects.Term == 9 || subjects.Term == 10)).ToList();
-                        break;
-                    case 6:
-                        getSubjectCPs = db.SubjectCPs.Where(subjects => (subjects.Term == 11)).ToList();
-                        getSubjects = db.Subjects.Where(subjects => subjects.Term == 11).ToList();
-                        break;
-                    default: return new HttpNotFoundResult();
-                }
-                ViewBag.GroupNumber = groupId;
-                model.subjects = getSubjects;
-                model.subjectCPs = getSubjectCPs;
-                return View(model);
-            }
-            return View();
-        }
-        public int Cn(string groupId)
-        {
-            if (groupId != null)
-            {
-                if (groupId.Length == 4)
-                {
-                    return Int32.Parse(groupId.Substring(1, 1));
-                }
-                return Int32.Parse(groupId.Substring(1, 1)) + 1;
-            }
-            return -1;
-        }
+        
         public ActionResult ShowMarks(string groupId, int? subjectId)
         {
             if (groupId == null || subjectId == null)
@@ -259,22 +115,6 @@ namespace MonitoringSystem.Controllers
                     });
                 }
             }
-
-
-            //foreach (var student in studentsInGroup)
-            //{
-            //    MaxLabID++;
-            //    subject.Marks.Add(new Mark()
-            //    {
-            //        MarkID = MaxLabID,
-            //        LabNumber = (MaxLabNumber + 1),
-            //        RecordBookNumberID = student.RecordBookNumberID,
-            //        DateOfProgram = DateTime.Now,
-            //        DateOfReport = DateTime.Now,
-            //        SubjectID = Convert.ToInt32(subjectId),
-            //        TheMark = 0
-            //    });                
-            //}
             db.SaveChanges();
             return RedirectToAction(getUrl("ShowMarks", groupId, subjectId));
         }
@@ -432,7 +272,7 @@ namespace MonitoringSystem.Controllers
             if (db.LabMaxPoints.Where(m => m.Subject.SubjectID == subjectId).Count() != 0)
             {
                 MaxLabNumber = db.LabMaxPoints
-                                 .Where(m => m.Subject.SubjectID == subjectId).Max(m => m.LabNumber);
+                    .Where(m => m.Subject.SubjectID == subjectId).Max(m => m.LabNumber);
             }
             if (db.LabMaxPoints.Count() != 0)
             {
@@ -517,108 +357,6 @@ namespace MonitoringSystem.Controllers
 
             db.SaveChanges();
             return RedirectToAction(getUrl("ShowMarks",groupId, subjectId));
-        }
-        protected string getUrl(string action, string groupId, int? subjectId)
-        {
-            string url = string.Empty;
-            url = action + "/" + groupId + "/" + subjectId.ToString();
-            return url;
-        }
-        [HttpPost]
-        public ActionResult SaveChanges(List<TemplateToMarks> dataToSend)
-        {
-            getIDs(ref dataToSend);
-            for (int i = 0; i < dataToSend.Count-1; i++)
-            {
-                switch (dataToSend[i].markType)
-                {
-                    case "lab":
-                        Mark mark = db.Marks.Find(Convert.ToInt32(dataToSend[i].inputId));                        
-                        mark.TheMark = Convert.ToInt32(dataToSend[i].inputvalue);
-                        mark.DateOfProgram = Convert.ToDateTime(dataToSend[i].dateOfProgram);
-                        mark.DateOfReport = Convert.ToDateTime(dataToSend[i].dateOfReport);
-                        break;
-                    case "hw":
-                        HomeWork homework = db.HomeWorks.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        homework.HWPoint = Convert.ToInt32(dataToSend[i].inputvalue);
-                        homework.DateOfProgram = Convert.ToDateTime(dataToSend[i].dateOfProgram);
-                        homework.DateOfReport = Convert.ToDateTime(dataToSend[i].dateOfReport);
-                        break;                    
-                    case "module":
-                        Module module = db.Modules.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        module.ModulePoint = Convert.ToInt32(dataToSend[i].inputvalue);
-                        break;
-                    case "freemarkfield":
-                        FreeMarkField freeMarkField = db.FreeMarkFields.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        freeMarkField.FieldPoint = Convert.ToInt32(dataToSend[i].inputvalue);
-                        break;
-                    case "maxlab": LabMaxPoint labMaxPoint = db.LabMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        labMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
-                        break;
-                    case "maxhw":
-                        HWMaxPoint hwMaxPoint = db.HWMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        hwMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
-                        break;
-                    case "maxmodule":
-                        ModuleMaxPoint moduleMaxPoint = db.ModuleMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        moduleMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
-                        break;
-                    case "maxfreefieldpoint":
-                        FreeMarkFieldMaxPoint freeFieldMaxPoint = db.FreeMarkFieldMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
-                        freeFieldMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
-                        break;
-                    default:
-                        break;
-                }
-                db.SaveChanges();
-            }
-            string url = dataToSend[dataToSend.Count - 1].inputId.Substring(dataToSend[dataToSend.Count - 1].inputId.IndexOf("ShowMarks"));
-            return RedirectToAction(url);
-        }
-        [HttpPost]
-        public ActionResult SaveOneItemPoint(string value, string url)
-        {
-            int indexOfLastSlash = url.LastIndexOf('/');
-            int subjectId = Convert.ToInt32(url.Substring(indexOfLastSlash + 1));
-            int maxOneItemPointId = 0;
-
-            List<OneItemPoint> oneItemPoints = db.OneItemPoints.Where(atts => atts.Subject.SubjectID == subjectId).ToList();
-
-            if (oneItemPoints.Count == 0)
-            {
-                if (db.OneItemPoints.Count() > 0)
-                {
-                    maxOneItemPointId = db.OneItemPoints.Max(o => o.OneItemPointID);
-                    OneItemPoint oip = new OneItemPoint() { OneItemPointID = maxOneItemPointId + 1, SubjectId = subjectId, Value = value };
-                    db.OneItemPoints.Add(oip);
-                }
-                else // db.OneItemPoint.Count == 0  (the sequence is empty)
-                {
-                    db.OneItemPoints.Add(new OneItemPoint() { OneItemPointID = 1, SubjectId = subjectId, Value = value });
-                }
-            }
-            else
-            {
-                foreach (OneItemPoint oneItemPoint in oneItemPoints)
-                {
-                    oneItemPoint.Value = value;
-                    db.SaveChanges();
-                }
-            }
-            
-            int indexOfSubject = url.IndexOf("Subjects");
-            url = url.Substring(indexOfSubject);
-
-            db.SaveChanges();
-            return RedirectToAction(url);
-        }
-        public void getIDs(ref List<TemplateToMarks> data)
-        {
-            for (int i = 0; i < data.Count-1; i++)
-            {
-                int ceparatorIndex = data[i].inputId.IndexOf('_');
-                data[i].inputId = data[i].inputId.Substring(0, ceparatorIndex);
-            }
         }
         public ActionResult EditAttendance(string groupId, int? subjectId)
         {
@@ -726,13 +464,94 @@ namespace MonitoringSystem.Controllers
             db.SaveChanges();
             return View();
         }
-        protected override void Dispose(bool disposing)
+        [HttpPost]
+        public ActionResult SaveChanges(List<TemplateToMarks> dataToSend)
         {
-            if (disposing)
+            getIDs(ref dataToSend);
+            for (int i = 0; i < dataToSend.Count - 1; i++)
             {
-                db.Dispose();
+                switch (dataToSend[i].markType)
+                {
+                    case "lab":
+                        Mark mark = db.Marks.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        mark.TheMark = Convert.ToInt32(dataToSend[i].inputvalue);
+                        mark.DateOfProgram = Convert.ToDateTime(dataToSend[i].dateOfProgram);
+                        mark.DateOfReport = Convert.ToDateTime(dataToSend[i].dateOfReport);
+                        break;
+                    case "hw":
+                        HomeWork homework = db.HomeWorks.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        homework.HWPoint = Convert.ToInt32(dataToSend[i].inputvalue);
+                        homework.DateOfProgram = Convert.ToDateTime(dataToSend[i].dateOfProgram);
+                        homework.DateOfReport = Convert.ToDateTime(dataToSend[i].dateOfReport);
+                        break;
+                    case "module":
+                        Module module = db.Modules.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        module.ModulePoint = Convert.ToInt32(dataToSend[i].inputvalue);
+                        break;
+                    case "freemarkfield":
+                        FreeMarkField freeMarkField = db.FreeMarkFields.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        freeMarkField.FieldPoint = Convert.ToInt32(dataToSend[i].inputvalue);
+                        break;
+                    case "maxlab":
+                        LabMaxPoint labMaxPoint = db.LabMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        labMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
+                        break;
+                    case "maxhw":
+                        HWMaxPoint hwMaxPoint = db.HWMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        hwMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
+                        break;
+                    case "maxmodule":
+                        ModuleMaxPoint moduleMaxPoint = db.ModuleMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        moduleMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
+                        break;
+                    case "maxfreefieldpoint":
+                        FreeMarkFieldMaxPoint freeFieldMaxPoint = db.FreeMarkFieldMaxPoints.Find(Convert.ToInt32(dataToSend[i].inputId));
+                        freeFieldMaxPoint.MaxPoint = Convert.ToInt32(dataToSend[i].inputvalue);
+                        break;
+                    default:
+                        break;
+                }
+                db.SaveChanges();
             }
-            base.Dispose(disposing);
+            string url = dataToSend[dataToSend.Count - 1].inputId.Substring(dataToSend[dataToSend.Count - 1].inputId.IndexOf("ShowMarks"));
+            return RedirectToAction(url);
         }
-    }    
+        [HttpPost]
+        public ActionResult SaveOneItemPoint(string value, string url)
+        {
+            int indexOfLastSlash = url.LastIndexOf('/');
+            int subjectId = Convert.ToInt32(url.Substring(indexOfLastSlash + 1));
+            int maxOneItemPointId = 0;
+
+            List<OneItemPoint> oneItemPoints = db.OneItemPoints.Where(atts => atts.Subject.SubjectID == subjectId).ToList();
+
+            if (oneItemPoints.Count == 0)
+            {
+                if (db.OneItemPoints.Count() > 0)
+                {
+                    maxOneItemPointId = db.OneItemPoints.Max(o => o.OneItemPointID);
+                    OneItemPoint oip = new OneItemPoint() { OneItemPointID = maxOneItemPointId + 1, SubjectId = subjectId, Value = value };
+                    db.OneItemPoints.Add(oip);
+                }
+                else // db.OneItemPoint.Count == 0  (the sequence is empty)
+                {
+                    db.OneItemPoints.Add(new OneItemPoint() { OneItemPointID = 1, SubjectId = subjectId, Value = value });
+                }
+            }
+            else
+            {
+                foreach (OneItemPoint oneItemPoint in oneItemPoints)
+                {
+                    oneItemPoint.Value = value;
+                    db.SaveChanges();
+                }
+            }
+
+            int indexOfSubject = url.IndexOf("Subjects");
+            url = url.Substring(indexOfSubject);
+
+            db.SaveChanges();
+            return RedirectToAction(url);
+        }
+    }
 }

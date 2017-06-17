@@ -15,6 +15,8 @@ namespace MonitoringSystem.Models
             CourseProjectLines = new HashSet<CourseProjectLine>();
             CPLineMaxPoints = new HashSet<CPLineMaxPoint>();
             Students = new HashSet<Student>();
+
+            Groups = new HashSet<Group>();
         }
 
         [Key]
@@ -29,5 +31,6 @@ namespace MonitoringSystem.Models
         public virtual ICollection<CourseProjectLine> CourseProjectLines { get; set; }
         public virtual ICollection<CPLineMaxPoint> CPLineMaxPoints { get; set; }
         public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
     }
 }

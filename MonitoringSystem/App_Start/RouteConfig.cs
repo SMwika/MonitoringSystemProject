@@ -23,7 +23,8 @@ namespace MonitoringSystem
                 name: "toMarks",
                 url: "Subjects/{action}/{groupId}/{subjectId}",
                 defaults: new {
-                    controller = "Subjects", action = "Index",
+                    controller = "Subjects",
+                    action = "Index",
                     groupId = UrlParameter.Optional,
                     subjectId = UrlParameter.Optional }
                 );

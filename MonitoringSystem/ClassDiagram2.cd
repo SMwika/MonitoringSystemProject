@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="MonitoringSystem.Controllers.SubjectCPsController">
+    <Position X="7.75" Y="1.25" Width="4" />
+    <Members>
+      <Method Name="Create" Hidden="true" />
+      <Method Name="Delete" Hidden="true" />
+      <Method Name="DeleteConfirmed" Hidden="true" />
+      <Method Name="Details" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="Edit" Hidden="true" />
+      <Method Name="getIDs" Hidden="true" />
+      <Method Name="getUrl" Hidden="true" />
+      <Method Name="Index" Hidden="true" />
+      <Method Name="SaveChanges" Hidden="true" />
+      <Method Name="SaveLineName" Hidden="true" />
+      <Method Name="ShowMarks" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAgCARAACAAAAAABAAAgEAAEACAAFABAAAAAA=</HashCode>
+      <FileName>Controllers\SubjectCPsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonitoringSystem.Controllers.SubjectsController" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.75" />
+    <Members>
+      <Method Name="AddAttendanceDate" Hidden="true" />
+      <Method Name="AddFreeFieldColumn" Hidden="true" />
+      <Method Name="AddHomeWorkColumn" Hidden="true" />
+      <Method Name="AddMarkColumn" Hidden="true" />
+      <Method Name="AddModuleColumn" Hidden="true" />
+      <Method Name="Cn" Hidden="true" />
+      <Method Name="Create" Hidden="true" />
+      <Method Name="Delete" Hidden="true" />
+      <Method Name="DeleteConfirmed" Hidden="true" />
+      <Method Name="Details" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="Edit" Hidden="true" />
+      <Method Name="EditAttendance" Hidden="true" />
+      <Method Name="getIDs" Hidden="true" />
+      <Method Name="getUrl" Hidden="true" />
+      <Method Name="Index" Hidden="true" />
+      <Method Name="RemoveAttendanceDate" Hidden="true" />
+      <Method Name="RemoveFreeFieldColumn" Hidden="true" />
+      <Method Name="RemoveHomeWorkColumn" Hidden="true" />
+      <Method Name="RemoveMarkColumn" Hidden="true" />
+      <Method Name="RemoveModuleColumn" Hidden="true" />
+      <Method Name="SaveAttendances" Hidden="true" />
+      <Method Name="SaveOneItemPoint" Hidden="true" />
+      <Method Name="ShowSubjectsByCourseNumber" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>iAAAAAIAACgRAACBAACQAABAQgEAEkASAAFABAAAEAg=</HashCode>
+      <FileName>Controllers\SubjectsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonitoringSystem.RouteConfig">
+    <Position X="3.5" Y="1" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\RouteConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonitoringSystem.Controllers.HomeController" Collapsed="true">
+    <Position X="2.5" Y="5.25" Width="1.5" />
+    <Members>
+      <Method Name="About" Hidden="true" />
+      <Method Name="Contact" Hidden="true" />
+      <Method Name="Index" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAEACAAAAAAAAAAAAACAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonitoringSystem.Controllers.GroupModel" Collapsed="true">
+    <Position X="4.25" Y="5.25" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

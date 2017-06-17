@@ -129,8 +129,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="Content\ShowMarksStyleSheet.css" />
-    <Compile Include="Controllers\CourseProjectLinesController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
+    <Compile Include="Controllers\SubjectsController2.cs" />
     <Compile Include="Helpers\HelperToSubjectCPs.cs" />
     <Compile Include="Helpers\HelperToAttendances.cs" />
     <Compile Include="Helpers\HelperToSubjects.cs" />
@@ -172,6 +172,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ClassDiagram1.cd" />
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\editAttendance.js" />
@@ -246,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SubjectsController2\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

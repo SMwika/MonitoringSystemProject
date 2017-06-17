@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MonitoringSystem.Models.Student>
+﻿@model MonitoringSystem.Models.Student
 
 @{
     ViewBag.Title = "Результаты поиска";
@@ -6,7 +6,29 @@
 
 <h2>Поиск студента</h2>
 
-<table class="table">
+@{ 
+    foreach (var subject in Model.Subjects)
+        {
+           <table>
+               <thead>
+                   <th>1</th>1<th></th>1<th>1</th>
+               </thead>
+               <tbody>
+                   <tr>2</tr>2<tr>2</tr>2<tr>2</tr>
+               </tbody>
+           </table> 
+        }
+    
+
+   
+        foreach (var subjectCPs in Model.SubjectCPs)
+        {
+
+        }
+    
+}
+
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Group.GroupID)
@@ -41,4 +63,4 @@
         </tr>
     }
 
-</table>
+</table>*@
