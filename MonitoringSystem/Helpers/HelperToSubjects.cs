@@ -41,6 +41,24 @@ namespace MonitoringSystem.Controllers
         public double oneItemPoint { get; set; }
     }
 
+    public class  ModelSearchStudent
+    {
+        public Student student { get; set; }
+        public List<Mark> marks { get; set; }
+        public List<Module> modules { get; set; }
+        public List<HomeWork> homeworks { get; set; }
+        public List<LabMaxPoint> labMaxPoints { get; set; }
+        public List<HWMaxPoint> hwMaxPoints { get; set; }
+        public List<ModuleMaxPoint> moduleMaxPoints { get; set; }
+        public List<FreeMarkField> freeMarkFields { get; set; }
+        public List<FreeMarkFieldMaxPoint> freeMarkFieldMaxPoints { get; set; }
+        public string GroupName { get; set; }
+        public string SubjectName { get; set; }
+        public int SubjectId { get; set; }
+        public double[] attendanceAmount { get; set; }
+        public double oneItemPoint { get; set; }
+    }
+
     public class SubjectModel
     {
         public List<Subject> subjects { get; set; }
