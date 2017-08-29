@@ -57,6 +57,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MonotoringSystemModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MonotoringSystemModel\obj\Debug\MonotoringSystemModel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -131,6 +135,7 @@
     <Content Include="Content\ShowMarksStyleSheet.css" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\SubjectsController2.cs" />
+    <Compile Include="Helpers\CRUDHelper.cs" />
     <Compile Include="Helpers\HelperToSubjectCPs.cs" />
     <Compile Include="Helpers\HelperToAttendances.cs" />
     <Compile Include="Helpers\HelperToSubjects.cs" />
@@ -143,22 +148,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="DBInitialize\TotalJournalDBInitiallizerPart1Seed.cs" />
-    <Compile Include="Models\Entities\CPLineMaxPoint.cs" />
-    <Compile Include="Models\Entities\ForSubjects\Attendance.cs" />
-    <Compile Include="Models\Entities\ForSubjects\AttendanceDate.cs" />
-    <Compile Include="Models\Entities\CourseProjectLine.cs" />
-    <Compile Include="Models\Entities\ForSubjects\FreeMarkField.cs" />
-    <Compile Include="Models\Entities\Group.cs" />
-    <Compile Include="Models\Entities\ForSubjects\HomeWork.cs" />
-    <Compile Include="Models\Entities\ForSubjects\MaxPoints.cs" />
-    <Compile Include="Models\Entities\ForSubjects\Mark.cs" />
-    <Compile Include="Models\Entities\ForSubjects\Module.cs" />
-    <Compile Include="Models\Entities\ForSubjects\OneItemPoint.cs" />
-    <Compile Include="Models\Entities\Student.cs" />
-    <Compile Include="Models\Entities\ForSubjects\Subject.cs" />
-    <Compile Include="Models\Entities\SubjectCP.cs" />
-    <Compile Include="Models\Entities\Teacher.cs" />
-    <Compile Include="Models\TotalJournalContext.cs" />
     <Compile Include="DBInitialize\TotalJournalDBInitiallizerPart2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -215,11 +204,6 @@
     <Content Include="Views\Subjects\Details.cshtml" />
     <Content Include="Views\Subjects\Edit.cshtml" />
     <Content Include="Views\Subjects\Index.cshtml" />
-    <Content Include="Views\Marks\Create.cshtml" />
-    <Content Include="Views\Marks\Delete.cshtml" />
-    <Content Include="Views\Marks\Details.cshtml" />
-    <Content Include="Views\Marks\Edit.cshtml" />
-    <Content Include="Views\Marks\Index.cshtml" />
     <Content Include="Views\Home\SearchStudentResults.cshtml" />
     <Content Include="Views\Subjects\ShowSubjectsByCourseNumber.cshtml" />
     <Content Include="Views\Subjects\EditAttendance.cshtml" />
@@ -228,11 +212,6 @@
     <Content Include="Views\SubjectCPs\Details.cshtml" />
     <Content Include="Views\SubjectCPs\Edit.cshtml" />
     <Content Include="Views\SubjectCPs\Index.cshtml" />
-    <Content Include="Views\CourseProjectLines\Create.cshtml" />
-    <Content Include="Views\CourseProjectLines\Delete.cshtml" />
-    <Content Include="Views\CourseProjectLines\Details.cshtml" />
-    <Content Include="Views\CourseProjectLines\Edit.cshtml" />
-    <Content Include="Views\CourseProjectLines\Index.cshtml" />
     <Content Include="Views\SubjectCPs\ShowMarks.cshtml" />
     <Content Include="Views\Students\Create.cshtml" />
     <Content Include="Views\Students\Delete.cshtml" />
@@ -248,7 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SubjectsController2\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

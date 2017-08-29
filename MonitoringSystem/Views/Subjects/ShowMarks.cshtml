@@ -1,5 +1,5 @@
 ﻿@model MonitoringSystem.Controllers.ModelList
-@using MonitoringSystem.Models
+@using MonitoringSystemModel
 <link rel="stylesheet" href="~/Content/ShowMarksStyleSheet.css" />
 @{
     ViewBag.Title = Model.GroupName + ", " + Model.SubjectName;
@@ -351,6 +351,18 @@
         @class = "btn btn-primary btn-sm"
     })
 </p>
+<div class="modal" id="modal-save-changes">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Изменения сохранены!</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-save-changes-OK">ОК</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts
 {
@@ -389,6 +401,12 @@
                     success: function (data) {
                         alert("data has been sent to server");
                     }
+                });
+
+                var modal = $("#modal-save-changes").show();
+
+                $("#modal-save-changes-OK").bind("click", function () {
+                    modal.hide();
                 });
             });            
             function getDatesToSend() {

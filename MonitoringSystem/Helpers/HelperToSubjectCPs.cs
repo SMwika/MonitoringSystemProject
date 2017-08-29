@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MonitoringSystem.Models;
+using MonitoringSystemModel;
 
 namespace MonitoringSystem.Controllers
 {

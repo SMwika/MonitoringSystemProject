@@ -1,5 +1,5 @@
-﻿@using MonitoringSystem.Models
-@model MonitoringSystem.Models.Student
+﻿@using MonitoringSystemModel
+@model MonitoringSystemModel.Student
 
 @{
     ViewBag.Title = "Результаты поиска";
@@ -11,7 +11,8 @@
 @{ 
     foreach (var subject in Model.Group.Subjects)
         {
-           <p>@subject.SubjectName Семестр:@subject.Term</p>
+           <p>@subject.SubjectName</p>
+           <p>Семестр: @subject.Term</p>
            <table class="table table-bordered table-hover">
                <thead>
                    <tr>

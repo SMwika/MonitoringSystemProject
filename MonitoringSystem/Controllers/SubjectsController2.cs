@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MonitoringSystem.Models;
 using System.Net;
 using System.Data.Entity;
+using MonitoringSystemModel;
 
 namespace MonitoringSystem.Controllers
 {

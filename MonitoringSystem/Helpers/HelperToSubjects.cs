@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using MonitoringSystem.Models;
-using System.Linq;
-using System.Web;
+using MonitoringSystemModel;
 
 namespace MonitoringSystem.Controllers
 {
@@ -56,7 +54,7 @@ namespace MonitoringSystem.Controllers
         public string SubjectName { get; set; }
         public int SubjectId { get; set; }
         public double[] attendanceAmount { get; set; }
-        public double oneItemPoint { get; set; }
+        public double oneItemPoint { get; set; }       
     }
 
     public class SubjectModel

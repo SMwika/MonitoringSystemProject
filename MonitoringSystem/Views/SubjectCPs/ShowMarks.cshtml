@@ -1,5 +1,5 @@
 ﻿@model MonitoringSystem.Controllers.ModelListSubjectCPs
-@using MonitoringSystem.Models
+@using MonitoringSystemModel
 <link rel="stylesheet" href="~/Content/ShowMarksStyleSheet.css" />
 <style>
     a .glyphicon-plus:hover {
@@ -27,7 +27,7 @@
         display:block;
         text-align:center;
     }
-    .glyphicon-save-hidden{
+    .save-hidden{
         display: none;
         width:0px;
         height:0px;
@@ -70,7 +70,7 @@
                     <th>
                         <p class="line-name-p-normal">@cpLineMaxPoint.LineName</p>
                         <input type="text" class="line-name-input-hidden" value="@cpLineMaxPoint.LineName" data-id=@cpLineMaxPoint.CPLineMaxPointID>
-                        <span class="glyphicon glyphicon-floppy-save glyphicon-save-hidden" aria-hidden="true">oops</span>
+                        <span class="save save-hidden">ОК</span>
                     </th>
                 }
             }
@@ -146,6 +146,18 @@
 <p>
     <input type="button" id="btn-savechanges" class="btn btn-primary btn-lg" value="Сохранить изменения" />
 </p>
+<div class="modal" id="modal-save-changes">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Изменения сохранены!</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-save-changes-OK">ОК</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @section scripts {
@@ -174,10 +186,10 @@
                     .addClass("line-name-p-hidden");
                 var inputLineName = $(this).next().removeClass("line-name-input-hidden")
                     .addClass("line-name-input-normal");
-                inputLineName.next().removeClass("glyphicon-save-hidden");
+                inputLineName.next().removeClass("save-hidden");
             });
-            $(".glyphicon-floppy-save").bind("click", function () {
-                $(this).addClass("glyphicon-save-hidden");
+            $(".save").bind("click", function () {
+                $(this).addClass("save-hidden");
                 var inputLineName = $(".line-name-input-normal")
                     .removeClass("line-name-input-normal")
                     .addClass("line-name-input-hidden");
@@ -208,14 +220,19 @@
                 $.ajax({
                     url: "@Url.Action("SaveChanges")",
                     type: "POST",
-                data: dataToSend,
-                dataType: "json",
-                contentType: "application/json",
-                success: function (data) {
-                    alert("data has been sent to server");
-                }
+                    data: dataToSend,
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert("data has been sent to server");
+                    }                
+                });
+                var modal = $("#modal-save-changes").show();
+
+                $("#modal-save-changes-OK").bind("click", function () {
+                    modal.hide();
+                });
             });
-        });
         })();
     </script>
 }

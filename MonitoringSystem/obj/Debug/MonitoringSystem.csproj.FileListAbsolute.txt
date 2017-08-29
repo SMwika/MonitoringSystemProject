@@ -100,3 +100,5 @@ F:\MonitoringSystemProject\MonitoringSystem\bin\ru\System.Web.WebPages.Razor.res
 F:\MonitoringSystemProject\MonitoringSystem\obj\Debug\MonitoringSystem.dll
 F:\MonitoringSystemProject\MonitoringSystem\obj\Debug\MonitoringSystem.pdb
 F:\MonitoringSystemProject\MonitoringSystem\obj\Debug\MonitoringSystem.csprojResolveAssemblyReference.cache
+F:\MonitoringSystemProject\MonitoringSystem\bin\MonotoringSystemModel.dll
+F:\MonitoringSystemProject\MonitoringSystem\bin\MonotoringSystemModel.pdb

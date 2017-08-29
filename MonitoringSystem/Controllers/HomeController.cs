@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MonitoringSystem.Models;
+using MonitoringSystemModel;
 using System.Net;
 
 namespace MonitoringSystem.Controllers
